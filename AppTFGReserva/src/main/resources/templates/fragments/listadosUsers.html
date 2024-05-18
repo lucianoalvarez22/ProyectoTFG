@@ -81,9 +81,9 @@
                     <th>Email</th>
                     <th>Teléfono</th>
                     <th>Ciudad</th>
-                    <th>Nombre Cargo</th>
-                    <th>Nivel Rol</th>
-                    <th>Nombre Empresa</th>
+                    <th>Cargo</th>
+                    <th>Rol</th>
+                    <th>Empresa</th>
                     <th>Correo Empresa</th>
                     <th>Acciones</th>
                 </tr>
@@ -95,11 +95,17 @@
                     <td th:text="${user.userEmail}"></td>
                     <td th:text="${user.userTelefono}"></td>
                     <td th:text="${user.userCiudad}"></td>
-                    <td>
+                    
+                    
+  				<td>
                         <span th:each="cargo : ${user.rolLevel.cargos}">
                             <span th:text="${cargo.cargoName}"></span>
                         </span>
                     </td>
+
+
+
+
                     <td th:text="${user.rolLevel.rolLevel}"></td>
                     <td th:text="${user.companyId.companyName}"></td>
                     <td th:text="${user.companyId.companyEmail}"></td>

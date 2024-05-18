@@ -43,13 +43,13 @@ public class Usuarios {
     @ManyToOne
     @JoinColumn(name = "rol_level", referencedColumnName = "rol_level")
     private Roles rolLevel;
+  
     
 //    @OneToMany(mappedBy = "companyAdmin")
 //    private List<Company> companies;
 
 
     // GET AND SET
- 
 
 	public Long getUserId() {
 		return userId;

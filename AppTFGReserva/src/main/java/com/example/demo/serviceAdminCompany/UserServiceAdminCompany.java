@@ -35,5 +35,10 @@ public class UserServiceAdminCompany implements IUserServiceAdminCompany {
 	public List<Usuarios> getUsuariosByCompanyId(Company companyId) {
 		return userRepositoryAdmin.findByCompanyId(companyId);
 	    }
+	
+	@Override
+	public Usuarios guardarUsuario(Usuarios usuario) {
+		return userRepositoryAdmin.save(usuario);
+	}
 
 }

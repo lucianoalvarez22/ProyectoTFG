@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.componenteLogueado.UserSessionLog;
+import com.example.demo.entity.CargoName;
 import com.example.demo.entity.Company;
 import com.example.demo.entity.Roles;
 import com.example.demo.entity.Usuarios;
 import com.example.demo.serviceAdmin.ICargoServiceAdmin;
 import com.example.demo.serviceAdmin.ICompanyServiceAdmin;
+import com.example.demo.serviceAdmin.IRolServiceAdmin;
 import com.example.demo.serviceAdminCompany.IUserServiceAdminCompany;
 
 @Controller
@@ -33,6 +35,9 @@ public class UserControllerAdminCompany {
 	private ICompanyServiceAdmin companyServicio;
 	@Autowired
 	private ICargoServiceAdmin cargoServicio;
+	
+	@Autowired
+	private IRolServiceAdmin rolServicio;
 
 	
 	//SACAR LOS USUARIOS DE UNA DETERMINADA EMPRESA
@@ -46,13 +51,14 @@ public class UserControllerAdminCompany {
 			 Company empresa = userLogueado.getCompanyId();
 			 List<Usuarios> usuariosEmpresa = userServiceAdminCompany.getUsuariosByCompanyId(empresa);
 			
-			
-			
 			Roles rol = userLogueado.getRolLevel();
 			Long rolIDUsuario = rol.getRolLevel();
 			
+			
+			
 			model.addAttribute("usuariosEmpresa", usuariosEmpresa);
 			model.addAttribute("rolID", rolIDUsuario);
+			
 
 			return "listAllUser";
 		}
@@ -81,7 +87,20 @@ public class UserControllerAdminCompany {
 		    }
 			
 			Usuarios AddUsuarioByAdmin = new Usuarios();
-			return "";
+			Company usuarioCompany = companyServicio.getCompanyById(companyId);
+			Roles usuarioRol = rolServicio.getRolesById(rolID); 
+			
+			AddUsuarioByAdmin.setUserName(userName);
+			AddUsuarioByAdmin.setUserPassword(userPassword);
+			AddUsuarioByAdmin.setUserEmail(userEmail);
+			AddUsuarioByAdmin.setUserTelefono(userTelefono);
+			AddUsuarioByAdmin.setUserCiudad(userCiudad);
+			AddUsuarioByAdmin.setCompanyId(usuarioCompany);
+			AddUsuarioByAdmin.setRolLevel(usuarioRol);
+			
+			userServiceAdminCompany.guardarUsuario(AddUsuarioByAdmin);
+			
+			return "redirect:/listUserAdminCompany";
 		}
 
 }

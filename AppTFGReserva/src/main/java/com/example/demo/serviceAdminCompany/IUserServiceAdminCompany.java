@@ -13,4 +13,6 @@ public interface IUserServiceAdminCompany {
 	
 	List<Usuarios> getUsuariosByCompanyId(Company companyId);
 
+	Usuarios guardarUsuario(Usuarios usuario);
+
 }
