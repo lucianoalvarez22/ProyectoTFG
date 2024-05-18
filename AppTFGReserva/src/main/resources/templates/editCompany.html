@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edit Company</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css"> 
+</head>
+<body>
+<div class="container my-3 card">
+    <h1 class="text-center mb-4">Editar Empresa</h1>
+    <form action="/editCompany" method="post">
+        <input type="hidden" name="idCompany" th:value="${company.companyId}">
+        <div class="mb-3">
+            <label for="companyName" class="form-label">Nombre Empresa</label>
+            <input type="text" class="form-control" id="companyName" name="companyName" th:value="${company.companyName}" required>
+        </div>
+        <div class="mb-3">
+            <label for="companyIndustria" class="form-label">Industria</label>
+            <input type="text" class="form-control" id="companyIndustria" name="companyIndustria" th:value="${company.companyIndustria}" required>
+        </div>
+        <div class="mb-3">
+            <label for="companyUbicacion" class="form-label">Ubicación</label>
+            <input type="text" class="form-control" id="companyUbicacion" name="companyUbicacion" th:value="${company.companyUbicacion}" required>
+        </div>
+        <div class="mb-3">
+            <label for="companyTelefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="companyTelefono" name="companyTelefono" th:value="${company.companyTelefono}" required>
+        </div>
+        <div class="mb-3">
+            <label for="companyEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="companyEmail" name="companyEmail" th:value="${company.companyEmail}" required>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Editar</button>
+            <a href="/listCompany" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script src="/js/bootstrap.bundle.min.js"></script> 
+</body>
+</html>
