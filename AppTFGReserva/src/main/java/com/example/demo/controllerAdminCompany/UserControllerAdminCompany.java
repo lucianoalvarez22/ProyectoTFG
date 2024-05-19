@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -68,7 +69,7 @@ public class UserControllerAdminCompany {
 			model.addAttribute("user", new Usuarios());
 			model.addAttribute("companies", companyServicio.getAllCompany());
 			model.addAttribute("cargos", cargoServicio.getAllCargos());
-			return "addUsuarioByAdminCompany";
+			return "adminCompany/addUsuarioByAdminCompany";
 		}
 		
 		@PostMapping("/addUsuarioByAdminCompany")
@@ -102,5 +103,59 @@ public class UserControllerAdminCompany {
 			
 			return "redirect:/listUserAdminCompany";
 		}
+		
+		//EDITAR EMPRESAS
+		
+			@GetMapping("/editUserByAdminCompany/{id}")
+			public String editCompany(@PathVariable(name = "id") Long id, Model model) {
+				model.addAttribute("user", userServiceAdminCompany.getUserById(id));
+				model.addAttribute("companies", companyServicio.getAllCompany());
+				model.addAttribute("cargos", cargoServicio.getAllCargos());
+				return "adminCompany/editUserByAdminCompany";
+			}
+			
+			
+			@PostMapping("/editUserByAdminCompany")
+			public String postEditUserByAdmin(@RequestParam(name = "userName") String userName,
+			        @RequestParam(name = "userEmail") String userEmail,
+			        @RequestParam(name = "userPassword") String userPassword,
+			        @RequestParam(name = "userConfirmPassword") String userConfirmPassword,
+			        @RequestParam(name = "userTelefono") String userTelefono,
+			        @RequestParam(name = "userCiudad") String userCiudad,
+			        @RequestParam(name = "companyId") Long companyId,
+			        @RequestParam(name = "idUser") Long userID,
+			        @RequestParam(name = "rol_level") Long rolID) {
+				
+				//COMPRUEBO SI LA CONTRASEÑA ES IGUAL A LA CONTRASEÑA A CONFIRMAR
+				if (!userPassword.equals(userConfirmPassword)) {
+			        return "redirect:/addAdminCompany?error=passwordMismatch";
+			    }
+				
+				
+				Long idEdit = userID;
+				String nameEdit = userName;
+				String passEdit = userPassword;
+				String emailEdit = userEmail;
+				String teleEdit = userTelefono;
+				String cityEdit = userCiudad;
+				Company usuarioCompanyEdit = companyServicio.getCompanyById(companyId);
+				Roles usuarioRolEdit = rolServicio.getRolesById(rolID); 
+			
+				
+				Usuarios usuarioEdit = new Usuarios(idEdit,nameEdit,passEdit,emailEdit,teleEdit,cityEdit,usuarioCompanyEdit,usuarioRolEdit);
+				userServiceAdminCompany.guardarUsuario(usuarioEdit);
+				
+				
+				return "redirect:/listUserAdminCompany";
+			}
+			
+			
+			//DELETE USER
+			
+			@GetMapping("/deleteUser/{id}")
+			public String deleteUser(@PathVariable(name= "id") Long id) {
+				userServiceAdminCompany.eliminarUser(id);
+				return "redirect:/listUserAdminCompany";
+			}
 
 }

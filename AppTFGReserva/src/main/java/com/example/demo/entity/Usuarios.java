@@ -47,13 +47,37 @@ public class Usuarios {
     
 //    @OneToMany(mappedBy = "companyAdmin")
 //    private List<Company> companies;
+    
+    
+    
+
+    
+    
+    public Usuarios(Long userId, String userName, String userPassword, String userEmail, String userTelefono,
+    		String userCiudad, Company companyId, Roles rolLevel) {
+    	this.userId = userId;
+    	this.userName = userName;
+    	this.userPassword = userPassword;
+    	this.userEmail = userEmail;
+    	this.userTelefono = userTelefono;
+    	this.userCiudad = userCiudad;
+    	this.companyId = companyId;
+    	this.rolLevel = rolLevel;
+    }
+    
+    
+
+    public Usuarios() {
+}
 
 
-    // GET AND SET
+
+	// GET AND SET
 
 	public Long getUserId() {
 		return userId;
 	}
+
 
 	public void setUserId(Long userId) {
 		this.userId = userId;

@@ -26,6 +26,12 @@
 	            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
 	        </div>
 	        
+	        <div th:case="'3'">
+	            <div th:replace="~{fragments/nav :: vistaUser}"></div>
+	            <div th:replace="~{fragments/body :: vistaUser}"></div>
+	            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
+	        </div>
+	        
 	        <div th:case="*">Para todos los demás casos (no definidos)</div>
     	</div>
     	

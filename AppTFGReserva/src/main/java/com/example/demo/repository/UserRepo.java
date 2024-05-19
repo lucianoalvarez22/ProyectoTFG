@@ -14,6 +14,7 @@ public interface UserRepo extends JpaRepository<Usuarios, Long> {
 	Usuarios findByUserPasswordAndUserEmail(String userPassword, String userEmail); 
 	
 	 List<Usuarios> findByCompanyId(Company companyId);
+
 	
 	 
 	 

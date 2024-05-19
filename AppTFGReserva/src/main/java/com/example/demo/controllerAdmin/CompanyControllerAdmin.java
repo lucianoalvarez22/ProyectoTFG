@@ -50,8 +50,14 @@ public class CompanyControllerAdmin {
 	
 	@GetMapping("/addCompany")
 	public String addCompany(Model model) {
+		
+		Usuarios userLogueado = userSession.getUser();
+		Roles rol = userLogueado.getRolLevel();
+		Long rolIDUsuario = rol.getRolLevel();
+		
 		model.addAttribute("company", new Company());
-		return "admin/addCompany";
+		model.addAttribute("rolID", rolIDUsuario);
+		return "adminSuper/addCompany";
 	}
 	
 	
@@ -63,10 +69,11 @@ public class CompanyControllerAdmin {
 	
 	@GetMapping("/addAdminCompany")
 	public String addAdminCompany(Model model) {
+		
 		model.addAttribute("adminCompany", new Usuarios());
 		model.addAttribute("cargos", cargoServicio.getAllCargos());
 		model.addAttribute("companies", companyServicio.getAllCompany());
-		return "admin/addAdminCompany";
+		return "adminSuper/addAdminCompany";
 	}
 	
 	@PostMapping("/addAdminCompany")
@@ -110,8 +117,13 @@ public class CompanyControllerAdmin {
 	
 		@GetMapping("/editCompany/{id}")
 		public String editCompany(@PathVariable(name = "id") Long id, Model model) {
+			Usuarios userLogueado = userSession.getUser();
+			Roles rol = userLogueado.getRolLevel();
+			Long rolIDUsuario = rol.getRolLevel();
+			
 			model.addAttribute("company", companyServicio.getCompanyById(id));
-			return "editCompany";
+			model.addAttribute("rolID", rolIDUsuario);
+			return "adminSuper/editCompany";
 		}
 		
 		@PostMapping("/editCompany")

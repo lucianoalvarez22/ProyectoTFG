@@ -41,4 +41,10 @@ public class UserServiceAdminCompany implements IUserServiceAdminCompany {
 		return userRepositoryAdmin.save(usuario);
 	}
 
+	@Override
+	public void eliminarUser(Long id) {
+		userRepositoryAdmin.deleteById(id);
+		
+	}
+
 }

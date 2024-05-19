@@ -15,4 +15,6 @@ public interface IUserServiceAdminCompany {
 
 	Usuarios guardarUsuario(Usuarios usuario);
 
+	void eliminarUser(Long id);
+
 }

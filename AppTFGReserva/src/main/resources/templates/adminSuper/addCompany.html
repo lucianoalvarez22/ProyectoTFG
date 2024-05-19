@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RegisterCompany</title>
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="/css/style.css"> 
+    
+    
+</head>
+<body>
+	
+	<div th:switch="${rolID}">
+			
+	        <div th:case="'0'">
+	            <div th:replace="~{fragments/nav :: vistaAdmin}"></div>
+	            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
+	        </div>
+	        
+	        <div th:case="*">Para todos los demás casos (no definidos)</div>
+    	</div>
+	
+	
+   <div class="container my-3">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">REGISTRO EMPRESA</h2>
+                    <form th:action="@{/addComp}" th:object="${company}" method="post">
+                        <div class="mb-3">
+                            <label for="company_name" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="company_name" name="companyName" th:field="*{companyName}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="company_industria" class="form-label">Industria:</label>
+                            <input type="text" class="form-control" id="company_industria" name="companyIndustria" th:field="*{companyIndustria}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="company_ubicacion" class="form-label">Ubicación:</label>
+                            <input type="text" class="form-control" id="company_ubicacion" name="companyUbicacion" th:field="*{companyUbicacion}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="company_telefono" class="form-label">Telefono:</label>
+                            <input type="text" class="form-control" id="company_telefono" name="companyTelefono" th:field="*{companyTelefono}" pattern="^[0-9]{9}$" title="Por favor, introduce un número de teléfono válido de 9 dígitos" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="company_email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="company_email" name="companyEmail" th:field="*{companyEmail}" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" title="Por favor, introduce una dirección de correo electrónico válida" required>
+                        </div>
+                        
+                        <div class="text-center">
+				           <button type="submit" class="btn btn-primary">Registrar Empresa</button>
+				            <a href="/listCompany" class="btn btn-secondary">Cancelar</a>
+				        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+ 
+ <!-- CDN DE JS -->
+   <!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
+    
+<script src="/js/bootstrap.bundle.min.js"></script> 
+
+</body>
+</html>

@@ -110,9 +110,9 @@
                     <td th:text="${user.companyId.companyName}"></td>
                     <td th:text="${user.companyId.companyEmail}"></td>
                     
-                    <td><a href="#" class="btn btn-info">+Info</a></td>
-                    <td><a href="#" class="btn btn-warning">Editar</a></td>
-            		<td><a href="#" class="btn btn-danger">Delete</a></td>
+                    <td><a th:href="@{/editUserByAdminCompany/{id}(id=${user.userId})}" class="btn btn-warning">Editar</a></td>
+            		<td><a th:href="@{/deleteUser/{id}(id=${user.userId})}" class="btn btn-danger">Delete</a></td>
+            		<td><a href="#" class="btn btn-info">Reservas</a></td>
             		
                     <!-- Aquí podrías añadir enlaces o botones para acciones específicas -->
                 </tr>

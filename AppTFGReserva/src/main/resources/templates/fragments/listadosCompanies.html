@@ -28,7 +28,6 @@
 	<table class="table table-striped">
         <thead>
             <tr>
-				<th>ID</th>
                 <th>Nombre Empresa</th>
                 <th>Industria</th>
                 <th>Ubicacion</th>
@@ -41,18 +40,19 @@
         <tbody>
             <tr th:each="compa : ${company}">
                 
-                <td th:text="${compa.companyId}"></td>
                 <td th:text="${compa.companyName}"></td>
                 <td th:text="${compa.companyIndustria}"></td>
                 <td th:text="${compa.companyUbicacion}"></td>
                 <td th:text="${compa.companyTelefono}"></td>
                 <td th:text="${compa.companyEmail}"></td>
                 
-                <td>
-                	<span th:each="admin : ${compa.usuarios}">
-                    	<span th:text="${admin.userName}"></span>
-                	</span>
-            	</td>
+				 <td>
+				    <span th:each="admin : ${compa.usuarios}">
+				        <span th:each="cargo : ${admin.rolLevel.cargos}">
+				            <span th:if="${cargo.cargoName == 'Administrador' || cargo.cargoName == 'Manager'}" th:text="${admin.userName}"></span>
+				        </span>
+				    </span>
+				</td>
                 
                <td>
                     <span th:if="${compa.usuarios != null && compa.usuarios.size() > 0}">
@@ -85,25 +85,21 @@
 	
 	<div th:fragment="vistaAdminCompany" class="container my-3 card">
 	
-	<h1 class="text-center mb-4">LISTADO DE EMPRESAS</h1>
+	<h1 class="text-center mb-4">MI EMPRESA</h1>
 	
 	<table class="table table-striped">
         <thead>
             <tr>
-				<th>ID</th>
                 <th>Nombre Empresa</th>
                 <th>Industria</th>
                 <th>Ubicacion</th>
                 <th>Teléfono</th>
                 <th>Email</th>
                 <th>Administrador-Empresa</th>
-                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="compa : ${myCompany}">
-                
-                <td th:text="${compa.companyId}"></td>
                 <td th:text="${compa.companyName}"></td>
                 <td th:text="${compa.companyIndustria}"></td>
                 <td th:text="${compa.companyUbicacion}"></td>
@@ -111,10 +107,12 @@
                 <td th:text="${compa.companyEmail}"></td>
                 
                 <td>
-                	<span th:each="admin : ${compa.usuarios}">
-                    	<span th:text="${admin.userName}"></span>
-                	</span>
-            	</td>
+				    <span th:each="admin : ${compa.usuarios}">
+				        <span th:each="cargo : ${admin.rolLevel.cargos}">
+				            <span th:if="${cargo.cargoName == 'Manager'}" th:text="${admin.userName}"></span>
+				        </span>
+				    </span>
+				</td>
            </tr>
         </tbody>
     </table>
