@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado Mapas</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	
+	<!-- LISTADO DE MAPAS --> 
+	
+	
+    <div th:fragment="vistaAdminMapa" class="container my-3 card">
+        <h1 class="text-center mb-4">Mapas</h1>
+        <div class="mb-3">
+            <a href="/addMapa" class="btn btn-success">Crear Nuevo Mapa</a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Nombre de la Empresa</th>
+                    <th>Número Total de Salas</th>
+                    <th>Acciones</th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mapa : ${mapas}">
+               <!--     <td th:text="${mapa.mapaId}"></td> -->
+                    <td th:text="${mapa.mapaNombre}"></td>
+                    <td th:text="${mapa.companyMapa.companyName}"></td>
+                    <td th:text="${mapa.numeroTotalDeSalas}"></td>
+                   
+                   <!-- 
+                    <td>
+                        <span th:each="sala : ${mapa.salas}">
+                            <span th:text="${sala.salaNumero}"></span>
+                        </span>
+               		</td>
+               		-->
+                    
+                    <td>
+                        <a href="/addSala" class="btn btn-success">+Sala</a>
+                        <a th:href="@{/getSalas/{id}(id=${mapa.mapaId})}" class="btn btn-info">Ver Salas</a>
+                        <a href="" class="btn btn-warning">Editar</a>
+                        <a href="" class="btn btn-danger">Eliminar</a>
+    				</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    
+    <!--  URL DE EDITAR Y ELIMNAR
+  	<td>
+                        <a th:href="#" class="btn btn-primary mb-3">+Sala</a>
+                        <a th:href="@{/admin/mapas/editar/{id}(id=${mapa.mapaId})}" class="btn btn-warning">Editar</a>
+                        <a th:href="@{/admin/mapas/eliminar/{id}(id=${mapa.mapaId})}" class="btn btn-danger" 
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar este mapa?');">Eliminar</a>
+    </td>  -->
+    
+    <!-- FIN DE LISTADO DE MAPAS --> 
+    
+    
+    <!-- LISTADO DE SALAS --> 
+    
+    
+    <div th:fragment="vistaAdminMapa" class="container my-3 card">
+        <h1 class="text-center mb-4">Salas</h1>
+         <div class="mb-3">
+		   <a href="/listMapas" class="btn btn-danger">Ocultar</a>
+		 </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Número Filas</th>
+                    <th>Número Columnas</th>
+                    <th>Asientos Totales</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+			
+				<tr th:each="sala : ${salas}">
+                <!--    <td th:text="${sala.salaId}"></td> -->
+                    <td th:text="'Sala ' + ${sala.salaNumero}"></td>
+                    <td th:text="${sala.numeroFilas}"></td>
+                    <td th:text="${sala.numeroColumnas}"></td>
+                    <td th:text="${sala.salaAsientosTotales}"></td>
+                    <td th:text="${sala.salaEstado ? 'Activo' : 'Inactivo'}"></td>
+                    
+                    <td>
+                       
+                        <a class="btn btn-info">Ver</a>
+                        <a href="" class="btn btn-warning">Editar</a>
+                        <a href="" class="btn btn-danger">Eliminar</a>
+    				</td>
+                    
+                </tr>
+               
+            </tbody>
+            
+        
+        </table>
+    </div>
+    
+    
+    <!-- FIN LISTADO DE SALAS --> 
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

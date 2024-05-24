@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,9 +36,6 @@ public class Usuarios {
     @Column(name = "user_ciudad")
     private String userCiudad;
     
-//    @Column(name = "user_confirmlogin")
-//    private boolean userConfirmLogin;
-    
     @ManyToOne
     @JoinColumn(name = "company_id", referencedColumnName = "company_id")
     private Company companyId;
@@ -43,15 +43,12 @@ public class Usuarios {
     @ManyToOne
     @JoinColumn(name = "rol_level", referencedColumnName = "rol_level")
     private Roles rolLevel;
-  
     
-//    @OneToMany(mappedBy = "companyAdmin")
-//    private List<Company> companies;
-    
-    
-    
+    @OneToMany(mappedBy = "usuario")
+    private List<Reservas> reservas;
 
     
+    //CONSTRUCTORES 
     
     public Usuarios(Long userId, String userName, String userPassword, String userEmail, String userTelefono,
     		String userCiudad, Company companyId, Roles rolLevel) {
@@ -123,16 +120,6 @@ public class Usuarios {
 		this.userCiudad = userCiudad;
 	}
 
-
-
-//	public boolean isUserConfirmLogin() {
-//		return userConfirmLogin;
-//	}
-//
-//	public void setUserConfirmLogin(boolean userConfirmLogin) {
-//		this.userConfirmLogin = userConfirmLogin;
-//	}
-
 	public Company getCompanyId() {
 		return companyId;
 	}
@@ -149,33 +136,21 @@ public class Usuarios {
 		this.rolLevel = rolLevel;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Usuarios [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword
-//				+ ", userEmail=" + userEmail + ", userTelefono=" + userTelefono + ", userCiudad=" + userCiudad
-//				+ ", companyId=" + companyId + ", rolLevel=" + rolLevel + "]";
-//	}
-//	
+
+
+	public List<Reservas> getReservas() {
+		return reservas;
+	}
+
+
+
+	public void setReservas(List<Reservas> reservas) {
+		this.reservas = reservas;
+	}
+	
+	
+	
 	
 
-//	public List<Company> getCompanies() {
-//		return companies;
-//	}
-
-//	public void setCompanies(List<Company> companies) {
-//		this.companies = companies;
-//	}
-
-	
-
-	
-
-	
-    
-    
-    
-
-    
-    
 }
 

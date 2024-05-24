@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Crear Mapa</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css"> 
+</head>
+<body>
+	
+	<div th:switch="${rolID}">
+			
+	        <div th:case="'0'">
+	            <div th:replace="~{fragments/nav :: vistaAdmin}"></div>
+	            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
+	        </div>
+	        
+	        <div th:case="*">Para todos los demás casos (no definidos)</div>
+    	</div>
+	
+	
+	 <div class="container my-3">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">CREAR MAPA</h2>
+                    <form th:action="@{/addMapaPost}" method="post">
+                        <div class="mb-3">
+                            <label for="mapa_nombre" class="form-label">Nombre Mapa:</label>
+                            <input type="text" class="form-control" id="mapa_nombre" name="mapaNombre" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="companyId" class="form-label">Empresa:</label>
+                            <select id="companyId" name="companyId" class="form-select" required>
+                                <option value="" selected disabled hidden>Seleccionar Empresa</option>
+                                <option th:each="company : ${companies}" th:value="${company.companyId}" th:name="companyId" th:text="${company.companyName}"></option>
+                            </select>
+                        </div>
+                        
+                        
+                        <div class="mb-3">
+                                <label for="salas_totales" class="form-label">Nº Salas:</label>
+                                <input type="number" class="form-control" id="salas_totales" name="salasTotales" min="1" max="100" required>
+                        </div>
+                        
+                        <div class="text-center">
+				           <button type="submit" class="btn btn-primary">Registrar</button>
+				            <a href="/listMapas" class="btn btn-secondary">Cancelar</a>
+				        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- CDN DE JS -->
+   <!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
+    
+<script src="/js/bootstrap.bundle.min.js"></script> 
+
+</body>
+</html>

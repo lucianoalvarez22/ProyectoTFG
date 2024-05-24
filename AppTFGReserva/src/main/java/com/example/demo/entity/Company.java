@@ -21,33 +21,27 @@ public class Company {
 	
 	@Column(name = "company_name")
 	private String companyName;
-	
-//	@Column(name = "company_password")
-//	private String companyPassword;
-	
+
 	@Column(name = "company_industria")
 	private String companyIndustria;
 	
+
+
 	@Column(name = "company_ubicacion")
 	private String companyUbicacion;
 	
 	@Column(name = "company_telefono")
 	private String companyTelefono;
 	
-//	@Column(name = "company_confirmlogin")
-//	private boolean companyConfirmLogin;
+	@Column(name = "company_email")
+	private String companyEmail;
 	
 	
 	@OneToMany(mappedBy = "companyId")
     private List<Usuarios> usuarios;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "company_admin", referencedColumnName = "user_id")
-//	private Usuarios companyAdmin;
-	
-	@Column(name = "company_email")
-	private String companyEmail;
-
+	@OneToMany(mappedBy = "companyMapa")
+	private List<Mapas> mapas; 
 
 	
 	//CONSTRUCTOR PARA ADD COMPANY
@@ -101,16 +95,6 @@ public class Company {
 	}
 
 
-//	public String getCompanyPassword() {
-//		return companyPassword;
-//	}
-//
-//
-//	public void setCompanyPassword(String companyPassword) {
-//		this.companyPassword = companyPassword;
-//	}
-
-
 	public String getCompanyIndustria() {
 		return companyIndustria;
 	}
@@ -140,17 +124,6 @@ public class Company {
 		this.companyTelefono = companyTelefono;
 	}
 
-
-//	public boolean isCompanyConfirmLogin() {
-//		return companyConfirmLogin;
-//	}
-//
-//
-//	public void setCompanyConfirmLogin(boolean companyConfirmLogin) {
-//		this.companyConfirmLogin = companyConfirmLogin;
-//	}
-
-
 	public List<Usuarios> getUsuarios() {
 		return usuarios;
 	}
@@ -160,28 +133,14 @@ public class Company {
 		this.usuarios = usuarios;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Company [companyId=" + companyId + ", companyName=" + companyName + ", companyIndustria="
-				+ companyIndustria + ", companyUbicacion=" + companyUbicacion + ", companyTelefono=" + companyTelefono
-				+ ", usuarios=" + usuarios + ", companyEmail=" + companyEmail + "]";
+	public List<Mapas> getMapas() {
+		return mapas;
 	}
 	
 	
-
-
-//	public Usuarios getCompanyAdmin() {
-//		return companyAdmin;
-//	}
-//
-//
-//	public void setCompanyAdmin(Usuarios companyAdmin) {
-//		this.companyAdmin = companyAdmin;
-//	} 
-	
-
-	
+	public void setMapas(List<Mapas> mapas) {
+		this.mapas = mapas;
+	}
 	
 	
 	
