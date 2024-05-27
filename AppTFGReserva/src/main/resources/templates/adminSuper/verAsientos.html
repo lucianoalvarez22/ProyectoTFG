@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa de Asientos</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        .circle {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .circle-success {
+            background-color: #28a745;
+        }
+        .circle-warning {
+            background-color: #ffc107;
+        }
+        .circle-secondary {
+            background-color: rgb(154, 153, 150);
+        }
+    </style>
+</head>
+<body>
+    <div th:switch="${rolID}">
+        <div th:case="'0'">
+            <div th:replace="~{fragments/nav :: vistaAdmin}"></div>
+            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <h1 class="card-header text-center">Mapa de Asientos</h1>
+                    <div class="card-body text-center">
+						
+						<div class="mb-3">
+                            <strong>Asientos Libres:</strong> <span th:text="${asientosLibres}"></span>
+                             <span class="mx-3"></span>
+                        	<strong>Asientos Ocupados:</strong> <span th:text="${asientosOcupados}"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <span class="circle circle-success d-inline-block mx-2"></span><strong>Libre</strong>
+                            <span class="circle circle-warning d-inline-block mx-2"></span><strong>Seleccionado</strong>
+                            <span class="circle circle-secondary d-inline-block mx-2"></span><strong>Ocupado</strong>
+                        </div>
+						
+						
+                        <!-- Crear una fila para cada fila de asientos -->
+                        <div th:each="fila : ${#numbers.sequence(1, sala.numeroFilas)}" class="row mb-3">
+                            <div class="col-12">
+                                <div class="d-flex flex-row justify-content-center">
+                                    <!-- Dentro de una fila, crear un botón para cada columna -->
+                                    <div th:each="columna : ${#numbers.sequence(1, sala.numeroColumnas)}" class="p-1">
+                                        <button th:each="asiento : ${asientos}"
+                                            th:if="${asiento.posicionFila == fila and asiento.posicionColumna == columna}"
+                                            th:classappend="${asiento.asientoEstado ? ' btn-success' : ' btn-secondary'}"
+                                            class="btn btn-sm asiento-btn"
+                                            th:data-fila="${fila}"
+                                            th:data-columna="${columna}"
+                                            th:data-estado="${asiento.asientoEstado ? 'Libre' : 'Ocupado'}"
+                                            th:title="|Fila ${fila} Asiento ${columna}|"
+                                            th:disabled="${!asiento.asientoEstado}"
+                                            id="toggleButton"
+                                            onclick="mostrarDetalleAsiento(this)">
+                                            <i class="fas fa-chair"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-header">Detalle del Asiento</div>
+                    <div class="card-body" id="info-asiento">
+                        <p>Elija un asiento para ver la información.</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/asientosAdmins.js"></script>
+    
+
+</body>
+</html>

@@ -8,8 +8,10 @@ public interface IMapaService {
 	
 	List<Mapas> getAllMapas();
 	Mapas getMapaById(Long id);
+	List<Mapas> getListMapaById(Long id);
 	Mapas saveMapa(Mapas mapa);
 	void deleteMapa(Long id);
 	List<Salas> findSalasByMapaId(Long mapaId);
+	List<Salas> getSalasByCompany(Long companyId);
 
 }

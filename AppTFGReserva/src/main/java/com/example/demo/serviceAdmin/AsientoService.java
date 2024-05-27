@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Asientos;
 import com.example.demo.entity.Mapas;
 import com.example.demo.repository.AsientoRepo;
 
+@Service
 public class AsientoService implements IAsientosService {
 	
 	@Autowired

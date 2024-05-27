@@ -9,5 +9,6 @@ import com.example.demo.entity.Salas;
 
 public interface SalaRepo extends JpaRepository<Salas, Long> {
 	
-	List<Salas> findByMapaId(Mapas mapa);
+	List<Salas> findByMapaIdMapaId(Long mapa);
+	 List<Salas> findByMapaId_CompanyMapa_CompanyId(Long companyId);
 }

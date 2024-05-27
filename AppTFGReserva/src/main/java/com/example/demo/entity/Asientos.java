@@ -87,7 +87,15 @@ public class Asientos {
 	public void setAsientoEstado(boolean asientoEstado) {
 		this.asientoEstado = asientoEstado;
 	}
+
+	@Override
+	public String toString() {
+		return "Asientos [asientoId=" + asientoId + ", posicionFila=" + posicionFila + ", posicionColumna="
+				+ posicionColumna + ", asientoEstado=" + asientoEstado + ", sala=" + sala + ", reservas=" + reservas
+				+ "]";
+	}
     
+	
     
 
 }

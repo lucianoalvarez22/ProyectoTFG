@@ -9,19 +9,25 @@
 <body>
 	
 	
-	<!-- NAV - LISTADOS COMPANIES --> 
+	<!-- NAV - LISTADOS MAPAS --> 
 	 <div th:switch="${rolID}">
 			
 	        <div th:case="'0'">
 	            <div th:replace="~{fragments/nav :: vistaAdmin}"></div>
-	            <div th:replace="~{fragments/listadosMapas :: vistaAdminMapa}"></div>
+	            <div th:replace="~{fragments/listadosMapaAdmin :: vistaAdminMapa}"></div>
+	            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
+	        </div>
+	        
+	        <div th:case="'1'">
+	            <div th:replace="~{fragments/nav :: vistaAdminCompany}"></div>
+	            <div th:replace="~{fragments/listadosMapaAdminCompany :: vistaAdminCompanyMapa}"></div>
 	            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
 	        </div>
 	        
 	        <div th:case="*">Para todos los demás casos (no definidos)</div>
     	</div>
     
-    <!-- FIN NAV - LISTADOS COMPANIES --> 
+    <!-- FIN NAV - LISTADOS MAPAS --> 
     
     
 <!-- CDN DE JS -->

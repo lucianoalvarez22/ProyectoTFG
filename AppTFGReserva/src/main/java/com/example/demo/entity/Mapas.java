@@ -86,7 +86,8 @@ public class Mapas {
 	public void setReservas(List<Reservas> reservas) {
 		this.reservas = reservas;
 	}
-    
+
+
     
     
 

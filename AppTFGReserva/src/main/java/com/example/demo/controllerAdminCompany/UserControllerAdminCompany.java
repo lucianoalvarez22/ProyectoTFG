@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.componenteLogueado.UserSessionLog;
-import com.example.demo.entity.CargoName;
 import com.example.demo.entity.Company;
 import com.example.demo.entity.Roles;
 import com.example.demo.entity.Usuarios;

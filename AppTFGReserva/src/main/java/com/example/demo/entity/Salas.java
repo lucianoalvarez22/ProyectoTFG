@@ -124,12 +124,7 @@ public class Salas {
 		this.reservas = reservas;
 	}
 
-	@Override
-	public String toString() {
-		return "Salas [salaId=" + salaId + ", salaNumero=" + salaNumero + ", salaAsientosTotales=" + salaAsientosTotales
-				+ ", salaEstado=" + salaEstado + ", numeroFilas=" + numeroFilas + ", numeroColumnas=" + numeroColumnas
-				+ ", mapaId=" + mapaId + ", asientos=" + asientos + ", reservas=" + reservas + "]";
-	}
+
 	
 	
     

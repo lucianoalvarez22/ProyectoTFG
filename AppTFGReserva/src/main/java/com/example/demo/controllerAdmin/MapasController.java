@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.componenteLogueado.UserSessionLog;
+import com.example.demo.entity.Asientos;
 import com.example.demo.entity.Company;
 import com.example.demo.entity.Mapas;
 import com.example.demo.entity.Roles;
 import com.example.demo.entity.Salas;
 import com.example.demo.entity.Usuarios;
+import com.example.demo.serviceAdmin.IAsientosService;
 import com.example.demo.serviceAdmin.ICompanyServiceAdmin;
 import com.example.demo.serviceAdmin.IMapaService;
 import com.example.demo.serviceAdmin.ISalasService;
@@ -33,6 +34,9 @@ public class MapasController {
 	
 	@Autowired
 	private ISalasService salaService;
+	
+	@Autowired
+	private IAsientosService asientoService;
 	
 	@Autowired
 	private UserSessionLog userSession;
@@ -94,6 +98,8 @@ public class MapasController {
 		
 		return "adminSuper/addSala";
 	}
+	
+	
 	@PostMapping("/addSalaPost")
 	public String addSalaPost(@RequestParam(name = "mapaId") Long mapaId,
 			@RequestParam(name = "numeroFilas") int numeroFilas,
@@ -112,10 +118,51 @@ public class MapasController {
 		nuevaSala.setNumeroColumnas(numeroColumnas);
 		nuevaSala.setSalaNumero(salaNumero);
 		
+		
+		
 		salaService.saveSala(nuevaSala);
+		
+		 crearAsientos(nuevaSala, numeroFilas, numeroColumnas);
 		
 		return "redirect:/listMapas";
 	}
+	
+	
+	//CREACION DE ASIENTOS
+	private void crearAsientos(Salas sala, int filas, int columnas) {
+	    for (int fila = 1; fila <= filas; fila++) {
+	        for (int columna = 1; columna <= columnas; columna++) {
+	            Asientos asiento = new Asientos();
+	            asiento.setSala(sala); 
+	            asiento.setPosicionFila(fila);
+	            asiento.setPosicionColumna(columna);
+	            asiento.setAsientoEstado(true); 
+	           
+	            
+	            asientoService.saveAsiento(asiento);
+	        }
+	    }
+	}
+	
+	@GetMapping("/verAsientos/{salaId}")
+	public String pintarAsientos(@PathVariable Long salaId, Model model) {
+		Usuarios userLogueado = userSession.getUser();
+		Roles rol = userLogueado.getRolLevel();
+		Long rolIDUsuario = rol.getRolLevel();
+		
+		
+	    Salas sala = salaService.getSalaById(salaId);
+	    List<Asientos> asientos = sala.getAsientos();
+	    
+	    for (Asientos as:asientos) {
+	    	System.out.println(as.toString());
+	    }
+	    model.addAttribute("sala", sala);
+	    model.addAttribute("asientos", asientos);
+	    model.addAttribute("rolID", rolIDUsuario);
+	    return "adminSuper/verAsientos";
+	}
+
 	
 	@GetMapping("/getSalas/{id}")
 	public String getSalas(@PathVariable(name = "id") Long mapaId, Model model) {

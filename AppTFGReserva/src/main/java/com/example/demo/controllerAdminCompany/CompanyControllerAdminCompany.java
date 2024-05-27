@@ -29,12 +29,14 @@ public class CompanyControllerAdminCompany {
 		
 		Usuarios userLogueado = userSession.getUser();
 		Company empresa = userLogueado.getCompanyId();
+		Roles rol = userLogueado.getRolLevel();
+		Long rolIDUsuario = rol.getRolLevel();
+		
 		Long idCompany = empresa.getCompanyId();
 		
 		List<Company> listMyCompany = companyServiceAdmComp.getMyCompany(idCompany);
 		
-		Roles rol = userLogueado.getRolLevel();
-		Long rolIDUsuario = rol.getRolLevel();
+		
 		
 		model.addAttribute("myCompany", listMyCompany);
 		model.addAttribute("rolID", rolIDUsuario);
