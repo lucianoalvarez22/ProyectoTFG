@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.componenteLogueado.UserSessionLog;
 import com.example.demo.entity.Asientos;
@@ -109,7 +110,8 @@ public class UserController {
     public String reservarAsiento(@RequestParam("asientoId") Long asientoId,
                                   @RequestParam("fechaEntrada") String fechaEntrada,
                                   @RequestParam("fechaSalida") String fechaSalida,
-                                  Model model) {
+                                  Model model,
+                                  RedirectAttributes redirectAttributes) {
         Usuarios userLogueado = userSession.getUser();
         Asientos asiento = asientoService.getAsientosById(asientoId);
         Salas sala = asiento.getSala();
@@ -128,8 +130,11 @@ public class UserController {
         
         
         reservaService.saveReserva(reserva);
+        
+    
+        redirectAttributes.addFlashAttribute("reservaExito", "Reserva gestionada exitosamente");
 
-        return "redirect:/misReservas?success";
+        return "redirect:/misReservas";
     }
 	
 	@GetMapping("/misReservas")
@@ -140,15 +145,24 @@ public class UserController {
         List<Reservas> reservas = reservaService.getReservasByUsuario(userLogueado);
         model.addAttribute("reservas", reservas);
         model.addAttribute("rolID", rolIDUsuario);
-
-        // Verifica si hay un mensaje de éxito
-        if (model.containsAttribute("success")) {
-            model.addAttribute("message", "Reserva gestionada exitosamente");
-            
-        }
-
         return "userGeneral/misReservas";
     }
+	
+	@GetMapping("/deleteReserva/{id}")
+	public String deleteReserva(@PathVariable(name= "id") Long id, RedirectAttributes redirectAttributes) {
+		Reservas reserva = reservaService.getReservaById(id);
+		if (reserva != null) {
+	        Asientos asiento = reserva.getAsiento();
+	        if (asiento != null) {
+	            asiento.setAsientoEstado(true); // Cambia el estado a libre
+	            asientoService.saveAsiento(asiento); // Guarda el estado del asiento actualizado
+	        }
+	        reservaService.eliminarReserva(id); // Eliminar la reserva
+	    }
+	    redirectAttributes.addFlashAttribute("reservaEliminadaExito", "Reserva eliminada exitosamente. Vuelva a reservar si así lo desea");
+	    return "redirect:/verSalas";
+		
+	}
 
 	
 	

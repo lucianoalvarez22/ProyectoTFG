@@ -10,7 +10,7 @@
 	
 	<!-- LISTADO COMPANY ADMIN SUPER--> 
 	
-	<div th:fragment="vistaAdmin" class="container my-3 card">
+	<div th:fragment="vistaAdmin" class="container my-3 card" style="padding-bottom: 334px;">
 	
 	<h1 class="text-center mb-4">LISTADO DE EMPRESAS</h1>
 	
@@ -76,7 +76,7 @@
 	
 	<!-- LISTA COMPANY ADMIN-COMPANY -->
 	
-		<div th:fragment="vistaAdminCompany" class="container my-3 card">
+		<div th:fragment="vistaAdminCompany" class="container my-3 card" style="padding-bottom: 512px;">
 	
 	<h1 class="text-center mb-4">MI EMPRESA</h1>
 	
@@ -117,7 +117,7 @@
   
   <!-- LISTA MY USER -->
   
- <div th:fragment="vistaUser" class="container my-3 card">
+ <div th:fragment="vistaUser" class="container my-3 card" style="padding-bottom: 512px;">
     <h1 class="text-center mb-4">MI PERFIL USUARIO</h1>
     
     <table class="table table-striped">
@@ -152,31 +152,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/js/bootstrap.bundle.min.js"></script> 
 
-<script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        var botonesEliminar = document.querySelectorAll('.delete-button');
-
-        botonesEliminar.forEach(function(boton) {
-            boton.addEventListener('click', function(event) {
-                event.preventDefault();
-
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: 'No podrás deshacer esta acción',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Sí, eliminar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = boton.getAttribute('href');
-                    }
-                });
-            });
-        });
-    });
-</script>
     
 
 </body>

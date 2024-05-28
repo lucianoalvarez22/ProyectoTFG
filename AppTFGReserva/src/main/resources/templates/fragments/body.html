@@ -10,16 +10,12 @@
 	<!-- BODY ADMIN -->
 
 	
-	<div th:fragment="vistaAdmin" class="container my-3 card bg-light">
-		<h1 class="text-center mb-4">ESTE ES EL HOME DE ADMIN LUC</h1>
-		<div class="text-center mb-4">
-		    <p>El administrador deberá poder crear los roles necesarios</p>
-		    <p>El administrador deberá poder modificar los roles</p>
-		    <p>El administrador deberá poder eliminar los roles</p>
-		    <p>El administrador deberá poder asignar permisos a cada rol</p>
-		    <p>El administrador deberá poder agregar la empresa a la aplicación con todos sus datos</p>
-		    <p>El administrador deberá poder gestionar los datos de la empresa una vez dentro de la App</p>
-	    </div>	
+	<div th:fragment="vistaAdmin" class="container my-3 card shadow-sm bg-light rounded border border-light" style="padding-bottom: 515px;">
+		<div class="card-body">
+	        <h1 class="card-title text-center mb-4">SEAT-TAKER</h1>
+	        <p class="card-text text-muted text-center">Bienvenido a la plataforma de <strong>Administrador-App</strong></p>
+	        <p class="card-text text-muted text-center">Creación y gestión de empresas y Mapas de las mismas.</p>
+    	</div>
 	</div>
 
 	<!-- FIN BODY ADMIN --> 
@@ -28,9 +24,13 @@
 	
 	<!-- BODY ADMIN COMPANY -->
 	
-	<div th:fragment="vistaAdminCompany" class="container my-3 card bg-light">
+	<div th:fragment="vistaAdminCompany" class="container my-3 card shadow-sm bg-light rounded border border-light" style="padding-bottom: 515px;">
 	
-		<h1 class="text-center mb-4">ESTO ES EL HOME DEL ADMINISTRADOR DE LA EMPRESA</h1>
+		<div class="card-body">
+	        <h1 class="card-title text-center mb-4">SEAT-TAKER</h1>
+	        <p class="card-text text-muted text-center">Bienvenido a la plataforma de <strong>Administrador-Empresa</strong></p>
+	        <p class="card-text text-muted text-center">Gestiona los usuarios y las reservas de los mismos en tu empresa.</p>
+    	</div>
 	
 	</div>
 	
@@ -39,11 +39,13 @@
 	
 	<!-- BODY USER -->
 	
-	<div th:fragment="vistaUser" class="container my-3 card bg-light">
-	
-		<h1 class="text-center mb-4">ESTO ES EL HOME DEL USUARIO</h1>
-	
-	</div>
+	<div th:fragment="vistaUser" class="container my-3 card shadow-sm bg-light rounded border border-light" style="padding-bottom: 515px;">
+    <div class="card-body">
+        <h1 class="card-title text-center mb-4">SEAT-TAKER</h1>
+        <p class="card-text text-muted text-center">Bienvenido a la plataforma de <strong>Usuario</strong></p>
+        <p class="card-text text-muted text-center">Gestiona y añade tu reserva. Disfruta de tu espacio en oficina.</p>
+    </div>
+</div>
 	
 	<!-- FIN BODY USER -->
 

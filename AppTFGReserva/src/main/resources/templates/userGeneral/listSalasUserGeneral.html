@@ -15,8 +15,13 @@
     </div>
     
     
-    <div class="container my-3 card">
+    <div class="container my-3 card" style="padding-bottom: 498px;">
         <h1 class="text-center mb-4">Salas Disponibles</h1>
+        
+         <!-- Mensaje de éxito -->
+        <div th:if="${reservaEliminadaExito}" class="alert alert-success text-center" role="alert">
+            <span th:text="${reservaEliminadaExito}"></span>
+        </div>
      
         <table class="table table-striped">
             <thead>

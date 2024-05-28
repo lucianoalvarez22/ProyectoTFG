@@ -10,5 +10,6 @@ import com.example.demo.entity.Usuarios;
 public interface ReservaRepo extends JpaRepository<Reservas, Long> {
 	
 	List<Reservas> findByUsuario(Usuarios usuario);
+	List<Reservas> findByUsuarioUserId(Long userId);
 		
 }

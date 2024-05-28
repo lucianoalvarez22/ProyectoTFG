@@ -11,5 +11,7 @@ public interface IReservaService {
 	Reservas getReservaById(Long reservaId);
 	 void saveReserva(Reservas reserva);
 	List<Reservas> getReservasByUsuario(Usuarios usuario);
+	void eliminarReserva(Long id);
+	List<Reservas> getReservasByUserId(Long userId);
 
 }

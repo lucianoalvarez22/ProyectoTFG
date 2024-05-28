@@ -11,15 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.componenteLogueado.UserSessionLog;
 import com.example.demo.entity.Company;
+import com.example.demo.entity.Reservas;
 import com.example.demo.entity.Roles;
 import com.example.demo.entity.Usuarios;
 import com.example.demo.serviceAdmin.ICargoServiceAdmin;
 import com.example.demo.serviceAdmin.ICompanyServiceAdmin;
 import com.example.demo.serviceAdmin.IRolServiceAdmin;
 import com.example.demo.serviceAdminCompany.IUserServiceAdminCompany;
+import com.example.demo.serviceUser.IReservaService;
 
 @Controller
 public class UserControllerAdminCompany {
@@ -38,6 +41,9 @@ public class UserControllerAdminCompany {
 	
 	@Autowired
 	private IRolServiceAdmin rolServicio;
+	
+	@Autowired
+	private IReservaService reservaServicio;
 
 	
 	//SACAR LOS USUARIOS DE UNA DETERMINADA EMPRESA
@@ -62,6 +68,10 @@ public class UserControllerAdminCompany {
 
 			return "listAllUser";
 		}
+		
+		
+		
+		
 		
 		@GetMapping("/addUsuarioByAdminCompany")
 		public String addUsuariosByAdminCompany(Model model) {

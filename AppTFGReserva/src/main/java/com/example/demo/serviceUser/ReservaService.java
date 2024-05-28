@@ -38,4 +38,15 @@ public class ReservaService implements IReservaService {
 		return reservaRepo.findByUsuario(usuario);
 	}
 
+	@Override
+	public void eliminarReserva(Long id) {
+		reservaRepo.deleteById(id);
+		
+	}
+
+	@Override
+	public List<Reservas> getReservasByUserId(Long userId) {
+		 return reservaRepo.findByUsuarioUserId(userId);
+	}
+
 }
