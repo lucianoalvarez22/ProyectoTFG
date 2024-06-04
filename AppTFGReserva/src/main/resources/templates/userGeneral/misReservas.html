@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+	<meta charset="UTF-8">
     <title>Mis Reservas</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -51,7 +52,36 @@
                     <td th:text="${reserva.asiento.posicionColumna}"></td>
                   <!--  <td th:text="${reserva.mapa.mapaNombre}"></td>  -->
                     <td th:text="${reserva.reservaCompletada ? 'Completada' : 'Pendiente'}"></td>
-                    <td><a th:href="@{/deleteReserva/{id}(id=${reserva.reservaId})}" class="btn btn-danger delete-button">Eliminar</a></td>
+                    
+                    
+                    
+                    <td>
+                    <!-- Botón de eliminación con modal de confirmación -->
+                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${reserva.reservaId}">Eliminar</a>
+
+                    <!-- Modal de confirmación -->
+                    <div class="modal fade" th:id="'confirmDeleteModal' + ${reserva.reservaId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de que quieres eliminar esta reserva?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <!-- Enlace para realizar la eliminación -->
+                                    <a th:href="@{/deleteReserva/{id}(id=${reserva.reservaId})}" class="btn btn-danger">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                    
+                    
+                    
                 </tr>
             </tbody>
         </table>
@@ -59,21 +89,6 @@
     </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
-    
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const deleteButtons = document.querySelectorAll('.delete-button');
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const confirmed = confirm('¿Estás seguro de que quieres eliminar esta reserva?');
-                    if (confirmed) {
-                        window.location.href = this.getAttribute('href');
-                    }
-                });
-            });
-        });
-    </script>
     
 </body>
 </html>

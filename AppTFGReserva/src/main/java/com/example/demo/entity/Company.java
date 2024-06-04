@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +38,7 @@ public class Company {
 	private String companyEmail;
 	
 	
-	@OneToMany(mappedBy = "companyId")
+	@OneToMany(mappedBy = "companyId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Usuarios> usuarios;
 	
 	@OneToMany(mappedBy = "companyMapa")

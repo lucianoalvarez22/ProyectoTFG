@@ -46,8 +46,30 @@
                     <td>
                         <a href="/addSala" class="btn btn-success">+Sala</a>
                         <a th:href="@{/getSalas/{id}(id=${mapa.mapaId})}" class="btn btn-info">Ver Salas</a>
-                        <a href="" class="btn btn-warning">Editar</a>
-                        <a href="" class="btn btn-danger">Eliminar</a>
+                        <a th:href="@{/editMapa/{id}(id=${mapa.mapaId})}" class="btn btn-warning">Editar</a>
+                        
+                        <!-- Botón de eliminación con modal de confirmación -->
+                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteMapaModal' + ${mapa.mapaId}">Eliminar</a>
+                    <!-- Modal de confirmación -->
+                    <div class="modal fade" th:id="'confirmDeleteMapaModal' + ${mapa.mapaId}" tabindex="-1" aria-labelledby="confirmDeleteMapaModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteMapaModalLabel">Confirmación de Eliminación</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de que quieres eliminar el mapa <strong th:text="${mapa.mapaNombre}"></strong>?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <!-- Enlace para realizar la eliminación -->
+                                    <a th:href="@{/deleteMapa/{id}(id=${mapa.mapaId})}" class="btn btn-danger">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
     				</td>
                     
                 </tr>
@@ -101,8 +123,32 @@
                     <td>
                        
                         <a th:href="@{/verAsientos/{id}(id=${sala.salaId})}" class="btn btn-info">Ver</a>
-                        <a href="" class="btn btn-warning">Editar</a>
-                        <a href="" class="btn btn-danger">Eliminar</a>
+                        <a th:href="@{/editSala/{id}(id=${sala.salaId})}" class="btn btn-warning">Editar</a>
+                        
+                        
+                       <!-- Botón de eliminación con modal de confirmación -->
+                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteSalaModal' + ${sala.salaId}">Eliminar</a>
+                    <!-- Modal de confirmación -->
+                    <div class="modal fade" th:id="'confirmDeleteSalaModal' + ${sala.salaId}" tabindex="-1" aria-labelledby="confirmDeleteSalaModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteSalaModalLabel">Confirmación de Eliminación</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de que quieres eliminar la sala <strong th:text="'Sala ' + ${sala.salaNumero}"></strong>?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <!-- Enlace para realizar la eliminación -->
+                                    <a th:href="@{/deleteSala/{id}(id=${sala.salaId})}" class="btn btn-danger">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                        
     				</td>
                     
                 </tr>

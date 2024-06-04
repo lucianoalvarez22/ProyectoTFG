@@ -52,6 +52,26 @@ public class SalaControllerAdminCompany {
 		return "listMapas";
 	}
 	
+	
+	@GetMapping("/getMySalas/{id}")
+	public String getSalas(@PathVariable(name = "id") Long mapaId, Model model) {
+		Usuarios userLogueado = userSession.getUser();
+		Roles rol = userLogueado.getRolLevel();
+		Long rolIDUsuario = rol.getRolLevel();
+		Company company = userLogueado.getCompanyId();
+		Long companyId = company.getCompanyId();
+		
+		List<Salas> sala = mapaServicio.findSalasByMapaId(mapaId);
+		List<Mapas> mapas = mapaServicio.getListMapaById(companyId);
+
+		model.addAttribute("salas", sala);
+		model.addAttribute("myMap", mapas);
+		model.addAttribute("rolID", rolIDUsuario);
+	    return "listMapas";
+	}
+	
+	
+	
 	@GetMapping("/verAsientosAdminCompany/{salaId}")
 	public String pintarAsientos(@PathVariable Long salaId, Model model) {
 		Usuarios userLogueado = userSession.getUser();
@@ -61,10 +81,6 @@ public class SalaControllerAdminCompany {
 		
 	    Salas sala = salaService.getSalaById(salaId);
 	    List<Asientos> asientos = sala.getAsientos();
-	    
-//	    for (Asientos as:asientos) {
-//	    	System.out.println(as.toString());
-//	    }
 	    
 	    long asientosLibres = asientos.stream().filter(Asientos::isAsientoEstado).count();
 	    long asientosOcupados = asientos.size() - asientosLibres;
@@ -78,18 +94,6 @@ public class SalaControllerAdminCompany {
 	}
 	
 	
-	@GetMapping("/getMySalas/{id}")
-	public String getSalas(@PathVariable(name = "id") Long mapaId, Model model) {
-		Usuarios userLogueado = userSession.getUser();
-		Roles rol = userLogueado.getRolLevel();
-		Long rolIDUsuario = rol.getRolLevel();
-		
-		List<Salas> sala = mapaServicio.findSalasByMapaId(mapaId);
-
-		model.addAttribute("salas", sala);
-		model.addAttribute("myMap", mapaServicio.getAllMapas());
-		model.addAttribute("rolID", rolIDUsuario);
-	    return "listMapas";
-	}
+	
 
 }

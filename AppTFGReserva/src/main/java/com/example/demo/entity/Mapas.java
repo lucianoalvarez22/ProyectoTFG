@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,13 +32,28 @@ public class Mapas {
     @JoinColumn(name = "company_id", referencedColumnName = "company_id")
     private Company companyMapa;
 
-    @OneToMany(mappedBy = "mapaId")
+    @OneToMany(mappedBy = "mapaId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Salas> salas;
     
-    @OneToMany(mappedBy = "mapa")
+    @OneToMany(mappedBy = "mapa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservas> reservas;
     
+    
+    
+    
     //GETTER AND SETTER
+    
+    
+
+	public Mapas(Long mapaId, String mapaNombre, int numeroTotalDeSalas, Company companyMapa) {
+		this.mapaId = mapaId;
+		this.mapaNombre = mapaNombre;
+		this.numeroTotalDeSalas = numeroTotalDeSalas;
+		this.companyMapa = companyMapa;
+	}
+
+	public Mapas() {
+	}
 
 	public Long getMapaId() {
 		return mapaId;

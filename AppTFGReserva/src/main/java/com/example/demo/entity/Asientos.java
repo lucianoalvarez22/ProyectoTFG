@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class Asientos {
     @JoinColumn(name = "sala_id", referencedColumnName = "sala_id")
     private Salas sala;
 
-    @OneToMany(mappedBy = "asiento")
+    @OneToMany(mappedBy = "asiento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservas> reservas;
     
     //GETTERS AND SETTERS

@@ -53,6 +53,35 @@ public class MapasController {
         return "listMapas";
     }
 	
+	
+	@GetMapping("/getSalas/{id}")
+	public String getSalas(@PathVariable(name = "id") Long mapaId, Model model) {
+		List<Salas> sala = mapaService.findSalasByMapaId(mapaId);
+		Usuarios userLogueado = userSession.getUser();
+		Roles rol = userLogueado.getRolLevel();
+		Long rolIDUsuario = rol.getRolLevel();
+
+		model.addAttribute("salas", sala);
+		model.addAttribute("mapas", mapaService.getAllMapas());
+		model.addAttribute("rolID", rolIDUsuario);
+	    return "listMapas";
+	}
+	
+	//BORRAR MAPA DEL PERFIL DE ADMIN SUPER
+	@GetMapping("/deleteMapa/{id}")
+	public String deleteMapa(@PathVariable(name= "id") Long id) {
+		mapaService.deleteMapa(id);
+		return "redirect:/listMapas";
+	}
+	
+	//BORRAR SALA DEL PERFIL DE ADMIN SUPER
+		@GetMapping("/deleteSala/{id}")
+		public String deleteSala(@PathVariable(name= "id") Long id) {
+			salaService.deleteSala(id);
+			return "redirect:/listMapas";
+		}
+	
+	
 	@GetMapping("/addMapa")
 	public String addMapa(Model model) {
 		
@@ -84,6 +113,43 @@ public class MapasController {
 		
 		return "redirect:/listMapas";
 	}
+	
+	//EDITAR MAPAS 
+	@GetMapping("/editMapa/{id}")
+	public String editMapa(@PathVariable(name = "id") Long mapaId, Model model) {
+		Usuarios userLogueado = userSession.getUser();
+		Roles rol = userLogueado.getRolLevel();
+		Long rolIDUsuario = rol.getRolLevel();
+		
+		model.addAttribute("mapa", mapaService.getMapaById(mapaId));
+		model.addAttribute("companies", companyServicio.getAllCompany());
+		model.addAttribute("rolID", rolIDUsuario);
+		return "adminSuper/editMapa";
+	}
+	
+	
+	@PostMapping("/editMapa")
+	public String editMapaPost(@RequestParam(name = "mapaNombre") String mapaNombre,
+			@RequestParam(name = "numeroTotalDeSalas") int salasTotales,
+	        @RequestParam(name = "companyId") Long companyId,
+	        @RequestParam(name = "mapaId") Long mapaId) {
+		
+		Company company = companyServicio.getCompanyById(companyId);
+		
+		String mapaNombreEdit = mapaNombre;
+		int salasEdit = salasTotales;
+		Long mapaIdEdit = mapaId;
+		
+		Mapas mapaEditado = new Mapas(mapaIdEdit, mapaNombreEdit, salasEdit, company);
+		
+		mapaService.saveMapa(mapaEditado);
+		return "redirect:/listMapas";
+	}
+	
+	
+	
+	//SALAS
+	
 	
 	@GetMapping("/addSala")
 	public String addSala(Model model) {
@@ -128,6 +194,47 @@ public class MapasController {
 	}
 	
 	
+	//EDITAR SALA
+	
+		@GetMapping("/editSala/{id}")
+		public String editSala(@PathVariable(name = "id") Long salaId, Model model) {
+			Usuarios userLogueado = userSession.getUser();
+			Roles rol = userLogueado.getRolLevel();
+			Long rolIDUsuario = rol.getRolLevel();
+			
+			model.addAttribute("sala", salaService.getSalaById(salaId));
+			model.addAttribute("mapas", mapaService.getAllMapas());
+			model.addAttribute("rolID", rolIDUsuario);
+			return "adminSuper/editSala";
+		}
+	
+		
+		@PostMapping("/editSala")
+		public String editSalaPost(@RequestParam(name = "mapaId") Long mapaId,
+				@RequestParam(name = "numeroFilas") int numeroFilas,
+		        @RequestParam(name = "numeroColumnas") int numeroColumnas,
+		        @RequestParam(name = "salaAsientosTotales") int salaAsientosTotales,
+		        @RequestParam(name = "salaNumero") int salaNumero,
+		        @RequestParam(name = "salaEstado") boolean salaEstado,
+		        @RequestParam(name = "salaId") Long salaId) {
+			
+			
+			Mapas mapaEdit = mapaService.getMapaById(mapaId);
+			int filasEdit = numeroFilas;
+			int columnasEdit = numeroColumnas;
+			int asientosEdit = salaAsientosTotales;
+			int salaNumeroEdit = salaNumero;
+			boolean estadoEdit = salaEstado;
+			Long salaIdEdit = salaId;
+			
+			Salas salaEdit = new Salas(salaIdEdit,salaNumeroEdit, asientosEdit,estadoEdit,filasEdit,columnasEdit, mapaEdit);
+			
+			salaService.saveSala(salaEdit);
+	
+			return "redirect:/listMapas";
+			
+		}
+	
 	//CREACION DE ASIENTOS
 	private void crearAsientos(Salas sala, int filas, int columnas) {
 	    for (int fila = 1; fila <= filas; fila++) {
@@ -154,33 +261,20 @@ public class MapasController {
 	    Salas sala = salaService.getSalaById(salaId);
 	    List<Asientos> asientos = sala.getAsientos();
 	    
-	    for (Asientos as:asientos) {
-	    	System.out.println(as.toString());
-	    }
+	    long asientosLibres = asientos.stream().filter(Asientos::isAsientoEstado).count();
+	    long asientosOcupados = asientos.size() - asientosLibres;
+	    
+
 	    model.addAttribute("sala", sala);
 	    model.addAttribute("asientos", asientos);
+	    model.addAttribute("asientosLibres", asientosLibres);
+	    model.addAttribute("asientosOcupados", asientosOcupados);
 	    model.addAttribute("rolID", rolIDUsuario);
 	    return "adminSuper/verAsientos";
 	}
 
 	
-	@GetMapping("/getSalas/{id}")
-	public String getSalas(@PathVariable(name = "id") Long mapaId, Model model) {
-		List<Salas> sala = mapaService.findSalasByMapaId(mapaId);
-		Usuarios userLogueado = userSession.getUser();
-		Roles rol = userLogueado.getRolLevel();
-		Long rolIDUsuario = rol.getRolLevel();
-		
-//		for(Salas s:sala) {
-//			System.out.println(s.toString());
-//		}
-		
-//		System.out.println(mapaId);
-		model.addAttribute("salas", sala);
-		model.addAttribute("mapas", mapaService.getAllMapas());
-		model.addAttribute("rolID", rolIDUsuario);
-	    return "listMapas";
-	}
+	
 
 
 

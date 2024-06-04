@@ -26,4 +26,10 @@ public class UserServiceAdmin implements IUserServiceAdmin {
         return Optional.ofNullable(user);
 	}
 
+	@Override
+	public void eliminarUserAdminSuper(Long id) {
+		userRepositoryAdminCompany.deleteById(id);
+		
+	}
+
 }
