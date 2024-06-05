@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -38,6 +39,15 @@ public class Company {
 	private String companyEmail;
 	
 	
+	@Column(name = "hora_apertura")
+    private LocalTime horaApertura;
+
+    @Column(name = "hora_cierre")
+    private LocalTime horaCierre;
+	
+	
+
+
 	@OneToMany(mappedBy = "companyId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Usuarios> usuarios;
 	
@@ -51,24 +61,26 @@ public class Company {
 
 
 	//CONSTRUCTOR PARA EDITAR COMPANY
+	
 	public Company(Long companyId, String companyName, String companyIndustria, String companyUbicacion,
-		String companyTelefono, String companyEmail) {
-	this.companyId = companyId;
-	this.companyName = companyName;
-	this.companyIndustria = companyIndustria;
-	this.companyUbicacion = companyUbicacion;
-	this.companyTelefono = companyTelefono;
-	this.companyEmail = companyEmail;
-}
-
+			String companyTelefono, String companyEmail, LocalTime horaApertura, LocalTime horaCierre) {
+		this.companyId = companyId;
+		this.companyName = companyName;
+		this.companyIndustria = companyIndustria;
+		this.companyUbicacion = companyUbicacion;
+		this.companyTelefono = companyTelefono;
+		this.companyEmail = companyEmail;
+		this.horaApertura = horaApertura;
+		this.horaCierre = horaCierre;
+	}
 
 	//GET AND SET
-
-
 
 	public String getCompanyEmail() {
 		return companyEmail;
 	}
+
+
 
 
 	public void setCompanyEmail(String companyEmail) {
@@ -143,11 +155,23 @@ public class Company {
 		this.mapas = mapas;
 	}
 	
+	public LocalTime getHoraApertura() {
+		return horaApertura;
+	}
 	
 	
-
+	public void setHoraApertura(LocalTime horaApertura) {
+		this.horaApertura = horaApertura;
+	}
 	
 	
+	public LocalTime getHoraCierre() {
+		return horaCierre;
+	}
 	
+	
+	public void setHoraCierre(LocalTime horaCierre) {
+		this.horaCierre = horaCierre;
+	}
 
 }

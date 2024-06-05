@@ -1,5 +1,6 @@
 package com.example.demo.controllerAdmin;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +131,8 @@ public class CompanyControllerAdmin {
 		public String postEditCompany(@RequestParam(name = "companyName") String companyName,
 				@RequestParam(name = "companyIndustria") String companyIndustria, @RequestParam(name = "companyUbicacion") String companyUbicacion,
 				@RequestParam(name = "companyTelefono") String companyTelefono, @RequestParam(name = "companyEmail") String companyEmail,
+				@RequestParam(name = "horaApertura") String horaApertura,
+		        @RequestParam(name = "horaCierre") String horaCierre,
 				Model model, @RequestParam(name = "idCompany") Long idCompany) {
 			
 			String nameEdit = companyName;
@@ -138,8 +141,10 @@ public class CompanyControllerAdmin {
 			String telefonoEdit = companyTelefono;
 			String emailEdit = companyEmail;
 			Long idEdit = idCompany;
-			
-			Company companyEdit = new Company(idEdit, nameEdit, industriaEdi, ubicacionEdit, telefonoEdit, emailEdit);
+			LocalTime aperturaEdit = LocalTime.parse(horaApertura);
+		    LocalTime cierreEdit = LocalTime.parse(horaCierre);
+		    
+			Company companyEdit = new Company(idEdit, nameEdit, industriaEdi, ubicacionEdit, telefonoEdit, emailEdit, aperturaEdit, cierreEdit);
 			companyServicio.guardarCompany(companyEdit);
 			return "redirect:/listCompany";
 		}

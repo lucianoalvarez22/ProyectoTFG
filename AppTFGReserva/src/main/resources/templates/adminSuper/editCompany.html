@@ -44,6 +44,16 @@
             <label for="companyEmail" class="form-label">Email</label>
             <input type="email" class="form-control" id="companyEmail" name="companyEmail" th:value="${company.companyEmail}" required>
         </div>
+        
+         <div class="mb-3">
+            <label for="horaApertura" class="form-label">Hora de Apertura</label>
+            <input type="time" class="form-control" id="horaApertura" name="horaApertura" th:value="${company.horaApertura}" required>
+        </div>
+        <div class="mb-3">
+            <label for="horaCierre" class="form-label">Hora de Cierre</label>
+            <input type="time" class="form-control" id="horaCierre" name="horaCierre" th:value="${company.horaCierre}" required>
+        </div>
+        
         <div class="text-center">
             <button type="submit" class="btn btn-primary">Editar</button>
             <a href="/listCompany" class="btn btn-secondary">Cancelar</a>

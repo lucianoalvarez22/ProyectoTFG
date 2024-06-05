@@ -50,6 +50,15 @@
                             <input type="email" class="form-control" id="company_email" name="companyEmail" th:field="*{companyEmail}" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" title="Por favor, introduce una dirección de correo electrónico válida" required>
                         </div>
                         
+                        <div class="mb-3">
+                            <label for="hora_apertura" class="form-label">Hora de Apertura:</label>
+                            <input type="time" class="form-control" id="hora_apertura" name="horaApertura" th:field="*{horaApertura}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hora_cierre" class="form-label">Hora de Cierre:</label>
+                            <input type="time" class="form-control" id="hora_cierre" name="horaCierre" th:field="*{horaCierre}" required>
+                        </div>
+                        
                         <div class="text-center">
 				           <button type="submit" class="btn btn-primary">Registrar Empresa</button>
 				            <a href="/listCompany" class="btn btn-secondary">Cancelar</a>

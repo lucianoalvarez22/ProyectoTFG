@@ -3,23 +3,42 @@ function mostrarDetalleAsiento(button) {
     const columna = button.getAttribute('data-columna');
     const estado = button.getAttribute('data-estado');
     const asientoId = button.getAttribute('data-asiento-id');
+    const fechaInicio = button.getAttribute('data-fecha-inicio');
+    const fechaFin = button.getAttribute('data-fecha-fin');
+    const salaId = document.querySelector('input[name="salaId"]').value;
+    const salaNumero = document.querySelector('input[name="salaNumero"]').value;
+    const fecha = button.getAttribute('data-fecha');
+    const tipoReserva = button.getAttribute('data-tipo-reserva');
+    
+    if (!fecha || !tipoReserva) {
+        alert("Por favor seleccione una fecha y un tipo de reserva.");
+        return;
+    }
+    
+    
+    const tipoReservaTexto = tipoReserva === 'completa' ? 'Jornada Completa' :
+                             tipoReserva === 'media_manana' ? 'Media Jornada Mañana' :
+                             'Media Jornada Tarde';
+                             
+   	const horaInicio = new Date(fechaInicio).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const horaFin = new Date(fechaFin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                             
     console.log("Fila:", fila, "Columna:", columna, "Estado:", estado);
 
     const infoAsiento = document.getElementById('info-asiento');
     infoAsiento.innerHTML = `
         <strong>Fila:</strong> ${fila}<br>
         <strong>Columna:</strong> ${columna}<br>
+        <strong>Fecha de Reserva:</strong> ${fecha}<br>
+        <strong>Jornada de Reserva:</strong> ${tipoReservaTexto}<br>
+        <strong>Horario:</strong> ${horaInicio} - ${horaFin}<br>
+        <strong>Sala:</strong> ${salaNumero}<br>
         <strong>Estado:</strong> ${estado}<br>
         <form action="/reservarAsiento" method="post">
             <input type="hidden" name="asientoId" value="${asientoId}">
-            <div class="mb-3">
-                <label for="fechaEntrada">Fecha y Hora de Entrada:</label>
-                <input type="datetime-local" class="form-control" name="fechaEntrada" required>
-            </div>
-            <div class="mb-3">
-                <label for="fechaSalida">Fecha y Hora de Salida:</label>
-                <input type="datetime-local" class="form-control" name="fechaSalida" required>
-            </div>
+            <input type="hidden" name="fechaInicio" value="${fechaInicio}">
+            <input type="hidden" name="fechaFin" value="${fechaFin}">
+            <input type="hidden" name="salaId" value="${salaId}">
             <button type="submit" class="btn btn-primary mt-2">Reservar</button>
         </form>
     `;
@@ -61,10 +80,18 @@ function mostrarOCultarDetalleAsiento(button) {
 
 function resetDetalleAsiento() {
     const infoAsiento = document.getElementById('info-asiento');
-    infoAsiento.innerHTML = '<p>Elija un asiento para ver la información.</p>';
+    infoAsiento.innerHTML = '<p>Seleccione una fecha y un tipo de reserva para posteriormente seleccionar un asiento.</p>';
 }
 
+
+
 document.addEventListener('DOMContentLoaded', function () {
+	
+	// Establecer la fecha mínima en el campo de selección de fecha
+    const fechaInput = document.getElementById('fecha');
+    const today = new Date().toISOString().split('T')[0];
+    fechaInput.setAttribute('min', today);
+    
     console.log("DOM completamente cargado y analizado");
     const asientoBtns = document.querySelectorAll('.asiento-btn');
     console.log("Botones encontrados:", asientoBtns.length);
