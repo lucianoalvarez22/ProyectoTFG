@@ -39,7 +39,7 @@
                 <div class="card">
                     <h1 class="card-header text-center">Reservar Asiento</h1>
                     
-                   <div class="card-header text-center" id="seleccion-reserva" th:if="${fechaFormateada != null}">
+                    <div class="card-header text-center" id="seleccion-reserva" th:if="${fechaFormateada != null}">
                         <span th:text="${fechaFormateada} + ' - ' + ${tipoReservaTexto}"></span>
                     </div>
                     
@@ -51,14 +51,17 @@
                                 <input type="hidden" name="salaNumero" th:value="${sala.salaNumero}">
                                 <input type="hidden" id="fechaFormateada" name="fechaFormateada" th:value="${fechaFormateada}">
                                 <input type="hidden" id="tipoReservaTexto" name="tipoReservaTexto" th:value="${tipoReservaTexto}">
+                                <input type="hidden" id="horaApertura" th:value="${horaApertura}">
+                                <input type="hidden" id="horaCierre" th:value="${horaCierre}">
+                                <input type="hidden" id="horaInicioParam" name="horaInicio">
+                                <input type="hidden" id="horaFinParam" name="horaFin">
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="fecha">Fecha:</label>
                                         <input type="date" id="fecha" name="fecha" class="form-control" required>
                                     </div>
-                                    
-                                    
+
                                     <div class="col-md-6">
                                         <label for="tipoReserva">Tipo de Reserva:</label>
                                         <select id="tipoReserva" name="tipoReserva" class="form-control" required>
@@ -66,57 +69,74 @@
                                             <option value="completa">Jornada Completa</option>
                                             <option value="media_manana">Media Jornada Mañana</option>
                                             <option value="media_tarde">Media Jornada Tarde</option>
+                                            <option value="por_horas">Por Horas</option>
                                         </select>
                                     </div>
-                                    
-                                    
                                 </div>
-                                <button type="button" class="btn btn-primary mt-2" onclick="buscarAsientos()">Buscar</button>
+
+                                <div class="row justify-content-center">
+                                    <div class="col-md-6 mt-3" id="horaReservaDiv" style="display:none;">
+                                        <label for="horaReserva">Hora de Reserva:</label>
+                                        <select id="horaReserva" name="horaReserva" class="form-control">
+                                            <!-- Options will be populated by JavaScript -->
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center mt-3">
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="buscarAsientos()">Buscar</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <!-- FIN DE SELECCIÓN DE FECHA Y TIPO DE RESERVA -->
 
-                        <!-- Información de asientos libres y ocupados -->
-                        <div class="mb-3">
-                            <strong>Asientos Libres:</strong> <span th:text="${asientosLibres}"></span>
-                             <span class="mx-3"></span>
-                            <strong>Asientos Ocupados:</strong> <span th:text="${asientosOcupados}"></span>
-                        </div>
+                        <!-- Mapa de asientos -->
+                        <div id="mapaAsientos" th:if="${mostrarMapa}">
+                            <!-- Información de asientos libres y ocupados -->
+                            <div class="mb-3">
+                                <strong>Asientos Libres:</strong> <span th:text="${asientosLibres}"></span>
+                                 <span class="mx-3"></span>
+                                <strong>Asientos Ocupados:</strong> <span th:text="${asientosOcupados}"></span>
+                            </div>
 
-                        <div class="mb-3">
-                            <span class="circle circle-success d-inline-block mx-2"></span><strong>Libre</strong>
-                            <span class="circle circle-warning d-inline-block mx-2"></span><strong>Seleccionado</strong>
-                            <span class="circle circle-secondary d-inline-block mx-2"></span><strong>Ocupado</strong>
-                        </div>
+                            <div class="mb-3">
+                                <span class="circle circle-success d-inline-block mx-2"></span><strong>Libre</strong>
+                                <span class="circle circle-warning d-inline-block mx-2"></span><strong>Seleccionado</strong>
+                                <span class="circle circle-secondary d-inline-block mx-2"></span><strong>Ocupado</strong>
+                            </div>
 
-                        <!-- Crear una fila para cada fila de asientos -->
-                        <div th:each="fila : ${#numbers.sequence(1, sala.numeroFilas)}" class="row mb-3">
-                            <div class="col-12">
-                                <div class="d-flex flex-row justify-content-center">
-                                    <!-- Dentro de una fila, crear un botón para cada columna -->
-                                    <div th:each="columna : ${#numbers.sequence(1, sala.numeroColumnas)}" class="p-1">
-                                        <button th:each="asiento : ${asientos}"
-                                                th:if="${asiento.posicionFila == fila and asiento.posicionColumna == columna}"
-                                                th:classappend="${asiento.asientoEstado ? ' btn-success' : ' btn-secondary'}"
-                                                class="btn btn-sm asiento-btn"
-                                                th:data-fila="${fila}"
-                                                th:data-columna="${columna}"
-                                                th:data-estado="${asiento.asientoEstado ? 'Libre' : 'Ocupado'}"
-                                                th:data-asiento-id="${asiento.asientoId}"
-                                                th:data-fecha-inicio="${fechaInicio}"
-                                                th:data-fecha-fin="${fechaFin}"
-                                                th:data-fecha="${fecha}"
-                                                th:data-tipo-reserva="${tipoReserva}"
-                                                th:title="|Fila ${fila} Asiento ${columna}|"
-                                                th:disabled="${!asiento.asientoEstado}"
-                                                id="toggleButton"
-                                                onclick="mostrarDetalleAsiento(this)">
-                                            <i class="fas fa-chair"></i>
-                                        </button>
+                            <!-- Crear una fila para cada fila de asientos -->
+                            <div th:each="fila : ${#numbers.sequence(1, sala.numeroFilas)}" class="row mb-3">
+                                <div class="col-12">
+                                    <div class="d-flex flex-row justify-content-center">
+                                        <!-- Dentro de una fila, crear un botón para cada columna -->
+                                        <div th:each="columna : ${#numbers.sequence(1, sala.numeroColumnas)}" class="p-1">
+                                            <button th:each="asiento : ${asientos}"
+                                                    th:if="${asiento.posicionFila == fila and asiento.posicionColumna == columna}"
+                                                    th:classappend="${asiento.asientoEstado ? ' btn-success' : ' btn-secondary'}"
+                                                    class="btn btn-sm asiento-btn"
+                                                    th:data-fila="${fila}"
+                                                    th:data-columna="${columna}"
+                                                    th:data-estado="${asiento.asientoEstado ? 'Libre' : 'Ocupado'}"
+                                                    th:data-asiento-id="${asiento.asientoId}"
+                                                    th:data-fecha-inicio="${fechaInicio}"
+                                                    th:data-fecha-fin="${fechaFin}"
+                                                    th:data-fecha="${fecha}"
+                                                    th:data-tipo-reserva="${tipoReserva}"
+                                                    th:title="|Fila ${fila} Asiento ${columna}|"
+                                                    th:disabled="${!asiento.asientoEstado}"
+                                                    id="toggleButton"
+                                                    onclick="mostrarDetalleAsiento(this)">
+                                                <i class="fas fa-chair"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- FIN Mapa de asientos -->
                     </div>
                 </div>
             </div>
@@ -125,7 +145,7 @@
                 <div class="card text-center">
                     <div class="card-header"><strong>Detalles de la reserva</strong></div>
                     <div class="card-body" id="info-asiento">
-                        <p>Seleccione una fecha y un tipo de reserva para posteriormente seleccionar un asiento.</p>
+                        <p>Seleccione una fecha y un tipo de reserva para ver los asientos disponibles.</p>
                     </div>
                 </div>
             </div>
@@ -134,59 +154,5 @@
 
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/asientosUser.js"></script>
-
-    <script>
-    function buscarAsientos() {
-    const fecha = document.getElementById('fecha').value;
-    const tipoReserva = document.getElementById('tipoReserva').value;
-
-
-    if (!fecha || !tipoReserva) {
-        alert("Por favor seleccione una fecha y un tipo de reserva.");
-        return;
-    }
-
-    const salaId = document.querySelector('input[name="salaId"]').value;
-    const salaNumero = document.querySelector('input[name="salaNumero"]').value;
-    const companyApertura = "09:00"; // Horario de apertura de la empresa
-    const companyCierre = "18:00"; // Horario de cierre de la empresa
-    let fechaInicio, fechaFin;
-
-    switch (tipoReserva) {
-        case 'completa':
-            fechaInicio = `${fecha}T${companyApertura}`;
-            fechaFin = `${fecha}T${companyCierre}`;
-            break;
-        case 'media_manana':
-            fechaInicio = `${fecha}T${companyApertura}`;
-            fechaFin = new Date(new Date(fechaInicio).getTime() + 4 * 60 * 60 * 1000).toISOString().substring(0, 16);
-            break;
-        case 'media_tarde':
-            fechaFin = `${fecha}T${companyCierre}`;
-            fechaInicio = new Date(new Date(fechaFin).getTime() - 4 * 60 * 60 * 1000).toISOString().substring(0, 16);
-            break;
-        default:
-            alert("Tipo de reserva no válido.");
-            return;
-    }
-    
-    const tipoReservaTexto = tipoReserva === 'completa' ? 'Jornada Completa' :
-                                 tipoReserva === 'media_manana' ? 'Media Jornada Mañana' :
-                                 'Media Jornada Tarde';
-
-        // Formatear la fecha seleccionada
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const fechaFormateada = new Date(fecha).toLocaleDateString('es-ES', options);
-
-        // Pasar la información al formulario
-        document.getElementById('fechaFormateada').value = fechaFormateada;
-        document.getElementById('tipoReservaTexto').value = tipoReservaTexto;
-
-        // Enviar el formulario
-        const form = document.getElementById('filterForm');
-        form.action = `/buscarAsientos?fecha=${fecha}&tipoReserva=${tipoReserva}&salaId=${salaId}&salaNumero=${salaNumero}`;
-        form.submit();
-    }
-    </script>
 </body>
 </html>

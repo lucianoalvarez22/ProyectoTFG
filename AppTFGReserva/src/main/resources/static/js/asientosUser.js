@@ -15,12 +15,12 @@ function mostrarDetalleAsiento(button) {
         return;
     }
     
-    
     const tipoReservaTexto = tipoReserva === 'completa' ? 'Jornada Completa' :
                              tipoReserva === 'media_manana' ? 'Media Jornada Mañana' :
-                             'Media Jornada Tarde';
+                             tipoReserva === 'media_tarde' ? 'Media Jornada Tarde' :
+                             'Por Horas';
                              
-   	const horaInicio = new Date(fechaInicio).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const horaInicio = new Date(fechaInicio).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const horaFin = new Date(fechaFin).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                              
     console.log("Fila:", fila, "Columna:", columna, "Estado:", estado);
@@ -80,18 +80,75 @@ function mostrarOCultarDetalleAsiento(button) {
 
 function resetDetalleAsiento() {
     const infoAsiento = document.getElementById('info-asiento');
-    infoAsiento.innerHTML = '<p>Seleccione una fecha y un tipo de reserva para posteriormente seleccionar un asiento.</p>';
+    infoAsiento.innerHTML = '<p>Seleccione una fecha y un tipo de reserva para ver los asientos disponibles.</p>';
 }
 
+function buscarAsientos() {
+    const fecha = document.getElementById('fecha').value;
+    const tipoReserva = document.getElementById('tipoReserva').value;
 
+    if (!fecha || !tipoReserva) {
+        alert("Por favor seleccione una fecha y un tipo de reserva.");
+        return;
+    }
+
+    const salaId = document.querySelector('input[name="salaId"]').value;
+    const salaNumero = document.querySelector('input[name="salaNumero"]').value;
+    const companyApertura = document.getElementById('horaApertura').value;
+    const companyCierre = document.getElementById('horaCierre').value;
+    let fechaInicio, fechaFin;
+    let horaInicio, horaFin;
+
+    switch (tipoReserva) {
+        case 'completa':
+            fechaInicio = `${fecha}T${companyApertura}`;
+            fechaFin = `${fecha}T${companyCierre}`;
+            break;
+        case 'media_manana':
+            fechaInicio = `${fecha}T${companyApertura}`;
+            fechaFin = new Date(new Date(fechaInicio).getTime() + 4 * 60 * 60 * 1000).toISOString().substring(0, 16);
+            break;
+        case 'media_tarde':
+            fechaFin = `${fecha}T${companyCierre}`;
+            fechaInicio = new Date(new Date(fechaFin).getTime() - 4 * 60 * 60 * 1000).toISOString().substring(0, 16);
+            break;
+        case 'por_horas':
+            [horaInicio, horaFin] = document.getElementById('horaReserva').value.split(' - ');
+            fechaInicio = `${fecha}T${horaInicio}`;
+            fechaFin = `${fecha}T${horaFin}`;
+            document.getElementById('horaInicioParam').value = horaInicio;
+            document.getElementById('horaFinParam').value = horaFin;
+            break;
+        default:
+            alert("Tipo de reserva no válido.");
+            return;
+    }
+
+    const tipoReservaTexto = tipoReserva === 'completa' ? 'Jornada Completa' :
+                             tipoReserva === 'media_manana' ? 'Media Jornada Mañana' :
+                             tipoReserva === 'media_tarde' ? 'Media Jornada Tarde' :
+                             'Por Horas';
+
+    // Formatear la fecha seleccionada
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaFormateada = new Date(fecha).toLocaleDateString('es-ES', options);
+
+    // Pasar la información al formulario
+    document.getElementById('fechaFormateada').value = fechaFormateada;
+    document.getElementById('tipoReservaTexto').value = tipoReservaTexto;
+
+    // Enviar el formulario
+    const form = document.getElementById('filterForm');
+    form.action = `/buscarAsientos?fecha=${fecha}&tipoReserva=${tipoReserva}&salaId=${salaId}&salaNumero=${salaNumero}`;
+    form.submit();
+}
 
 document.addEventListener('DOMContentLoaded', function () {
-	
-	// Establecer la fecha mínima en el campo de selección de fecha
+    // Establecer la fecha mínima en el campo de selección de fecha
     const fechaInput = document.getElementById('fecha');
     const today = new Date().toISOString().split('T')[0];
     fechaInput.setAttribute('min', today);
-    
+
     console.log("DOM completamente cargado y analizado");
     const asientoBtns = document.querySelectorAll('.asiento-btn');
     console.log("Botones encontrados:", asientoBtns.length);
@@ -100,4 +157,38 @@ document.addEventListener('DOMContentLoaded', function () {
             mostrarOCultarDetalleAsiento(this);
         });
     });
+
+    // Mostrar/ocultar el select de hora según el tipo de reserva
+    const tipoReservaSelect = document.getElementById('tipoReserva');
+    const horaReservaDiv = document.getElementById('horaReservaDiv');
+    const horaReservaSelect = document.getElementById('horaReserva');
+
+    tipoReservaSelect.addEventListener('change', function () {
+        if (this.value === 'por_horas') {
+            horaReservaDiv.style.display = 'block';
+            populateHoraReservaSelect();
+        } else {
+            horaReservaDiv.style.display = 'none';
+            horaReservaSelect.innerHTML = '';
+        }
+    });
+
+    function populateHoraReservaSelect() {
+        const companyApertura = document.getElementById('horaApertura').value;
+        const companyCierre = document.getElementById('horaCierre').value;
+        const [startHour, startMinute] = companyApertura.split(':');
+        const [endHour, endMinute] = companyCierre.split(':');
+
+        let currentHour = parseInt(startHour);
+        let options = '';
+
+        while (currentHour < parseInt(endHour)) {
+            const horaInicio = `${currentHour.toString().padStart(2, '0')}:${startMinute}`;
+            const horaFin = `${(currentHour + 1).toString().padStart(2, '0')}:${startMinute}`;
+            options += `<option value="${horaInicio} - ${horaFin}">${horaInicio} - ${horaFin}</option>`;
+            currentHour++;
+        }
+
+        horaReservaSelect.innerHTML = options;
+    }
 });

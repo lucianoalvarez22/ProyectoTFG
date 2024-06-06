@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.profile-header {
+            position: relative;
+            text-align: center;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+        .profile-header img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 5px solid #fff;
+            margin-top: -75px;
+        }
+        .profile-header h3 {
+            margin-top: 15px;
+        }
+        .profile-details {
+            padding: 2rem;
+        }
+        .profile-details .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .profile-details .info-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .profile-details .info-list li i {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-right: 15px;
+        }
