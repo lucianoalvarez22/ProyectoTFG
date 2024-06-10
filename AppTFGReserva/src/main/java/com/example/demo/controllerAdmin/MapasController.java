@@ -264,12 +264,14 @@ public class MapasController {
 	    long asientosLibres = asientos.stream().filter(Asientos::isAsientoEstado).count();
 	    long asientosOcupados = asientos.size() - asientosLibres;
 	    
+	    String companyName = sala.getMapaId().getCompanyMapa().getCompanyName();	    
 
 	    model.addAttribute("sala", sala);
 	    model.addAttribute("asientos", asientos);
 	    model.addAttribute("asientosLibres", asientosLibres);
 	    model.addAttribute("asientosOcupados", asientosOcupados);
 	    model.addAttribute("rolID", rolIDUsuario);
+	    model.addAttribute("companyName", companyName);
 	    return "adminSuper/verAsientos";
 	}
 

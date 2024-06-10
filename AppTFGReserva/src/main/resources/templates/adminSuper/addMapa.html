@@ -5,6 +5,7 @@
 <title>Crear Mapa</title>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/style.css"> 
+<link rel="stylesheet" href="/css/formAdd.css"> 
 </head>
 <body>
 	
@@ -19,39 +20,32 @@
     	</div>
 	
 	
-	 <div class="container my-3">
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="text-center mb-4">CREAR MAPA</h2>
-                    <form th:action="@{/addMapaPost}" method="post">
-                        <div class="mb-3">
-                            <label for="mapa_nombre" class="form-label">Nombre Mapa:</label>
-                            <input type="text" class="form-control" id="mapa_nombre" name="mapaNombre" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="companyId" class="form-label">Empresa:</label>
-                            <select id="companyId" name="companyId" class="form-select" required>
-                                <option value="" selected disabled hidden>Seleccionar Empresa</option>
-                                <option th:each="company : ${companies}" th:value="${company.companyId}" th:name="companyId" th:text="${company.companyName}"></option>
-                            </select>
-                        </div>
-                        
-                        
-                        <div class="mb-3">
-                                <label for="salas_totales" class="form-label">Nº Salas:</label>
-                                <input type="number" class="form-control" id="salas_totales" name="salasTotales" min="1" max="100" required>
-                        </div>
-                        
-                        <div class="text-center">
-				           <button type="submit" class="btn btn-primary">Registrar</button>
-				            <a href="/listMapas" class="btn btn-secondary">Cancelar</a>
-				        </div>
-                       
-                    </form>
-                </div>
+	<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 mb-5">
+            <div class="form-container p-5 rounded shadow-sm">
+                <h2 class="text-center mb-4">CREAR MAPA</h2>
+                <form th:action="@{/addMapaPost}" method="post">
+                    <div class="mb-3">
+                        <label for="mapa_nombre" class="form-label">Nombre Mapa:</label>
+                        <input type="text" class="form-control" id="mapa_nombre" name="mapaNombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="companyId" class="form-label">Empresa:</label>
+                        <select id="companyId" name="companyId" class="form-select" required>
+                            <option value="" selected disabled hidden>Seleccionar Empresa</option>
+                            <option th:each="company : ${companies}" th:value="${company.companyId}" th:name="companyId" th:text="${company.companyName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="salas_totales" class="form-label">Nº Salas:</label>
+                        <input type="number" class="form-control" id="salas_totales" name="salasTotales" min="1" max="100" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary me-2">Registrar</button>
+                        <a href="/listMapas" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

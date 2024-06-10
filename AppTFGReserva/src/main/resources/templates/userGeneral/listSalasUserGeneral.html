@@ -4,6 +4,7 @@
     <title>Salas Disponibles</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
      <link rel="stylesheet" href="/css/style.css">
+     <link rel="stylesheet" href="/css/list.css"> 
 </head>
 <body>
 	
@@ -15,41 +16,39 @@
     </div>
     
     
-    <div class="container my-3 card" style="padding-bottom: 498px;">
-        <h1 class="text-center mb-4">Salas Disponibles</h1>
-        
-         <!-- Mensaje de éxito -->
-        <div th:if="${reservaEliminadaExito}" class="alert alert-success text-center" role="alert">
-            <span th:text="${reservaEliminadaExito}"></span>
-        </div>
-     
-        <table class="table table-striped">
-            <thead>
+   <div class="container my-5">
+    <h1 class="text-center mb-4 text-white">SALAS DISPONIBLES</h1>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white">
+            <thead class="table-dark">
                 <tr>
-					<th>Empresa</th>
+                    <th>Empresa</th>
                     <th>Nombre Sala</th>
                     <th>Número Filas</th>
                     <th>Número Columnas</th>
                     <th>Asientos Totales</th>
                     <th>Estado</th>
-                    <th>Acciones</th>
+                    <th class="text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="sala : ${salas}">
-					<td th:text="${sala.mapaId.companyMapa.companyName}"></td>
+                    <td th:text="${sala.mapaId.companyMapa.companyName}"></td>
                     <td th:text="'Sala ' + ${sala.salaNumero}"></td>
                     <td th:text="${sala.numeroFilas}"></td>
                     <td th:text="${sala.numeroColumnas}"></td>
                     <td th:text="${sala.salaAsientosTotales}"></td>
                     <td th:text="${sala.salaEstado ? 'Libre' : 'Ocupada'}"></td>
-                    <td>
-                        <a th:href="@{/verAsientosUserGeneral/{id}(id=${sala.salaId})}" class="btn btn-info">Reservar</a>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a th:href="@{/verAsientosUserGeneral/{id}(id=${sala.salaId})}" class="btn btn-info btn-sm">Reservar</a>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+</div>
     
     
     <!-- CDN DE JS -->

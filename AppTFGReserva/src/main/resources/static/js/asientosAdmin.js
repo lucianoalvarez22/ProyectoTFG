@@ -10,7 +10,6 @@ function mostrarDetalleAsiento(button) {
         <strong>Fila:</strong> ${fila}<br>
         <strong>Columna:</strong> ${columna}<br>
         <strong>Estado:</strong> ${estado}<br>
-     
     `;
 }
 

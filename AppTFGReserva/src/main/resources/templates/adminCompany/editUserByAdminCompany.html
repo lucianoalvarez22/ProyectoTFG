@@ -5,66 +5,124 @@
 <title>Edita Usuario</title>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/style.css"> 
+<link rel="stylesheet" href="/css/formAdd.css"> 
 </head>
 <body>
 	
+	<!-- NAV ADMIN COMPANY --> 
 	
-	<div class="container my-3 card">
-    <h1 class="text-center mb-4">Editar Usuario</h1>
-    <form action="/editUserByAdminCompany" method="post">
-        <input type="hidden" name="idUser" th:value="${user.userId}">
-        <div class="mb-3">
-            <label for="user_name" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="user_name" name="userName" th:value="${user.userName}" required>
-        </div>
-        <div class="mb-3">
-            <label for="user_email" class="form-label">Email</label>
-            <input type="text" class="form-control" id="user_email" name="userEmail" th:value="${user.userEmail}" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" title="Por favor, introduce una dirección de correo electrónico válida" required>
-        </div>
+		<nav th:fragment="vistaAdminCompany" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home">Seataker</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/home">Home</a>
+        </li>
         
-        <div class="mb-3">
-            <label for="user_password" class="form-label">Contraseña:</label>
-            <input type="password" class="form-control" id="user_password" name="userPassword" th:value="${user.userPassword}" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="La contraseña debe contener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula, un número y un carácter especial como @$!%*?&" required>
-         </div>
-         <div class="mb-3">
-             <label for="user_confirm_password" class="form-label">Repite contraseña:</label>
-             <input type="password" class="form-control" id="user_confirm_password" name="userConfirmPassword" th:value="${user.userPassword}" required>
-         </div>
-      	 <div th:if="${param.error}">
-            <p style="color: red;">Las contraseñas no coinciden. Por favor, inténtalo de nuevo.</p>
-         </div>
-         
-         <div class="mb-3">
-			 <label for="user_telefono" class="form-label">Telefono:</label>
- 		     <input type="text" class="form-control" id="user_telefono" name="userTelefono" th:value="${user.userTelefono}" pattern="^[0-9]{9}$" title="Por favor, introduce un número de teléfono válido de 9 dígitos" required>
-         </div>
-         <div class="mb-3">
-             <label for="user_ciudad" class="form-label">Ciudad:</label>
-             <input type="text" class="form-control" id="user_ciudad" name="userCiudad" th:value="${user.userCiudad}" required>
-          </div>
-          <div class="mb-3">
-             <label for="companyId" class="form-label">Empresa:</label>
-                <select id="companyId" name="companyId" class="form-select" required>
-                  <option value="" selected disabled hidden>Seleccionar Empresa</option>
-                  <option th:each="company : ${companies}" th:value="${company.companyId}" th:name="companyId" th:text="${company.companyName}"></option>
-                </select>
-          </div>
-          <div class="mb-3">
-            <label for="rol_level" class="form-label">Cargo-Empresa:</label>
-              <select id="rol_level" name="rol_level" class="form-select" required>
-                 <option value="" selected disabled hidden>Seleccionar Cargo</option>
-                 <option th:each="cargo : ${cargos}" th:value="${cargo.rolLevel.rolLevel}" th:name="rol_level" th:text="${cargo.cargoName}"></option>
-              </select>
-          </div>
-                        
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Editar</button>
-            <a href="/listUserAdminCompany" class="btn btn-secondary">Cancelar</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/myPerfilAdminCompany">Perfil</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/myCompany">Mi Empresa</a>
+        </li>
+        
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/listUserAdminCompany">Usuarios</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/mySalas">Salas</a>
+        </li>
+    
+      </ul>
+      <form th:action="@{/logout}" method="post" class="d-flex">
+        <button class="btn btn-outline-danger"  type="submit">Cerrar Sesión</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+	<!-- FIN NAV --> 
+	
+	
+	<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 mb-5">
+            <div class="form-container p-5 rounded shadow-sm">
+                <h2 class="text-center mb-4">EDITAR USUARIO</h2>
+                <form action="/editUserByAdminCompany" method="post">
+                    <input type="hidden" name="idUser" th:value="${user.userId}">
+                    <div class="mb-3">
+                        <label for="user_name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="user_name" name="userName" th:value="${user.userName}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user_email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="user_email" name="userEmail" th:value="${user.userEmail}" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" title="Por favor, introduce una dirección de correo electrónico válida" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user_password" class="form-label">Contraseña:</label>
+                        <input type="password" class="form-control" id="user_password" name="userPassword" th:value="${user.userPassword}" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="La contraseña debe contener al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula, un número y un carácter especial como @$!%*?&" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user_confirm_password" class="form-label">Repite contraseña:</label>
+                        <input type="password" class="form-control" id="user_confirm_password" name="userConfirmPassword" th:value="${user.userPassword}" required>
+                    </div>
+                    <div th:if="${param.error}">
+                        <p style="color: red;">Las contraseñas no coinciden. Por favor, inténtalo de nuevo.</p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user_telefono" class="form-label">Teléfono:</label>
+                        <input type="text" class="form-control" id="user_telefono" name="userTelefono" th:value="${user.userTelefono}" pattern="^[0-9]{9}$" title="Por favor, introduce un número de teléfono válido de 9 dígitos" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user_ciudad" class="form-label">Ciudad:</label>
+                        <input type="text" class="form-control" id="user_ciudad" name="userCiudad" th:value="${user.userCiudad}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="companyId" class="form-label">Empresa:</label>
+                        <select id="companyId" name="companyId" class="form-select" required>
+                            <option value="" selected disabled hidden>Seleccionar Empresa</option>
+                            <option th:each="company : ${companies}" th:value="${company.companyId}" th:name="companyId" th:text="${company.companyName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rol_level" class="form-label">Cargo-Empresa:</label>
+                        <select id="rol_level" name="rol_level" class="form-select" required>
+                            <option value="" selected disabled hidden>Seleccionar Cargo</option>
+                            <option th:each="cargo : ${cargos}" th:value="${cargo.rolLevel.rolLevel}" th:name="rol_level" th:text="${cargo.cargoName}"></option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                        <a href="/listUserAdminCompany" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
         </div>
-    </form>
+    </div>
 </div>
 
+<!-- FIN FORM ADD USUARIO -->  
+	
+	
+	
+	<footer th:fragment="vistaFooter" class="bg-dark fixed-bottom">
+    <div class="text-center p-2 container-fluid">
+      <p class="text-white">Copyright by<span></span>
+        <a class="text-decoration-none text-warning fw-bold" rel="nofollow noopener noreferrer" href="#" target="_blank">
+        Luciano Alvarez</a> | Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
+
+<script src="/js/bootstrap.bundle.min.js"></script> 
 
 </body>
 </html>

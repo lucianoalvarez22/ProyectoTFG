@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>MiPerfil</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/perfil.css"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+	
+	 <div th:switch="${rolID}">
+	        
+	    	<div th:case="'1'">
+	            <div th:replace="~{fragments/nav :: vistaAdminCompany}"></div>
+	            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
+	        </div>
+	        
+	   
+	        
+	        <div th:case="*">Para todos los demás casos (no definidos)</div>
+    	</div>
+	
+	
+	 <!-- LISTA MY USER -->
+  
+ <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="profile-header">
+                    <img src="/img/user1.jpg" alt="Foto de perfil">
+                    <h3 th:text="${usuarioGeneral.userName}">Nombre del Usuario</h3>
+                    <p class="text-muted" th:each="cargo : ${usuarioGeneral.rolLevel.cargos}"
+                       th:text="${cargo.cargoName}">Cargo del Usuario</p>
+                </div>
+                <div class="profile-details">
+                    <ul class="info-list">
+                        <li><i class="fas fa-envelope"></i><span th:text="${usuarioGeneral.userEmail}">correo@example.com</span></li>
+                        <li><i class="fas fa-map-marker-alt"></i><span th:text="${usuarioGeneral.userCiudad}">Ciudad, País</span></li>
+                        <li><i class="fas fa-phone"></i><span th:text="${usuarioGeneral.userTelefono}">(123) 456-7890</span></li>
+                        <li><i class="fas fa-building"></i><span th:text="${usuarioGeneral.companyId.companyName}">Nombre de la Empresa</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+  
+  <!-- FIN MY USER -->
+
+ <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+header {
+    background: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 255, 255));
+    color: white;
+    text-align: center; 
+    padding: 100px 0;
+}
+
+.about-us {
+    padding: 60px 0;
+    color: white; /* Asegura que todo el texto dentro de .about-us sea blanco */
+}
+
+.about-us h2,
+.about-us p {
+    color: white; /* Aplica el color blanco específicamente a los textos dentro de .about-us */
+}
+
+.our-team {
+    padding: 60px 0;
+}
+
+.team-member {
+    transition: transform 0.3s;
+}
+
+.team-member:hover {
+    transform: scale(1.05);
+}
+
+.about-us-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: 400px; /* Ajustar altura máxima */
+}
+
+.team-member-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: 400px; /* Ajustar altura máxima */
+}

@@ -12,10 +12,13 @@ import com.example.demo.entity.Company;
 import com.example.demo.entity.Roles;
 import com.example.demo.entity.Usuarios;
 import com.example.demo.serviceAdminCompany.ICompanyServiceAdminComp;
+import com.example.demo.serviceUser.IUserService;
 
 @Controller
 public class CompanyControllerAdminCompany {
 	
+	@Autowired
+    private IUserService userService;
 	
 	@Autowired
 	private UserSessionLog userSession;
@@ -43,5 +46,22 @@ public class CompanyControllerAdminCompany {
 		
 		return "listCompanies";
 	}
+	
+	@GetMapping("/myPerfilAdminCompany")
+    public String myPerfilUser(Model model) {
+
+        Usuarios userLogueado = userSession.getUser();
+        Long userId = userLogueado.getUserId();
+
+        Roles rol = userLogueado.getRolLevel();
+        Long rolIDUsuario = rol.getRolLevel();
+
+        Usuarios myPerfilUser = userService.getUsuarioGeneralById(userId); 
+
+        model.addAttribute("usuarioGeneral", myPerfilUser);
+        model.addAttribute("rolID", rolIDUsuario);
+
+        return "adminCompany/myPerfil";
+    }
 
 }

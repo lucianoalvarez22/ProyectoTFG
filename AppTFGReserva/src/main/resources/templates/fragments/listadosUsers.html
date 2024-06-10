@@ -11,169 +11,133 @@
 	<!-- LISTADO ADMIN --> 
 	
 	
-	<div th:fragment="vistaAdmin" class="container my-3 card" style="padding-bottom: 388px;">
-		
-		
-		<h1 class="text-center mb-4">LISTADO DE USUARIOS</h1>
-	
-	<table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Usuario</th>
-                <th>Contraseña</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Ciudad</th>
-                <th>Cargo</th>
-                <th>Rol</th>
-                <th>Empresa</th>
-                <th>EmailEmpresa</th>
-                <th>Acciones</th>
-                
-               
-               
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="user : ${users}">
-                
-                <td th:text="${user.userName}"></td>
-                <td th:text="${user.userPassword}"></td>
-                <td th:text="${user.userEmail}"></td>
-                <td th:text="${user.userTelefono}"></td>
-                <td th:text="${user.userCiudad}"></td>
-                       
-                <td>
-                	<span th:each="cargo : ${user.rolLevel.cargos}">
-                    	<span th:text="${cargo.cargoName}"></span>
-                	</span>
-            	</td>
-            	<td th:text="${user.rolLevel.rolLevel}"></td>
-            	 <td th:text="${user.companyId.companyName}"></td>
-            	<td th:text="${user.companyId.companyEmail}"></td>
-            	
-            	<td>
-                    <!-- Botón de eliminación con modal de confirmación -->
-                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${user.userId}">Eliminar</a>
-
-                    <!-- Modal de confirmación -->
-                    <div class="modal fade" th:id="'confirmDeleteModal' + ${user.userId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ¿Estás seguro de que quieres eliminar a <strong th:text="${user.userName}"></strong>?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <!-- Enlace para realizar la eliminación -->
-                                    <a th:href="@{/deleteUserAdminSuper/{id}(id=${user.userId})}" class="btn btn-danger">Eliminar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-  
-           </tr>
-        </tbody>
-    </table>
-		
-		
-		
-	</div>
-	
-	
-	<!-- LISTADO ADMIN --> 
-	
-	
-	<!-- LISTADO ADMINCOMPANY -->
-	
-	 <div th:fragment="vistaAdminCompany" class="container my-3 card">
-        <h1 class="text-center mb-4">LISTADO DE USUARIOS</h1>
-        
-        <div class="mb-3">
-        <a href="/addUsuarioByAdminCompany" class="btn btn-success">+ Usuario</a>
-    </div>
-    
-        <table class="table table-striped">
-            <thead>
+	<div th:fragment="vistaAdmin" class="container my-5">
+    <h1 class="text-center mb-4 text-white">USUARIOS</h1>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white">
+            <thead class="table-dark">
                 <tr>
-                    <th>Nombre de Usuario</th>
-                    <th>Contraseña</th>
+                    <th>Usuario</th>
                     <th>Email</th>
                     <th>Teléfono</th>
                     <th>Ciudad</th>
                     <th>Cargo</th>
                     <th>Rol</th>
                     <th>Empresa</th>
-                   <!-- <th>Correo Empresa</th> -->
-                    <th>Acciones</th>
+                    <th>Email Empresa</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.userName}"></td>
+                    <td th:text="${user.userEmail}"></td>
+                    <td th:text="${user.userTelefono}"></td>
+                    <td th:text="${user.userCiudad}"></td>
+                    <td>
+                        <span th:each="cargo : ${user.rolLevel.cargos}">
+                            <span th:text="${cargo.cargoName}"></span>
+                        </span>
+                    </td>
+                    <td th:text="${user.rolLevel.rolLevel}"></td>
+                    <td th:text="${user.companyId.companyName}"></td>
+                    <td th:text="${user.companyId.companyEmail}"></td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${user.userId}">Eliminar</a>
+                        </div>
+                        <!-- Modal de confirmación -->
+                        <div class="modal fade" th:id="'confirmDeleteModal' + ${user.userId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-black" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-black">
+                                        ¿Estás seguro de que quieres eliminar a <strong th:text="${user.userName}"></strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <a th:href="@{/deleteUserAdminSuper/{id}(id=${user.userId})}" class="btn btn-danger">Eliminar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+	
+	<!-- LISTADO ADMIN --> 
+	
+	
+	<!-- LISTADO ADMINCOMPANY -->
+	
+	<div th:fragment="vistaAdminCompany" class="container my-5">
+    <h1 class="text-center mb-4 text-white">USUARIOS</h1>
+    <div class="mb-3">
+        <a href="/addUsuarioByAdminCompany" class="btn btn-success">+ Usuario</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre de Usuario</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Ciudad</th>
+                    <th>Cargo</th>
+                    <th>Rol</th>
+                    <th>Empresa</th>
+                    <th class="text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="user : ${usuariosEmpresa}">
                     <td th:text="${user.userName}"></td>
-                    <td th:text="${user.userPassword}"></td>
                     <td th:text="${user.userEmail}"></td>
                     <td th:text="${user.userTelefono}"></td>
                     <td th:text="${user.userCiudad}"></td>
-                    
-                    
-  				<td>
+                    <td>
                         <span th:each="cargo : ${user.rolLevel.cargos}">
                             <span th:text="${cargo.cargoName}"></span>
                         </span>
-               </td>
-
-
-
-
-	                    <td th:text="${user.rolLevel.rolLevel}"></td>
-	                    <td th:text="${user.companyId.companyName}"></td>
-	                  <!--  <td th:text="${user.companyId.companyEmail}"></td>  -->
-	                    
-                     
-                        <td><a th:href="@{/editUserByAdminCompany/{id}(id=${user.userId})}" class="btn btn-warning">Editar</a></td>
-                        
-                        
-                    <td>
-                    <!-- Botón de eliminación con modal de confirmación -->
-                    		<a href="#" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${user.userId}">Eliminar</a>
-
-	                    <!-- Modal de confirmación -->
-	                    <div class="modal fade" th:id="'confirmDeleteModal' + ${user.userId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-	                        <div class="modal-dialog">
-	                            <div class="modal-content">
-	                                <div class="modal-header">
-	                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-	                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	                                </div>
-	                                <div class="modal-body">
-	                                    ¿Estás seguro de que quieres eliminar a <strong th:text="${user.userName}"></strong>?
-	                                </div>
-	                                <div class="modal-footer">
-	                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-	                                    <!-- Enlace para realizar la eliminación -->
-	                                    <a th:href="@{/deleteUser/{id}(id=${user.userId})}" class="btn btn-danger">Eliminar</a>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-                </td>
-                        
-                        
-                        <td><a th:href="@{/userReserva/{id}(id=${user.userId})}" class="btn btn-info">Reservas</a></td>
-                    <!-- Aquí podrías añadir enlaces o botones para acciones específicas -->
+                    </td>
+                    <td th:text="${user.rolLevel.rolLevel}"></td>
+                    <td th:text="${user.companyId.companyName}"></td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a th:href="@{/editUserByAdminCompany/{id}(id=${user.userId})}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${user.userId}">Eliminar</a>
+                            <a th:href="@{/userReserva/{id}(id=${user.userId})}" class="btn btn-info btn-sm">Reservas</a>
+                        </div>
+                        <!-- Modal de confirmación -->
+                        <div class="modal fade" th:id="'#confirmDeleteModal' + ${user.userId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-black" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-black">
+                                        ¿Estás seguro de que quieres eliminar a <strong th:text="${user.userName}"></strong>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <a th:href="@{/deleteUser/{id}(id=${user.userId})}" class="btn btn-danger">Eliminar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
-                
-              
-                
             </tbody>
         </table>
     </div>
+</div>
 
 	<!-- LISTADO ADMINCOMPANY -->
 	
@@ -181,73 +145,61 @@
 	<!-- RESERVA POR USUARIOS --> 
 	
 	
-	 <div th:fragment="vistaAdminCompany" class="container my-3 card">
-        <h1 class="text-center mb-4">Reservas</h1>
-         <div class="mb-3">
-		   <a href="/listUserAdminCompany" class="btn btn-danger">Ocultar</a>
-		 </div>
-        <table class="table table-striped">
-            <thead>
+	 <div th:fragment="vistaAdminCompany" class="container my-5">
+    <h1 class="text-center mb-4 text-white">RESERVAS</h1>
+    <div class="mb-3">
+        <a href="/listUserAdminCompany" class="btn btn-danger">Ocultar</a>
+        
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white">
+            <thead class="table-dark">
                 <tr>
                     <th>Sala</th>
                     <th>Fecha Entrada</th>
                     <th>Fecha Salida</th>
                     <th>Fila</th>
                     <th>Asiento</th>
-                   <!-- <th>Mapa</th> -->
                     <th>Estado</th>
-                    <th>Acción</th>
-                    
-                    
+                    <th class="text-center">Acción</th>
                 </tr>
             </thead>
             <tbody>
-			
-				<tr th:each="reserva : ${reservaUser}">
-                <!--    <td th:text="${sala.salaId}"></td> -->
+                <tr th:each="reserva : ${reservaUser}">
                     <td th:text="${'Sala ' + reserva.sala.salaNumero}"></td>
                     <td th:text="${#temporals.format(reserva.fechaEntrada, 'dd/MM/yyyy HH:mm')}"></td>
                     <td th:text="${#temporals.format(reserva.fechaSalida, 'dd/MM/yyyy HH:mm')}"></td>
                     <td th:text="${reserva.asiento.posicionFila}"></td>
                     <td th:text="${reserva.asiento.posicionColumna}"></td>
-                  <!--  <td th:text="${reserva.mapa.mapaNombre}"></td>  -->
                     <td th:text="${reserva.reservaCompletada ? 'Completada' : 'Pendiente'}"></td>
-                    
-                    
-                    
-                    
-                    <td>
-                    <!-- Botón de eliminación con modal de confirmación -->
-                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${reserva.reservaId}">Eliminar</a>
-
-                    <!-- Modal de confirmación -->
-                    <div class="modal fade" th:id="'confirmDeleteModal' + ${reserva.reservaId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ¿Estás seguro que quieres <strong>ELIMINAR</strong> esta reserva?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <!-- Enlace para realizar la eliminación -->
-                                    <a th:href="@{/deleteReservaAdminCompany/{id}(id=${reserva.reservaId})}" class="btn btn-danger">Eliminar</a>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${reserva.reservaId}">Eliminar</a>
+                        </div>
+                        <!-- Modal de confirmación -->
+                        <div class="modal fade" th:id="'confirmDeleteModal' + ${reserva.reservaId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-black" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-black">
+                                        ¿Estás seguro que quieres <strong>ELIMINAR</strong> esta reserva?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <a th:href="@{/deleteReservaAdminCompany/{id}(id=${reserva.reservaId})}" class="btn btn-danger">Eliminar</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-                    
+                    </td>
                 </tr>
-               
             </tbody>
-            
-        
         </table>
     </div>
+</div>
 	
 	
 	

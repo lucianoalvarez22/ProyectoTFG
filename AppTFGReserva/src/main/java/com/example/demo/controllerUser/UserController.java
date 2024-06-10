@@ -26,6 +26,7 @@ import com.example.demo.entity.Usuarios;
 import com.example.demo.serviceAdmin.IAsientosService;
 import com.example.demo.serviceAdmin.IMapaService;
 import com.example.demo.serviceAdmin.ISalasService;
+import com.example.demo.serviceAdminCompany.ICompanyServiceAdminComp;
 import com.example.demo.serviceUser.IReservaService;
 import com.example.demo.serviceUser.IUserService;
 
@@ -49,6 +50,9 @@ public class UserController {
 
     @Autowired
     private IReservaService reservaService;
+    
+    @Autowired
+	private ICompanyServiceAdminComp companyServicioAdmComp;
 
     @GetMapping("/myPerfilUser")
     public String myPerfilUser(Model model) {
@@ -65,6 +69,25 @@ public class UserController {
         model.addAttribute("rolID", rolIDUsuario);
 
         return "listCompanies";
+    }
+    
+    
+    @GetMapping("/myCompanyUser")
+    public String myPCompanyUser(Model model) {
+
+        Usuarios userLogueado = userSession.getUser();
+        Company empresa = userLogueado.getCompanyId();
+
+        Roles rol = userLogueado.getRolLevel();
+        Long rolIDUsuario = rol.getRolLevel();
+
+        Long idCompany = empresa.getCompanyId();
+        List<Company> listMyCompany = companyServicioAdmComp.getMyCompany(idCompany);
+
+        model.addAttribute("myCompanyUser", listMyCompany);
+        model.addAttribute("rolID", rolIDUsuario);
+
+        return "userGeneral/myCompanyUser";
     }
 
     @GetMapping("/verSalas")
@@ -177,7 +200,7 @@ public class UserController {
             reservaService.eliminarReserva(id); // Eliminar la reserva
         }
         redirectAttributes.addFlashAttribute("reservaEliminadaExito", "Reserva eliminada exitosamente. Vuelva a reservar si así lo desea");
-        return "redirect:/verSalas";
+        return "redirect:/misReservas";
     }
 
     @GetMapping("/buscarAsientos")

@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <title>Edita Mapa</title>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/style.css"> 
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/formAdd.css">  
 </head>
 <body>
 	
@@ -19,59 +20,52 @@
     	</div>
     	
     	
-   	<!-- FORM --> 
-    	
-    	<div class="container my-3 card">
-    <h1 class="text-center mb-4">Editar Sala</h1>
-    <form action="/editSala" method="post">
-        <input type="hidden" name="salaId" th:value="${sala.salaId}">
-        
-        
-        <div class="mb-3">
-               <label for="mapaId" class="form-label">Nombre Mapa:</label>
-               <select id="mapaId" name="mapaId" class="form-select" required>
-              <option value="" selected disabled hidden>Nombre Mapa</option>
-              <option th:each="mapa : ${mapas}" th:value="${mapa.mapaId}" th:name="mapaId" th:text="${mapa.mapaNombre}"></option>
-           </select>
-       </div> 
-        
-        
-        <div class="mb-3">
-            <label for="numeroFilas" class="form-label">Nº Filas</label>
-            <input type="number" class="form-control" id="numeroFilas" name="numeroFilas" th:value="${sala.numeroFilas}" min="1" max="100" required>
+   <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 mb-5">
+            <div class="form-container p-5 rounded shadow-sm">
+                <h2 class="text-center mb-4">EDITAR SALA</h2>
+                <form action="/editSala" method="post">
+                    <input type="hidden" name="salaId" th:value="${sala.salaId}">
+                    <div class="mb-3">
+                        <label for="mapaId" class="form-label">Nombre Mapa:</label>
+                        <select id="mapaId" name="mapaId" class="form-select" required>
+                            <option value="" selected disabled hidden>Nombre Mapa</option>
+                            <option th:each="mapa : ${mapas}" th:value="${mapa.mapaId}" th:name="mapaId" th:text="${mapa.mapaNombre}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="numeroFilas" class="form-label">Nº Filas:</label>
+                        <input type="number" class="form-control" id="numeroFilas" name="numeroFilas" th:value="${sala.numeroFilas}" min="1" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="numeroColumnas" class="form-label">Nº Columnas:</label>
+                        <input type="number" class="form-control" id="numeroColumnas" name="numeroColumnas" th:value="${sala.numeroColumnas}" min="1" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sala_asientostotales" class="form-label">Asientos Totales:</label>
+                        <input type="number" class="form-control" id="sala_asientostotales" name="salaAsientosTotales" th:value="${sala.salaAsientosTotales}" min="1" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="salaNumero" class="form-label">Nº Sala:</label>
+                        <input type="number" class="form-control" id="salaNumero" name="salaNumero" th:value="${sala.salaNumero}" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sala_estado" class="form-label">Estado:</label>
+                        <select id="sala_estado" name="salaEstado" class="form-select" required>
+                            <option value="" selected disabled hidden>Seleccione el Estado</option>
+                            <option value="true">Disponible</option>
+                            <option value="false">Inactivo</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary me-2">Editar</button>
+                        <a href="/listMapas" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        
-        <div class="mb-3">
-            <label for="numeroColumnas" class="form-label">Nº Columnas</label>
-            <input type="number" class="form-control" id="numeroColumnas" name="numeroColumnas" th:value="${sala.numeroColumnas}" min="1" max="100" required>
-        </div>
-        
-        <div class="mb-3">
-            <label for="sala_asientostotales" class="form-label">Asientos totales</label>
-            <input type="number" class="form-control" id="sala_asientostotales" name="salaAsientosTotales" th:value="${sala.salaAsientosTotales}" min="1" max="100" required>
-        </div>
-        
-        <div class="mb-3">
-            <label for="salaNumero" class="form-label">Nº Sala</label>
-            <input type="number" class="form-control" id="salaNumero" name="salaNumero" th:value="${sala.salaNumero}" min="1" required>
-        </div>
-        
-        <div class="mb-3">
-         <label for="sala_estado" class="form-label">Estado:</label>
-         <select id="sala_estado" name="salaEstado" class="form-select" required>
-            <option value="" selected disabled hidden>Seleccione el Estado</option>
-            <option value="true">Disponible</option>
-            <option value="false">Inactivo</option>
-          </select>
-       </div>
-        
-        
-         
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Editar</button>
-            <a href="/listMapas" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </form>
+    </div>
 </div>
 
 

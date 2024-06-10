@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mi Empresa</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/css/perfil.css">
+</head>
+<body>
+    <div th:switch="${rolID}">
+        <div th:case="'3'">
+            <div th:replace="~{fragments/nav :: vistaUser}"></div>
+            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
+        </div>
+    </div>
+
+    <div th:fragment="vistaAdminCompany" class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="profile-header">
+                        <img src="/img/company1.jpg" alt="Logo de la Empresa">
+                        <h3 th:text="${myCompanyUser[0].companyName}">Nombre de la Empresa</h3>
+                        <p class="text-muted" th:text="${myCompanyUser[0].companyIndustria}">Industria</p>
+                    </div>
+                    <div class="profile-details">
+                        <ul class="info-list">
+                            <li><i class="fas fa-map-marker-alt"></i><span th:text="${myCompanyUser[0].companyUbicacion}">Ubicación</span></li>
+                            <li><i class="fas fa-phone"></i><span th:text="${myCompanyUser[0].companyTelefono}">Teléfono</span></li>
+                            <li><i class="fas fa-envelope"></i><span th:text="${myCompanyUser[0].companyEmail}">Email</span></li>
+                            <li>
+                                <i class="fas fa-user-tie"></i>
+                                <span th:each="admin : ${myCompanyUser[0].usuarios}">
+                                    <span th:each="cargo : ${admin.rolLevel.cargos}">
+                                        <span th:if="${cargo.cargoName == 'Manager'}" th:text="${admin.userName}">Administrador-Empresa</span>
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -5,6 +5,7 @@
 <title>Editar Mapa</title>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/style.css"> 
+<link rel="stylesheet" href="/css/formAdd.css"> 
 </head>
 <body>
 	
@@ -19,35 +20,36 @@
     	</div>
     	
     	
-    	<!-- FORM --> 
-    	
-    	<div class="container my-3 card">
-    <h1 class="text-center mb-4">Editar Mapa</h1>
-    <form action="/editMapa" method="post">
-        <input type="hidden" name="mapaId" th:value="${mapa.mapaId}">
-        <div class="mb-3">
-            <label for="mapaNombre" class="form-label">Nombre Mapa</label>
-            <input type="text" class="form-control" id="mapaNombre" name="mapaNombre" th:value="${mapa.mapaNombre}" required>
+    <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 mb-5">
+            <div class="form-container p-5 rounded shadow-sm">
+                <h2 class="text-center mb-4">EDITAR MAPA</h2>
+                <form action="/editMapa" method="post">
+                    <input type="hidden" name="mapaId" th:value="${mapa.mapaId}">
+                    <div class="mb-3">
+                        <label for="mapaNombre" class="form-label">Nombre Mapa:</label>
+                        <input type="text" class="form-control" id="mapaNombre" name="mapaNombre" th:value="${mapa.mapaNombre}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="companyId" class="form-label">Empresa:</label>
+                        <select id="companyId" name="companyId" class="form-select" required>
+                            <option value="" selected disabled hidden>Seleccionar Empresa</option>
+                            <option th:each="company : ${companies}" th:value="${company.companyId}" th:name="companyId" th:text="${company.companyName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="numeroTotalDeSalas" class="form-label">Nº Salas:</label>
+                        <input type="text" class="form-control" id="numeroTotalDeSalas" name="numeroTotalDeSalas" th:value="${mapa.numeroTotalDeSalas}" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary me-2">Editar</button>
+                        <a href="/listMapas" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        
-         <div class="mb-3">
-             <label for="companyId" class="form-label">Empresa:</label>
-                <select id="companyId" name="companyId" class="form-select" required>
-                      <option value="" selected disabled hidden>Seleccionar Empresa</option>
-                      <option th:each="company : ${companies}" th:value="${company.companyId}" th:name="companyId" th:text="${company.companyName}"></option>
-                </select>
-         </div>
-        
-        <div class="mb-3">
-            <label for="numeroTotalDeSalas" class="form-label">Nº Salas</label>
-            <input type="text" class="form-control" id="numeroTotalDeSalas" name="numeroTotalDeSalas" th:value="${mapa.numeroTotalDeSalas}" required>
-        </div>
-         
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Editar</button>
-            <a href="/listMapas" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </form>
+    </div>
 </div>
     	
     	

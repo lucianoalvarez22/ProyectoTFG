@@ -5,6 +5,7 @@
     <title>Mis Reservas</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/list.css"> 
 </head>
 <body>
     <div th:switch="${rolID}">
@@ -14,81 +15,96 @@
         </div>
     </div>
 
-    <div class="container my-3 card" style="padding-bottom: 498px;">
-        <h1 class="text-center mb-4">Mis Reservas</h1>
-        
-        <!-- Mensaje de éxito -->
-        <div th:if="${reservaExito}" class="alert alert-success text-center" role="alert">
-            <span th:text="${reservaExito}"></span>
-        </div>
-        
-        <!-- Mensaje si no hay reservas -->
-        <div th:if="${#lists.isEmpty(reservas)}" class="alert alert-info text-center" role="alert">
-            No tienes reservas.
-        </div>
-        
-        <div th:if="${!#lists.isEmpty(reservas)}">
-        <table class="table table-striped">
-            <thead class="text-center">
+    <div class="container my-5">
+    <h1 class="text-center mb-4 text-white">MIS RESERVAS</h1>
+    
+    <!-- Mensaje de éxito -->
+    <div th:if="${reservaExito}" class="alert alert-success text-center" role="alert">
+        <span th:text="${reservaExito}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    <!-- Mensaje de eliminación con éxito -->
+    <div th:if="${reservaEliminadaExito}" class="alert alert-success text-center" role="alert">
+        <span th:text="${reservaEliminadaExito}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    <!-- Mensaje si no hay reservas -->
+    <div th:if="${#lists.isEmpty(reservas)}" class="alert alert-info text-center" role="alert">
+        No tienes reservas.
+    </div>
+    
+    <div th:if="${!#lists.isEmpty(reservas)}" class="table-responsive">
+        <table class="table table-hover align-middle bg-white">
+            <thead class="table-dark text-center">
                 <tr>
-                    <!-- <th>Reserva ID</th> -->
                     <th>Sala</th>
                     <th>Fecha Entrada</th>
                     <th>Fecha Salida</th>
                     <th>Fila</th>
                     <th>Asiento</th>
-                   <!-- <th>Mapa</th> -->
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th class="text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="reserva : ${reservas}" class="text-center">
-                    <!-- <td th:text="${reserva.reservaId}"></td> -->
                     <td th:text="${'Sala ' + reserva.sala.salaNumero}"></td>
                     <td th:text="${#temporals.format(reserva.fechaEntrada, 'dd/MM/yyyy HH:mm')}"></td>
                     <td th:text="${#temporals.format(reserva.fechaSalida, 'dd/MM/yyyy HH:mm')}"></td>
                     <td th:text="${reserva.asiento.posicionFila}"></td>
                     <td th:text="${reserva.asiento.posicionColumna}"></td>
-                  <!--  <td th:text="${reserva.mapa.mapaNombre}"></td>  -->
-                    <td th:text="${reserva.reservaCompletada ? 'Completada' : 'Pendiente'}"></td>
-                    
-                    
-                    
-                    <td>
-                    <!-- Botón de eliminación con modal de confirmación -->
-                    <a href="#" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${reserva.reservaId}">Eliminar</a>
-
-                    <!-- Modal de confirmación -->
-                    <div class="modal fade" th:id="'confirmDeleteModal' + ${reserva.reservaId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ¿Estás seguro de que quieres eliminar esta reserva?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <!-- Enlace para realizar la eliminación -->
-                                    <a th:href="@{/deleteReserva/{id}(id=${reserva.reservaId})}" class="btn btn-danger">Eliminar</a>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${reserva.reservaId}">Eliminar</a>
+                        </div>
+                        <!-- Modal de confirmación -->
+                        <div class="modal fade" th:id="'confirmDeleteModal' + ${reserva.reservaId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-black" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-black">
+                                        ¿Estás seguro de que quieres eliminar esta reserva?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <a th:href="@{/deleteReserva/{id}(id=${reserva.reservaId})}" class="btn btn-danger">Eliminar</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-                    
-                    
-                    
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    </div>
+</div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Script para ocultar el mensaje después de 5 segundos
+        document.addEventListener('DOMContentLoaded', function () {
+            const alertSuccess = document.querySelector('.alert-success');
+            if (alertSuccess) {
+                setTimeout(() => {
+                    alertSuccess.classList.add('fade-out');
+                    setTimeout(() => {
+                        alertSuccess.remove();
+                    }, 500); // Tiempo que tarda en desaparecer (ajustable)
+                }, 3000); // 5 segundos (ajustable)
+            }
+        });
+    </script>
+    <style>
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
     
 </body>
 </html>

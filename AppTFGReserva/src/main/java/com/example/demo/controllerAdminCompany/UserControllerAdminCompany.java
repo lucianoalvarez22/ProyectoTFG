@@ -25,6 +25,7 @@ import com.example.demo.serviceAdmin.IAsientosService;
 import com.example.demo.serviceAdmin.ICargoServiceAdmin;
 import com.example.demo.serviceAdmin.ICompanyServiceAdmin;
 import com.example.demo.serviceAdmin.IRolServiceAdmin;
+import com.example.demo.serviceAdmin.ISalasService;
 import com.example.demo.serviceAdminCompany.IUserServiceAdminCompany;
 import com.example.demo.serviceUser.IReservaService;
 
@@ -55,6 +56,8 @@ public class UserControllerAdminCompany {
 	
 
 	
+
+	
 	//SACAR LOS USUARIOS DE UNA DETERMINADA EMPRESA
 		@GetMapping("/listUserAdminCompany")
 		public String getUsersCompany(Model model) {
@@ -80,7 +83,7 @@ public class UserControllerAdminCompany {
 		
 		
 		
-		//RESERVA DE CADA USUARIO
+		//RESERVAS ACTIVAS DE CADA USUARIO
 		
 		@GetMapping("/userReserva/{id}")
 		public String getUserReservas(@PathVariable(name = "id") Long userId, Model model) {
@@ -91,6 +94,9 @@ public class UserControllerAdminCompany {
 			Company empresa = userLogueado.getCompanyId();
 			List<Usuarios> usuariosEmpresa = userServiceAdminCompany.getUsuariosByCompanyId(empresa);	
 			List<Reservas> reservaByUser = reservaServicio.getReservasByUserId(userId);
+		
+		
+		  
 			
 			model.addAttribute("reservaUser", reservaByUser);
 			model.addAttribute("usuariosEmpresa", usuariosEmpresa);
@@ -98,6 +104,8 @@ public class UserControllerAdminCompany {
 			return "listAllUser";
 			
 		}
+
+		
 		
 		
 		//ELIMINAR RESERVA 

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.componenteLogueado.UserSessionLog;
-import com.example.demo.entity.Roles;
 import com.example.demo.entity.Usuarios;
 import com.example.demo.serviceAdmin.IUserServiceAdmin;
 
@@ -76,6 +75,10 @@ public class LoginController {
 	        }
 	        return "redirect:/login"; 
 	    }
+		
+		
+		
+		
 		
 		
 		

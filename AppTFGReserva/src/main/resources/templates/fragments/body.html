@@ -7,45 +7,117 @@
 </head>
 <body>
 	
-	<!-- BODY ADMIN -->
+<!-- BODY ADMIN -->
+<div th:fragment="vistaAdmin" class="container my-5">
+    <div class="text-center my-5 text-white">
+        <h1 class="display-4">BIENVENIDO A SEATAKER</h1>
+        <p class="lead">La plataforma del <strong>Administrador-App</strong></p>
+        <p class="text-muted">Creación y gestión de empresas y Mapas de las mismas.</p>
+    </div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/img/oficina.jpg" class="d-block mx-auto custom-carousel-img" alt="Imagen 1">
+            </div>
+            <div class="carousel-item">
+                <img src="/img/oficina.jpg" class="d-block mx-auto custom-carousel-img" alt="Imagen 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/img/oficina.jpg" class="d-block mx-auto custom-carousel-img" alt="Imagen 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 
-	
-	<div th:fragment="vistaAdmin" class="container my-3 card shadow-sm bg-light rounded border border-light" style="padding-bottom: 515px;">
-		<div class="card-body">
-	        <h1 class="card-title text-center mb-4">SEATAKER</h1>
-	        <p class="card-text text-muted text-center">Bienvenido a la plataforma de <strong>Administrador-App</strong></p>
-	        <p class="card-text text-muted text-center">Creación y gestión de empresas y Mapas de las mismas.</p>
-    	</div>
-	</div>
-
-	<!-- FIN BODY ADMIN --> 
-	
-	
+</div>
+<!-- FIN BODY ADMIN -->
 	
 	<!-- BODY ADMIN COMPANY -->
 	
-	<div th:fragment="vistaAdminCompany" class="container my-3 card shadow-sm bg-light rounded border border-light" style="padding-bottom: 515px;">
-	
-		<div class="card-body">
-	        <h1 class="card-title text-center mb-4">SEATAKER</h1>
-	        <p class="card-text text-muted text-center">Bienvenido a la plataforma de <strong>Administrador-Empresa</strong></p>
-	        <p class="card-text text-muted text-center">Gestiona los usuarios y las reservas de los mismos en tu empresa.</p>
-    	</div>
-	
-	</div>
+	<div th:fragment="vistaAdminCompany" class="container my-5">
+    <div class="text-center my-5 text-white">
+        <h1 class="display-4">BIENVENIDO A SEATAKER</h1>
+        <p class="lead">La plataforma del <strong>Administrador-Company</strong></p>
+        <p class="text-muted">Gestión de usuarios y reservas.</p>
+    </div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/img/oficina.jpg" class="d-block mx-auto custom-carousel-img" alt="Imagen 1">
+            </div>
+            <div class="carousel-item">
+                <img src="/img/oficina.jpg" class="d-block mx-auto custom-carousel-img" alt="Imagen 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/img/oficina.jpg" class="d-block mx-auto custom-carousel-img" alt="Imagen 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+</div>
 	
 	<!-- FIN DE BODY COMPANY --> 
 	
 	
 	<!-- BODY USER -->
 	
-	<div th:fragment="vistaUser" class="container my-3 card shadow-sm bg-light rounded border border-light" style="padding-bottom: 515px;">
-    <div class="card-body">
-        <h1 class="card-title text-center mb-4">SEAT-TAKER</h1>
-        <p class="card-text text-muted text-center">Bienvenido a la plataforma de <strong>Usuario</strong></p>
-        <p class="card-text text-muted text-center">Gestiona y añade tu reserva. Disfruta de tu espacio en oficina.</p>
+	<div th:fragment="vistaUser" class="container my-5">
+    <div class="text-center my-5 text-white">
+        <h1 class="display-4">BIENVENIDO A SEATAKER</h1>
+        <p class="lead">La plataforma del <strong>Usuario</strong></p>
+        <p class="text-muted">Reserva tu asiento de la manera más rápida y sencilla.</p>
     </div>
-</div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/img/oficina.jpg" class="d-block mx-auto custom-carousel-img" alt="Imagen 1">
+            </div>
+            <div class="carousel-item">
+                <img src="/img/oficina.jpg" class="d-block mx-auto custom-carousel-img" alt="Imagen 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/img/oficina.jpg" class="d-block mx-auto custom-carousel-img" alt="Imagen 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 	
 	<!-- FIN BODY USER -->
 

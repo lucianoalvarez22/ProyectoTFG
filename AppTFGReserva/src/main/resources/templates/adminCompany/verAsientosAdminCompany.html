@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Mapa de Asientos</title>
+    <title>Reservar Asiento</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -23,6 +23,52 @@
         .circle-secondary {
             background-color: rgb(154, 153, 150);
         }
+        .asiento-btn {
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            font-size: 1.2rem;
+        }
+        .custom-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .custom-header {
+            background-color: #333;
+            color: #fff;
+            border-bottom: 1px solid #ccc;
+            padding: 1rem;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .custom-body {
+            padding: 2rem;
+        }
+        .btn-custom {
+            background-color: #444;
+            color: #fff;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #555;
+            color: #fff;
+        }
+        .custom-footer {
+            padding: 1rem;
+            background-color: #333;
+            color: #fff;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .status-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .status-indicator span {
+            margin-right: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -40,65 +86,124 @@
 
     <div class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <h1 class="card-header text-center">Mapa de Asientos</h1>
-                    <div class="card-body text-center">
-						
-						<div class="mb-3">
-                            <strong>Asientos Libres:</strong> <span th:text="${asientosLibres}"></span>
-                             <span class="mx-3"></span>
-                        	<strong>Asientos Ocupados:</strong> <span th:text="${asientosOcupados}"></span>
-                        </div>
-                        
+            <div class="col-md-10">
+                <div class="custom-card bg-light mb-5">
+                    <div class="custom-header text-center">
+                        <h1>Reservar Asiento</h1>
+                    </div>
+                    
+                    <div class="text-center my-3" id="seleccion-reserva" th:if="${fechaFormateada != null}">
+                        <span th:text="${fechaFormateada} + ' - ' + ${tipoReservaTexto}"></span>
+                    </div>
+                    
+                    <div class="custom-body text-center">
+                        <!-- Selección de Fecha -->
                         <div class="mb-3">
-                            <span class="circle circle-success d-inline-block mx-2"></span><strong>Libre</strong>
-                            <span class="circle circle-warning d-inline-block mx-2"></span><strong>Seleccionado</strong>
-                            <span class="circle circle-secondary d-inline-block mx-2"></span><strong>Ocupado</strong>
+                            <form action="#" method="get" id="filterForm">
+                                <input type="hidden" name="salaId" th:value="${sala.salaId}">
+                                <input type="hidden" name="salaNumero" th:value="${sala.salaNumero}">
+                                <input type="hidden" id="fechaFormateada" name="fechaFormateada" th:value="${fechaFormateada}">
+                                <input type="hidden" id="tipoReservaTexto" name="tipoReservaTexto" th:value="${tipoReservaTexto}">
+                                <input type="hidden" id="horaApertura" th:value="${horaApertura}">
+                                <input type="hidden" id="horaCierre" th:value="${horaCierre}">
+                                <input type="hidden" id="horaInicioParam" name="horaInicio">
+                                <input type="hidden" id="horaFinParam" name="horaFin">
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="fecha">Fecha:</label>
+                                        <input type="date" id="fecha" name="fecha" class="form-control" required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="tipoReserva">Tipo de Reserva:</label>
+                                        <select id="tipoReserva" name="tipoReserva" class="form-control" required>
+                                            <option value="" selected disabled>Seleccionar</option>
+                                            <option value="completa">Jornada Completa</option>
+                                            <option value="media_manana">Media Jornada Mañana</option>
+                                            <option value="media_tarde">Media Jornada Tarde</option>
+                                            <option value="por_horas">Por Horas</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                    <div class="col-md-6 mt-3" id="horaReservaDiv" style="display:none;">
+                                        <label for="horaReserva">Hora de Reserva:</label>
+                                        <select id="horaReserva" name="horaReserva" class="form-control">
+                                            <!-- Options will be populated by JavaScript -->
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center mt-3">
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-custom btn-lg" onclick="buscarAsientos()">Buscar</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        
-                        <!-- Crear una fila para cada fila de asientos -->
-                        <div th:each="fila : ${#numbers.sequence(1, sala.numeroFilas)}" class="row mb-3">
-                            <div class="col-12">
-                                <div class="d-flex flex-row justify-content-center">
-                                    <!-- Dentro de una fila, crear un botón para cada columna -->
-                                    <div th:each="columna : ${#numbers.sequence(1, sala.numeroColumnas)}" class="p-1">
-                                        <button th:each="asiento : ${asientos}"
-                                            th:if="${asiento.posicionFila == fila and asiento.posicionColumna == columna}"
-                                            th:classappend="${asiento.asientoEstado ? ' btn-success' : ' btn-secondary'}"
-                                            class="btn btn-sm asiento-btn"
-                                            th:data-fila="${fila}"
-                                            th:data-columna="${columna}"
-                                            th:data-estado="${asiento.asientoEstado ? 'Libre' : 'Ocupado'}"
-                                            th:title="|Fila ${fila} Asiento ${columna}|"
-                                            th:disabled="${!asiento.asientoEstado}"
-                                            id="toggleButton"
-                                            onclick="mostrarDetalleAsiento(this)">
-                                            <i class="fas fa-chair"></i>
-                                        </button>
+                        <!-- FIN DE SELECCIÓN DE FECHA Y TIPO DE RESERVA -->
+
+                        <!-- Mapa de asientos -->
+                        <div id="mapaAsientos" th:if="${mostrarMapa}">
+                            <!-- Información de asientos libres y ocupados -->
+                            <div class="status-indicator">
+                                <span><strong>Asientos Libres:</strong> <span th:text="${asientosLibres}"></span></span>
+                                <span><strong>Asientos Ocupados:</strong> <span th:text="${asientosOcupados}"></span></span>
+                            </div>
+
+                            <div class="status-indicator">
+                                <span><span class="circle circle-success"></span>Libre</span>
+                                <span><span class="circle circle-warning"></span>Seleccionado</span>
+                                <span><span class="circle circle-secondary"></span>Ocupado</span>
+                            </div>
+
+                            <!-- Crear una fila para cada fila de asientos -->
+                            <div th:each="fila : ${#numbers.sequence(1, sala.numeroFilas)}" class="row mb-3">
+                                <div class="col-12">
+                                    <div class="d-flex flex-row justify-content-center">
+                                        <!-- Dentro de una fila, crear un botón para cada columna -->
+                                        <div th:each="columna : ${#numbers.sequence(1, sala.numeroColumnas)}" class="p-1">
+                                            <button th:each="asiento : ${asientos}"
+                                                    th:if="${asiento.posicionFila == fila and asiento.posicionColumna == columna}"
+                                                    th:classappend="${asiento.asientoEstado ? ' btn-success' : ' btn-secondary'}"
+                                                    class="btn btn-sm asiento-btn"
+                                                    th:data-fila="${fila}"
+                                                    th:data-columna="${columna}"
+                                                    th:data-estado="${asiento.asientoEstado ? 'Libre' : 'Ocupado'}"
+                                                    th:data-asiento-id="${asiento.asientoId}"
+                                                    th:data-fecha-inicio="${fechaInicio}"
+                                                    th:data-fecha-fin="${fechaFin}"
+                                                    th:data-fecha="${fecha}"
+                                                    th:data-tipo-reserva="${tipoReserva}"
+                                                    th:title="|Fila ${fila} Asiento ${columna}|"
+                                                    th:disabled="${!asiento.asientoEstado}"
+                                                    id="toggleButton"
+                                                    onclick="mostrarDetalleAsiento(this)">
+                                                <i class="fas fa-chair"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- FIN Mapa de asientos -->
+                    </div>
+
+                    <div class="custom-footer text-center">
+                        <strong>Detalles de la reserva</strong>
+                        <div id="info-asiento" class="mt-2">
+                            <p>Seleccione una fecha y un tipo de reserva para ver los asientos disponibles.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="col-md-4">
-                <div class="card text-center">
-                    <div class="card-header"><strong>Detalles del Asiento</strong></div>
-                    <div class="card-body" id="info-asiento">
-                        <p>Elija un asiento para ver la información.</p>
-                    </div>
-                </div>
-            </div>
-            
         </div>
     </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/asientosAdmins.js"></script>
-    
+    <script src="/js/asientosAdminCompany.js"></script>
 
 </body>
 </html>

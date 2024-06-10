@@ -10,57 +10,49 @@
 </head>
 <body>
 	
-	<!-- LISTADO COMPANY ADMIN SUPER--> 
-	
-	<div th:fragment="vistaAdmin" class="container my-3 card" style="padding-bottom: 334px;">
-	
-	<h1 class="text-center mb-4">LISTADO DE EMPRESAS</h1>
-	
-	<div class="mb-3">
+	<div th:fragment="vistaAdmin" class="container my-5">
+    <h1 class="text-center mb-4 text-white">EMPRESAS</h1>
+    <div class="mb-3">
         <a href="/addCompany" class="btn btn-success">Add Empresa</a>
     </div>
-	
-	<table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nombre Empresa</th>
-                <th>Industria</th>
-                <th>Ubicacion</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                 <th>Nombre Admin</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="compa : ${company}">
-                
-                <td th:text="${compa.companyName}"></td>
-                <td th:text="${compa.companyIndustria}"></td>
-                <td th:text="${compa.companyUbicacion}"></td>
-                <td th:text="${compa.companyTelefono}"></td>
-                <td th:text="${compa.companyEmail}"></td>
-                
-				 <td>
-				    <span th:each="admin : ${compa.usuarios}">
-				        <span th:each="cargo : ${admin.rolLevel.cargos}">
-				            <span th:if="${cargo.cargoName == 'Administrador' || cargo.cargoName == 'Manager'}" th:text="${admin.userName}"></span>
-				        </span>
-				    </span>
-				</td>
-                
-               <td>
-                    <span th:if="${compa.usuarios != null && compa.usuarios.size() > 0}">
-                        <button class="btn btn-success" disabled>Add Admin</button>
-                    </span>
-                    <span th:if="${compa.usuarios == null || compa.usuarios.size() == 0}">
-                        <a href="/addAdminCompany" class="btn btn-success">Add Admin</a>
-                    </span>
-                    
-                    <td><a th:href="@{/editCompany/{id}(id=${compa.companyId})}" class="btn btn-warning">Edit</a></td>
-            		<td>
-                        <!-- Botón de eliminación con modal de confirmación -->
-                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${compa.companyId}">Eliminar</a>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre Empresa</th>
+                    <th>Industria</th>
+                    <th>Ubicación</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>Nombre Admin</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="compa : ${company}">
+                    <td th:text="${compa.companyName}"></td>
+                    <td th:text="${compa.companyIndustria}"></td>
+                    <td th:text="${compa.companyUbicacion}"></td>
+                    <td th:text="${compa.companyTelefono}"></td>
+                    <td th:text="${compa.companyEmail}"></td>
+                    <td>
+                        <span th:each="admin : ${compa.usuarios}">
+                            <span th:each="cargo : ${admin.rolLevel.cargos}">
+                                <span th:if="${cargo.cargoName == 'Administrador' || cargo.cargoName == 'Manager'}" th:text="${admin.userName}"></span>
+                            </span>
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <span th:if="${compa.usuarios != null && compa.usuarios.size() > 0}">
+                                <button class="btn btn-success btn-sm" disabled>Add Admin</button>
+                            </span>
+                            <span th:if="${compa.usuarios == null || compa.usuarios.size() == 0}">
+                                <a href="/addAdminCompany" class="btn btn-success btn-sm">Add Admin</a>
+                            </span>
+                            <a th:href="@{/editCompany/{id}(id=${compa.companyId})}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${compa.companyId}">Eliminar</a>
+                        </div>
                         <!-- Modal de confirmación -->
                         <div class="modal fade" th:id="'confirmDeleteModal' + ${compa.companyId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -74,20 +66,17 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <!-- Enlace para realizar la eliminación -->
                                         <a th:href="@{/deleteCompany/{id}(id=${compa.companyId})}" class="btn btn-danger">Eliminar</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </td>
-                    
-                </td>
-    
-           </tr> 
-        </tbody>
-    </table>
-  </div>
+                </tr> 
+            </tbody>
+        </table>
+    </div>
+</div>
   
   
   <!-- LISTADO COMPANY ADMIN SUPER--> 
@@ -96,40 +85,36 @@
 	
 	<!-- LISTA COMPANY ADMIN-COMPANY -->
 	
-		<div th:fragment="vistaAdminCompany" class="container my-3 card" style="padding-bottom: 512px;">
-	
-	<h1 class="text-center mb-4">MI EMPRESA</h1>
-	
-	<table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nombre Empresa</th>
-                <th>Industria</th>
-                <th>Ubicacion</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                <th>Administrador-Empresa</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="compa : ${myCompany}">
-                <td th:text="${compa.companyName}"></td>
-                <td th:text="${compa.companyIndustria}"></td>
-                <td th:text="${compa.companyUbicacion}"></td>
-                <td th:text="${compa.companyTelefono}"></td>
-                <td th:text="${compa.companyEmail}"></td>
-                
-                <td>
-				    <span th:each="admin : ${compa.usuarios}">
-				        <span th:each="cargo : ${admin.rolLevel.cargos}">
-				            <span th:if="${cargo.cargoName == 'Manager'}" th:text="${admin.userName}"></span>
-				        </span>
-				    </span>
-				</td>
-           </tr>
-        </tbody>
-    </table>
-  </div> 
+	<div th:fragment="vistaAdminCompany" class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="profile-header">
+                    <img src="/img/company1.jpg" alt="Logo de la Empresa">
+                    <h3 th:text="${myCompany[0].companyName}">Nombre de la Empresa</h3>
+                    <p class="text-muted" th:text="${myCompany[0].companyIndustria}">Industria</p>
+                </div>
+                <div class="profile-details">
+                    <ul class="info-list">
+                        <li><i class="fas fa-map-marker-alt"></i><span th:text="${myCompany[0].companyUbicacion}">Ubicación</span></li>
+                        <li><i class="fas fa-phone"></i><span th:text="${myCompany[0].companyTelefono}">Teléfono</span></li>
+                        <li><i class="fas fa-envelope"></i><span th:text="${myCompany[0].companyEmail}">Email</span></li>
+                        
+                        <li>
+                            <i class="fas fa-user-tie"></i>
+                            <span th:each="admin : ${myCompany[0].usuarios}">
+                                <span th:each="cargo : ${admin.rolLevel.cargos}">
+                                    <span th:if="${cargo.cargoName == 'Manager'}" th:text="${admin.userName}">Administrador-Empresa</span>
+                                </span>
+                            </span>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 	
 	
   
