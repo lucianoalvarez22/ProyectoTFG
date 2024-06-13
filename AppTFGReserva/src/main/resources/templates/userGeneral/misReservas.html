@@ -3,9 +3,16 @@
 <head>
 	<meta charset="UTF-8">
     <title>Mis Reservas</title>
+    <link rel="icon" href="/img/logo.PNG" type="image/x-icon">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/list.css"> 
+    <style>
+	 .navbar-logo {
+		    width: 30px;
+		    height: 30px;
+		}
+</style>
 </head>
 <body>
     <div th:switch="${rolID}">
@@ -18,11 +25,14 @@
     <div class="container my-5">
     <h1 class="text-center mb-4 text-white">MIS RESERVAS</h1>
     
-    <!-- Mensaje de éxito -->
+    <!-- Mensaje de éxito 
+
     <div th:if="${reservaExito}" class="alert alert-success text-center" role="alert">
         <span th:text="${reservaExito}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    
+    -->
     
     <!-- Mensaje de eliminación con éxito -->
     <div th:if="${reservaEliminadaExito}" class="alert alert-success text-center" role="alert">
@@ -55,27 +65,10 @@
                     <td th:text="${reserva.asiento.posicionFila}"></td>
                     <td th:text="${reserva.asiento.posicionColumna}"></td>
                     <td class="text-center">
-                        <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${reserva.reservaId}">Eliminar</a>
+                        <div role="group">
+                            <a th:href="@{/deleteReserva/{id}(id=${reserva.reservaId})}" class="delete-button btn btn-danger btn-sm">Eliminar</a>
                         </div>
-                        <!-- Modal de confirmación -->
-                        <div class="modal fade" th:id="'confirmDeleteModal' + ${reserva.reservaId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title text-black" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-black">
-                                        ¿Estás seguro de que quieres eliminar esta reserva?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <a th:href="@{/deleteReserva/{id}(id=${reserva.reservaId})}" class="btn btn-danger">Eliminar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </td>
                 </tr>
             </tbody>
@@ -84,7 +77,35 @@
 </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var botonesEliminar = document.querySelectorAll('.delete-button'); // Actualizado el selector
+
+        botonesEliminar.forEach(function(boton) {
+            boton.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: 'No podrás deshacer esta acción',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = boton.getAttribute('href');
+                    }
+                });
+            });
+        });
+    });
+</script>
     
+ 
     <script>
         // Script para ocultar el mensaje después de 5 segundos
         document.addEventListener('DOMContentLoaded', function () {

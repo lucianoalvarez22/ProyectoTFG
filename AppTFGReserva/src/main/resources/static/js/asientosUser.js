@@ -39,7 +39,7 @@ function mostrarDetalleAsiento(button) {
             <input type="hidden" name="fechaInicio" value="${fechaInicio}">
             <input type="hidden" name="fechaFin" value="${fechaFin}">
             <input type="hidden" name="salaId" value="${salaId}">
-            <button type="submit" class="btn btn-primary mt-2">Reservar</button>
+            <button type="submit" class="btn btn-primary mt-2 reserva-button">Reservar</button>
         </form>
     `;
 }
@@ -88,7 +88,13 @@ function buscarAsientos() {
     const tipoReserva = document.getElementById('tipoReserva').value;
 
     if (!fecha || !tipoReserva) {
-        alert("Por favor seleccione una fecha y un tipo de reserva.");
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor seleccione una fecha y un tipo de reserva.',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#D94C09' 
+        });
         return;
     }
 
@@ -120,7 +126,13 @@ function buscarAsientos() {
             document.getElementById('horaFinParam').value = horaFin;
             break;
         default:
-            alert("Tipo de reserva no válido.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Tipo de reserva no válido.',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#D94C09' 
+            });
             return;
     }
 
@@ -191,4 +203,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
         horaReservaSelect.innerHTML = options;
     }
+    
+    // Añadir evento click a los botones de reserva
+    document.addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('reserva-button')) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Reserva Completada',
+                text: 'Reserva completada exitosamente, te redirigiremos a tus reservas',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#6DE687'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    event.target.closest('form').submit();
+                }
+            });
+        }
+    });
+    
 });

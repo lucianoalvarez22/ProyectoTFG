@@ -2,9 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Listado Mapas</title>
+<title>Mapa-Salas</title>
+<link rel="icon" href="/img/logo.PNG" type="image/x-icon">
 <link rel="stylesheet" href="/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="/css/style.css"> 
+<style>
+	
+	.navbar-logo {
+		    width: 30px;
+		    height: 30px;
+		}
+	
+</style>
 </head>
 <body>
 	
@@ -34,6 +43,33 @@
    <!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
     
 <script src="/js/bootstrap.bundle.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var botonesEliminar = document.querySelectorAll('.delete-button'); // Actualizado el selector
+
+        botonesEliminar.forEach(function(boton) {
+            boton.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: 'No podrás deshacer esta acción',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = boton.getAttribute('href');
+                    }
+                });
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

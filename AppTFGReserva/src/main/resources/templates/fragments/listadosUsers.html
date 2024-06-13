@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="icon" href="/img/logo.PNG" type="image/x-icon">
  <link rel="stylesheet" href="/css/bootstrap.min.css"> 
     <link rel="stylesheet" href="/css/style.css"> 
 </head>
@@ -42,11 +43,14 @@
                     <td th:text="${user.rolLevel.rolLevel}"></td>
                     <td th:text="${user.companyId.companyName}"></td>
                     <td th:text="${user.companyId.companyEmail}"></td>
-                    <td class="text-center">
+                    <td class="operation-buttons">
+						<a class="delete-button btn btn-danger btn-sm" th:href="@{/deleteUserAdminSuper/{id}(id=${user.userId})}">Eliminar</a>
+					</td>
+            <!--        <td class="text-center">
                         <div class="btn-group" role="group">
                             <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${user.userId}">Eliminar</a>
                         </div>
-                        <!-- Modal de confirmación -->
+                        
                         <div class="modal fade" th:id="'confirmDeleteModal' + ${user.userId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -64,7 +68,8 @@
                                 </div>
                             </div>
                         </div>
-                    </td>
+                    </td> -->
+          
                 </tr>
             </tbody>
         </table>
@@ -108,30 +113,12 @@
                     </td>
                     <td th:text="${user.rolLevel.rolLevel}"></td>
                     <td th:text="${user.companyId.companyName}"></td>
-                    <td class="text-center">
-                        <div class="btn-group" role="group">
+                    <td class="text-center" role="group">
+                        
                             <a th:href="@{/editUserByAdminCompany/{id}(id=${user.userId})}" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${user.userId}">Eliminar</a>
+                             <a th:href="@{/deleteUser/{id}(id=${user.userId})}" class="delete-button btn btn-danger btn-sm">Eliminar</a>
                             <a th:href="@{/userReserva/{id}(id=${user.userId})}" class="btn btn-info btn-sm">Reservas</a>
-                        </div>
-                        <!-- Modal de confirmación -->
-                        <div class="modal fade" th:id="'#confirmDeleteModal' + ${user.userId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title text-black" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-black">
-                                        ¿Estás seguro de que quieres eliminar a <strong th:text="${user.userName}"></strong>?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <a th:href="@{/deleteUser/{id}(id=${user.userId})}" class="btn btn-danger">Eliminar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </td>
                 </tr>
             </tbody>
@@ -173,27 +160,7 @@
                     <td th:text="${reserva.asiento.posicionColumna}"></td>
                     <td th:text="${reserva.reservaCompletada ? 'Completada' : 'Pendiente'}"></td>
                     <td class="text-center">
-                        <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${reserva.reservaId}">Eliminar</a>
-                        </div>
-                        <!-- Modal de confirmación -->
-                        <div class="modal fade" th:id="'confirmDeleteModal' + ${reserva.reservaId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title text-black" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-black">
-                                        ¿Estás seguro que quieres <strong>ELIMINAR</strong> esta reserva?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <a th:href="@{/deleteReservaAdminCompany/{id}(id=${reserva.reservaId})}" class="btn btn-danger">Eliminar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                         <a th:href="@{/deleteReservaAdminCompany/{id}(id=${reserva.reservaId})}" class="delete-button btn btn-danger btn-sm">Eliminar</a>
                     </td>
                 </tr>
             </tbody>

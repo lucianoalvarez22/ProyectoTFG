@@ -81,7 +81,13 @@ function buscarAsientos() {
     const tipoReserva = document.getElementById('tipoReserva').value;
 
     if (!fecha || !tipoReserva) {
-        alert("Por favor seleccione una fecha y un tipo de reserva.");
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor seleccione una fecha y un tipo de reserva.',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#D94C09' 
+        });
         return;
     }
 
@@ -113,7 +119,13 @@ function buscarAsientos() {
             document.getElementById('horaFinParam').value = horaFin;
             break;
         default:
-            alert("Tipo de reserva no válido.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Tipo de reserva no válido.',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#D94C09' 
+            });
             return;
     }
 

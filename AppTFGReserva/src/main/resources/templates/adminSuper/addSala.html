@@ -3,11 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Añadir Sala</title>
+<link rel="icon" href="/img/logo.PNG" type="image/x-icon">
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/style.css"> 
 <link rel="stylesheet" href="/css/formAdd.css"> 
+<style>
+	 .navbar-logo {
+		    width: 30px;
+		    height: 30px;
+		}
+</style>
 </head>
 <body>
+	
+	<div th:switch="${rolID}">
+			
+	        <div th:case="'0'">
+	            <div th:replace="~{fragments/nav :: vistaAdmin}"></div>
+	            <div th:replace="~{fragments/footer :: vistaFooter}"></div>
+	        </div>
+	        
+	        <div th:case="*">Para todos los demás casos (no definidos)</div>
+    	</div>
 	
 	
 	<div class="container my-5">

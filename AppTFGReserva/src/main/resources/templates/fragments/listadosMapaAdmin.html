@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Listado Mapas</title>
+    <link rel="icon" href="/img/logo.PNG" type="image/x-icon">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -31,30 +32,13 @@
                     <td th:text="${mapa.mapaNombre}"></td>
                     <td th:text="${mapa.companyMapa.companyName}"></td>
                     <td class="text-center">
-                        <div class="btn-group" role="group">
+                        <div role="group">
                             <a href="/addSala" class="btn btn-success btn-sm">+Sala</a>
                             <a th:href="@{/getSalas/{id}(id=${mapa.mapaId})}" class="btn btn-info btn-sm">Ver Salas</a>
                             <a th:href="@{/editMapa/{id}(id=${mapa.mapaId})}" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteMapaModal' + ${mapa.mapaId}">Eliminar</a>
+                            <a th:href="@{/deleteMapa/{id}(id=${mapa.mapaId})}" class="delete-button btn btn-danger btn-sm">Eliminar</a>
                         </div>
-                        <!-- Modal de confirmación -->
-                        <div class="modal fade" th:id="'confirmDeleteMapaModal' + ${mapa.mapaId}" tabindex="-1" aria-labelledby="confirmDeleteMapaModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDeleteMapaModalLabel">Confirmación de Eliminación</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ¿Estás seguro de que quieres eliminar el mapa <strong th:text="${mapa.mapaNombre}"></strong>?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <a th:href="@{/deleteMapa/{id}(id=${mapa.mapaId})}" class="btn btn-danger">Eliminar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </td>
                 </tr>
             </tbody>
@@ -102,29 +86,12 @@
                     <td th:text="${sala.salaAsientosTotales}"></td>
                     <td th:text="${sala.salaEstado ? 'Activo' : 'Inactivo'}"></td>
                     <td class="text-center">
-                        <div class="btn-group" role="group">
+                        <div role="group">
                             <a th:href="@{/verAsientos/{id}(id=${sala.salaId})}" class="btn btn-info btn-sm">Ver</a>
                             <a th:href="@{/editSala/{id}(id=${sala.salaId})}" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteSalaModal' + ${sala.salaId}">Eliminar</a>
+                            <a th:href="@{/deleteSala/{id}(id=${sala.salaId})}" class="delete-button btn btn-danger btn-sm">Eliminar</a>
                         </div>
-                        <!-- Modal de confirmación -->
-                        <div class="modal fade" th:id="'confirmDeleteSalaModal' + ${sala.salaId}" tabindex="-1" aria-labelledby="confirmDeleteSalaModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDeleteSalaModalLabel">Confirmación de Eliminación</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ¿Estás seguro de que quieres eliminar la sala <strong th:text="'Sala ' + ${sala.salaNumero}"></strong>?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <a th:href="@{/deleteSala/{id}(id=${sala.salaId})}" class="btn btn-danger">Eliminar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </td>
                 </tr>
             </tbody>

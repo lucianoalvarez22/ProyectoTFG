@@ -68,7 +68,7 @@ public class UserController {
         model.addAttribute("usuarioGeneral", myPerfilUser);
         model.addAttribute("rolID", rolIDUsuario);
 
-        return "listCompanies";
+        return "userGeneral/miPerfil";
     }
     
     
