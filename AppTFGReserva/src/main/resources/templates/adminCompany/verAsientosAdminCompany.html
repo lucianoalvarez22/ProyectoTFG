@@ -27,8 +27,11 @@
         .asiento-btn {
             width: 30px;
             height: 30px;
-            margin: 5px;
-            font-size: 1.2rem;
+            margin: 2px;
+            font-size: 1 rem; /* Tamaño más grande para el icono */
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
         }
         .custom-card {
             border: 1px solid #ccc;
@@ -188,7 +191,7 @@
                                                     th:disabled="${!asiento.asientoEstado}"
                                                     id="toggleButton"
                                                     onclick="mostrarDetalleAsiento(this)">
-                                                <i class="fas fa-chair"></i>
+                                                 <i class="fas fa-couch"></i>
                                             </button>
                                         </div>
                                     </div>

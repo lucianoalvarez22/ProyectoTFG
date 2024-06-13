@@ -25,8 +25,7 @@ public class LoginController {
 	@Autowired
 	private UserSessionLog userSession;
 	
-	
-	
+
 	
 		//GET LOGIN
 		@GetMapping("/login")

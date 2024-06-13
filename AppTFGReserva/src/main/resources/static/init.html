@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Seataker</title>
+   <!--link rel="stylesheet" href="/css/bootstrap.min.css"> NO FUNCIONA POR LA CLASE SESSION INTERCEPTOR-->
+    <link rel="icon" href="/img/logo.PNG" type="image/x-icon">
+    <!-- CDN DE BOOTSTRAP --> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+		.navbar-logo {
+		    width: 30px;
+		    height: 30px;
+		}
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+           
+        }
+        .background:after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            animation: rotateBackground 30s linear infinite;
+        }
+        @keyframes rotateBackground {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .welcome-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 90vh;
+            color: white;
+            text-align: center;
+            flex-direction: column;
+            font-family: 'Arial', sans-serif;
+            z-index: 1;
+        }
+        .welcome-container img {
+            max-width: 150px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        .welcome-container h1 {
+            font-size: 3rem;
+            margin-top: 20px;
+            animation: flip 6s infinite;
+        }
+        @keyframes flip {
+            0%, 25%, 75%, 100% {
+                transform: rotateY(0);
+            }
+            50% {
+                transform: rotateY(360deg);
+            }
+        }
+        .glow {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        .slogan {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+        .cta-button {
+		    margin-top: 20px;
+		    padding: 10px 20px;
+		    font-size: 1.2rem;
+		    background-color: rgb(38, 162, 105);
+		    color: #000;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    text-decoration: none;
+		    transition: color 0.3s ease; /* Añade una transición suave */
+		}
+		
+		.cta-button:hover {
+		    color:#000; /* Asegura que el color del texto sea negro al pasar el ratón */
+		    background-color: aliceblue;
+		}
+        .features {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .feature-item {
+            margin: 0 20px;
+            text-align: center;
+        }
+        .feature-item i {
+            font-size: 2rem;
+        }
+	</style>
+</head>
+<body>
+	
+	<!-- NAV -->
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+	  
+	  <a class="navbar-brand" href="init.html">
+                <img src="/img/logoBlanco.PNG" alt="SEATAKER Logo" class="navbar-logo">
+      </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/conocenos.html">Conócenos</a>
+        <a class="nav-link" href="/faq.html">FAQ</a>
+        <a class="nav-link" href="/contacto.html">Contacto</a>
+      </div>
+    </div>
+    
+    <div class="navbar-nav">
+       <a class=" d-flex btn btn-outline bg-light" href="/login">Login</a>
+    </div>
+                
+  </div>
+</nav>
+
+<!-- BODY -->
+
+<div class="background"></div>
+
+<div class="welcome-container">
+    <img src="/img/logo.PNG" alt="SEATAKER Logo">
+    <h1 class="glow">SEATAKER</h1>
+    <p class="slogan">La solución perfecta para equipos flexibles</p>
+   <!-- <p class="slogan">Encuentra tu lugar, impulsa tu productividad</p> -->
+    <a href="/login" class="cta-button">Login</a>
+    <div class="features">
+    <div class="feature-item">
+        <i class="fas fa-couch"></i>
+        <p>Reserva asientos fácilmente</p>
+    </div>
+    <div class="feature-item">
+        <i class="fas fa-calendar-check"></i>
+        <p>Gestión eficiente de espacios</p>
+    </div>
+    <div class="feature-item">
+        <i class="fas fa-user-friends"></i>
+        <p>Conecta con tu equipo</p>
+    </div>
+</div>
+</div>
+
+    
+	<!-- FOOTER -->
+<footer class="bg-dark fixed-bottom">
+    <div class="container-fluid text-center p-2">
+        <div class="row justify-content-center">
+            <div class="col-md-2">
+                <a href="/conocenos.html" class="text-decoration-none text-white">Conócenos</a>
+            </div>
+            <div class="col-md-2">
+                <a href="/faq.html" class="text-decoration-none text-white">FAQ</a>
+            </div>
+            <div class="col-md-2">
+                <a href="/contacto.html" class="text-decoration-none text-white">Contacto</a>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col-12">
+                <p class="text-white mb-0">Copyright by
+                    <a class="text-decoration-none text-warning fw-bold" rel="nofollow noopener noreferrer" href="#" target="_blank">
+                    Luciano Alvarez</a> | Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- FIN DEL FOOTER -->
+
+	 <!-- CDN DE JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+    <script src="/js/bootstrap.bundle.min.js"></script> 
+
+</body>
+</html>
