@@ -8,11 +8,57 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css"> 
     <link rel="stylesheet" href="/css/contacto.css"> 
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
 		.navbar-logo {
 		    width: 30px;
 		    height: 30px;
 		}
+		
+.content {
+    padding: 2rem 0;
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.contact-header {
+    border-radius: 15px 15px 0 0;
+    background-color: #343a40; /* Dark background color */
+}
+
+.contact-header h1,
+.contact-header p {
+    margin: 0;
+}
+
+.contact-section {
+    border-radius: 0 0 15px 15px;
+}
+
+.bg-light {
+    background-color: #f7f7f7 !important; /* Light gray background */
+}
+
+.contact-info p {
+    margin-bottom: 1rem;
+}
+
+.contact-info a {
+    color: #007bff; /* Link color */
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+.contact-info i {
+    margin-right: 8px; /* Space between icon and text */
+}
+
 	</style>
 </head>
 <body>
@@ -43,25 +89,29 @@
     </nav>
     <!-- FIN NAV -->
 
-    <div class="content">
-        <header class="contact-header">
-            <div class="container">
-                <h1>Contacto</h1>
-                <p class="lead">Estamos aquí para ayudarte. Ponte en contacto con nosotros.</p>
-            </div>
-        </header>
+  <div class="content">
+    <div class="container d-flex justify-content-center my-5">
+        <div class="card shadow-lg" style="max-width: 600px;">
+            <header class="contact-header p-3 bg-dark text-white">
+                <h1 class="text-center">Contacto</h1>
+                <p class="lead text-center">Estamos aquí para ayudarte. Ponte en contacto con nosotros.</p>
+            </header>
 
-        <section class="contact-section py-5">
-            <div class="container">
-                <div class="contact-info text-center text-white">
-                    <p>Para cualquier consulta, puede contactarnos a través de los siguientes medios:</p>
-                    <p><strong>Email:</strong> <a href="mailto:support@seataker.com">support@seataker.com</a></p>
-                    <p><strong>Teléfono:</strong> +123 456 789</p>
-                    <p><strong>Oficinas:</strong> Calle Betis, 123, Sevilla, España</p>
+            <section class="contact-section py-4 bg-light">
+                <div class="container">
+                    <div class="contact-info text-center">
+                        <p>Para cualquier consulta, puede contactarnos a través de los siguientes medios:</p>
+                        <p><strong><i class="fas fa-envelope"></i> Email:</strong> <a href="mailto:support@seataker.com">support@seataker.com</a></p>
+                        <p><strong><i class="fas fa-phone"></i> Teléfono:</strong> +123 456 789</p>
+                        <p><strong><i class="fas fa-map-marker-alt"></i> Oficina:</strong> Calle Betis, 123, Sevilla, España</p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
+</div>
+
+
 
     <!-- FOOTER -->
     <footer class="bg-dark fixed-bottom">

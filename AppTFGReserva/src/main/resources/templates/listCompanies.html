@@ -7,13 +7,58 @@
 <link rel="stylesheet" href="/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="/css/style.css"> 
 <link rel="stylesheet" href="/css/perfil.css"> 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <style>
 	
 	.navbar-logo {
 		    width: 30px;
 		    height: 30px;
 		}
+		
+		.card {
+    border-radius: 15px;
+    
+    transition: transform 0.3s, box-shadow 0.3s;
+    min-height: 350px; /* Adjust the height to fit the content */
+    border: 2px solid white; /* Added white border */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #2C5364, #203A43, #0F2027); /* Gradient background to match the body */
+    color: white; /* Text color for better contrast */
+}
+
+.card-title {
+    font-weight: bold;
+    color: #fff; /* White for better contrast */
+    font-size: 1.2rem; /* Slightly smaller font size */
+}
+
+.card-text {
+    font-size: 0.85rem; /* Slightly smaller font size */
+    color: #d1d1d1; /* Light grey text for better contrast */
+}
+
+.card-text i {
+    color: #b0c4de; /* Light steel blue for icon color */
+    margin-right: 8px;
+}
+
+.delete-button {
+    
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
 	
 </style>
     

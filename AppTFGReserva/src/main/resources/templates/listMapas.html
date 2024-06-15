@@ -6,12 +6,79 @@
 <link rel="icon" href="/img/logo.PNG" type="image/x-icon">
 <link rel="stylesheet" href="/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="/css/style.css"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
 	
-	.navbar-logo {
+.navbar-logo {
 		    width: 30px;
 		    height: 30px;
 		}
+	
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 2px solid white; /* White border */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #2C5364, #203A43, #0F2027); /* Gradient background to match the body */
+    color: white; /* Text color for better contrast */
+}
+
+.gradient-bg-salas {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)); /* Light gradient background with opacity */
+    color: white; /* Text color for better contrast */
+}
+
+.card-title {
+    font-weight: bold;
+    color: #fff; /* White for better contrast */
+    font-size: 1.2rem; /* Slightly smaller font size */
+}
+
+.card-text {
+    font-size: 0.9rem; /* Slightly smaller font size */
+    color: #d1d1d1; /* Light grey text for better contrast */
+}
+
+.delete-button {
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.ocultar-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.ocultar-button:hover{
+	background-color: #bd2130;
+	border-color: #bd2130;
+	color: white;
+}
+
+.ver-salas {
+    position: relative;
+    animation: blink 3s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
 	
 </style>
 </head>
@@ -44,6 +111,7 @@
     
 <script src="/js/bootstrap.bundle.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 <script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function() {
@@ -68,6 +136,12 @@
                 });
             });
         });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('.ver-salas').tooltip({title: "Haz clic para ver las salas", placement: "top"});
     });
 </script>
 

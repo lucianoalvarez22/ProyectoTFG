@@ -11,60 +11,53 @@
 </head>
 <body>
 	
-	<div th:fragment="vistaAdmin" class="container my-5">
+	<!-- LISTADO COMPANY ADMIN SUPER --> 
+<div th:fragment="vistaAdmin" class="container my-5">
     <h1 class="text-center mb-4 text-white">EMPRESAS</h1>
     <div class="mb-3">
-        <a href="/addCompany" class="btn btn-success">Add Empresa</a>
+        <a href="/addCompany" class="btn btn-success" title="Añade nueva empresa"><i class="fas fa-plus"></i> <i class="fas fa-building"></i></a>
     </div>
-    <div class="table-responsive">
-        <table class="table table-hover align-middle bg-white">
-            <thead class="table-dark">
-                <tr>
-                    <th>Nombre Empresa</th>
-                    <th>Industria</th>
-                    <th>Ubicación</th>
-                    <th>Teléfono</th>
-                    <th>Email</th>
-                    <th>Nombre Admin</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="compa : ${company}">
-                    <td th:text="${compa.companyName}"></td>
-                    <td th:text="${compa.companyIndustria}"></td>
-                    <td th:text="${compa.companyUbicacion}"></td>
-                    <td th:text="${compa.companyTelefono}"></td>
-                    <td th:text="${compa.companyEmail}"></td>
-                    <td>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="compa : ${company}">
+            <div class="card shadow-lg gradient-bg"> 
+                <div class="card-body text-center">
+                    <h5 class="card-title mt-4" th:text="${compa.companyName}"></h5>
+                    <p class="card-text">
+                        <i class="fas fa-industry"></i> <span th:text="${compa.companyIndustria}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-map-marker-alt"></i> <span th:text="${compa.companyUbicacion}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-phone"></i> <span th:text="${compa.companyTelefono}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-envelope"></i> <span th:text="${compa.companyEmail}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-user"></i>
                         <span th:each="admin : ${compa.usuarios}">
                             <span th:each="cargo : ${admin.rolLevel.cargos}">
                                 <span th:if="${cargo.cargoName == 'Administrador' || cargo.cargoName == 'Manager'}" th:text="${admin.userName}"></span>
                             </span>
                         </span>
-                    </td>
-                    
-                    <td class="text-center">
-                        <div role="group">
-                            <span th:if="${compa.usuarios != null && compa.usuarios.size() > 0}">
-                                <button class="btn btn-success btn-sm" disabled>Add Admin</button>
-                            </span>
-                            <span th:if="${compa.usuarios == null || compa.usuarios.size() == 0}">
-                                <a href="/addAdminCompany" class="btn btn-success btn-sm">Add Admin</a>
-                            </span>
-                            <a th:href="@{/editCompany/{id}(id=${compa.companyId})}" class="btn btn-warning btn-sm">Edit</a>
-                            <a th:href="@{/deleteCompany/{id}(id=${compa.companyId})}" class="delete-button btn btn-danger btn-sm">Eliminar</a>
-                        </div>
-                     
-                    </td>
-                </tr> 
-            </tbody>
-        </table>
+                    </p>
+                    <div role="group">
+                        <span th:if="${compa.usuarios != null && compa.usuarios.size() > 0}">
+                            <button class="btn btn-success btn-sm" disabled title="Administrador de la empresa"><i class="fas fa-user-lock"></i></button>
+                        </span>
+                        <span th:if="${compa.usuarios == null || compa.usuarios.size() == 0}">
+                            <a href="/addAdminCompany" class="btn btn-success btn-sm" title="Añade un administrador a la empresa"><i class="fa-sharp fa-solid fa-user-tie"></i></a>
+                        </span>
+                        <a th:href="@{/editCompany/{id}(id=${compa.companyId})}" class="btn btn-warning btn-sm" title="Edita datos de la empresa"><i class="fas fa-edit"></i></a>
+                        <a th:href="@{/deleteCompany/{id}(id=${compa.companyId})}" class="delete-button btn btn-danger btn-sm" title="Elimina empresa"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-  
-  
-  <!-- LISTADO COMPANY ADMIN SUPER--> 
+<!-- LISTADO COMPANY ADMIN SUPER -->
 	
 	
 	

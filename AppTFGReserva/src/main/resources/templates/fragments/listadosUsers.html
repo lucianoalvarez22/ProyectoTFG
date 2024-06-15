@@ -5,173 +5,109 @@
 <title></title>
 <link rel="icon" href="/img/logo.PNG" type="image/x-icon">
  <link rel="stylesheet" href="/css/bootstrap.min.css"> 
-    <link rel="stylesheet" href="/css/style.css"> 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="/css/style.css"> 
 </head>
 <body>
 	
-	<!-- LISTADO ADMIN --> 
-	
-	
-	<div th:fragment="vistaAdmin" class="container my-5">
-    <h1 class="text-center mb-4 text-white">USUARIOS</h1>
-    <div class="table-responsive">
-        <table class="table table-hover align-middle bg-white">
-            <thead class="table-dark">
-                <tr>
-                    <th>Usuario</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Ciudad</th>
-                    <th>Cargo</th>
-                    <th>Rol</th>
-                    <th>Empresa</th>
-                    <th>Email Empresa</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.userName}"></td>
-                    <td th:text="${user.userEmail}"></td>
-                    <td th:text="${user.userTelefono}"></td>
-                    <td th:text="${user.userCiudad}"></td>
-                    <td>
-                        <span th:each="cargo : ${user.rolLevel.cargos}">
-                            <span th:text="${cargo.cargoName}"></span>
-                        </span>
-                    </td>
-                    <td th:text="${user.rolLevel.rolLevel}"></td>
-                    <td th:text="${user.companyId.companyName}"></td>
-                    <td th:text="${user.companyId.companyEmail}"></td>
-                    <td class="operation-buttons">
-						<a class="delete-button btn btn-danger btn-sm" th:href="@{/deleteUserAdminSuper/{id}(id=${user.userId})}">Eliminar</a>
-					</td>
-            <!--        <td class="text-center">
-                        <div class="btn-group" role="group">
-                            <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" th:data-bs-target="'#confirmDeleteModal' + ${user.userId}">Eliminar</a>
-                        </div>
-                        
-                        <div class="modal fade" th:id="'confirmDeleteModal' + ${user.userId}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title text-black" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-black">
-                                        ¿Estás seguro de que quieres eliminar a <strong th:text="${user.userName}"></strong>?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <a th:href="@{/deleteUserAdminSuper/{id}(id=${user.userId})}" class="btn btn-danger">Eliminar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td> -->
-          
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 	
 	<!-- LISTADO ADMIN --> 
-	
-	
-	<!-- LISTADO ADMINCOMPANY -->
-	
-	<div th:fragment="vistaAdminCompany" class="container my-5">
+<div th:fragment="vistaAdmin" class="container my-5">
     <h1 class="text-center mb-4 text-white">USUARIOS</h1>
-    <div class="mb-3">
-        <a href="/addUsuarioByAdminCompany" class="btn btn-success">+ Usuario</a>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-hover align-middle bg-white">
-            <thead class="table-dark">
-                <tr>
-                    <th>Nombre de Usuario</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Ciudad</th>
-                    <th>Cargo</th>
-                    <th>Rol</th>
-                    <th>Empresa</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="user : ${usuariosEmpresa}">
-                    <td th:text="${user.userName}"></td>
-                    <td th:text="${user.userEmail}"></td>
-                    <td th:text="${user.userTelefono}"></td>
-                    <td th:text="${user.userCiudad}"></td>
-                    <td>
-                        <span th:each="cargo : ${user.rolLevel.cargos}">
-                            <span th:text="${cargo.cargoName}"></span>
-                        </span>
-                    </td>
-                    <td th:text="${user.rolLevel.rolLevel}"></td>
-                    <td th:text="${user.companyId.companyName}"></td>
-                    <td class="text-center" role="group">
-                        
-                            <a th:href="@{/editUserByAdminCompany/{id}(id=${user.userId})}" class="btn btn-warning btn-sm">Editar</a>
-                             <a th:href="@{/deleteUser/{id}(id=${user.userId})}" class="delete-button btn btn-danger btn-sm">Eliminar</a>
-                            <a th:href="@{/userReserva/{id}(id=${user.userId})}" class="btn btn-info btn-sm">Reservas</a>
-                        
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="user : ${users}">
+            <div class="card shadow-lg gradient-bg"> <!-- Removed 'border-0' -->
+                <div class="card-body text-center">
+                    <div class="profile-pic mt-4">
+                        <img src="/img/user1.jpg" class="rounded-circle mb-3" alt="Foto de perfil" width="80" height="80">
+                    </div>
+                    <h5 class="card-title" th:text="${user.userName}"></h5>
+                    <p class="card-text">
+                        <i class="fas fa-envelope"></i> <span th:text="${user.userEmail}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-phone"></i> <span th:text="${user.userTelefono}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-map-marker-alt"></i> <span th:text="${user.userCiudad}"></span>
+                    </p>
+                    <p class="card-text" th:each="cargo : ${user.rolLevel.cargos}">
+                        <i class="fas fa-briefcase"></i> <span th:text="${cargo.cargoName}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-building"></i> <span th:text="${user.companyId.companyName}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-envelope-open"></i> <span th:text="${user.companyId.companyEmail}"></span>
+                    </p>
+                    <a class="delete-button btn btn-danger btn-sm" th:href="@{/deleteUserAdminSuper/{id}(id=${user.userId})}" title="Elimina usuario"><i class="fas fa-trash-alt"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<!-- LISTADO ADMIN -->
 
+	
+	
+	
 	<!-- LISTADO ADMINCOMPANY -->
-	
-	
-	<!-- RESERVA POR USUARIOS --> 
-	
-	
-	 <div th:fragment="vistaAdminCompany" class="container my-5">
-    <h1 class="text-center mb-4 text-white">RESERVAS</h1>
+<div th:fragment="vistaAdminCompany" class="container my-5">
+    <h1 class="text-center mb-4 text-white">USUARIOS</h1>
     <div class="mb-3">
-        <a href="/listUserAdminCompany" class="btn btn-danger">Ocultar</a>
-        
+        <a href="/addUsuarioByAdminCompany" class="btn btn-success"><i class="fas fa-user-plus"></i></a>
     </div>
-    <div class="table-responsive">
-        <table class="table table-hover align-middle bg-white">
-            <thead class="table-dark">
-                <tr>
-                    <th>Sala</th>
-                    <th>Fecha Entrada</th>
-                    <th>Fecha Salida</th>
-                    <th>Fila</th>
-                    <th>Asiento</th>
-                    <th>Estado</th>
-                    <th class="text-center">Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="reserva : ${reservaUser}">
-                    <td th:text="${'Sala ' + reserva.sala.salaNumero}"></td>
-                    <td th:text="${#temporals.format(reserva.fechaEntrada, 'dd/MM/yyyy HH:mm')}"></td>
-                    <td th:text="${#temporals.format(reserva.fechaSalida, 'dd/MM/yyyy HH:mm')}"></td>
-                    <td th:text="${reserva.asiento.posicionFila}"></td>
-                    <td th:text="${reserva.asiento.posicionColumna}"></td>
-                    <td th:text="${reserva.reservaCompletada ? 'Completada' : 'Pendiente'}"></td>
-                    <td class="text-center">
-                         <a th:href="@{/deleteReservaAdminCompany/{id}(id=${reserva.reservaId})}" class="delete-button btn btn-danger btn-sm">Eliminar</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="user : ${usuariosEmpresa}">
+            <div class="card shadow-lg gradient-bg">
+                <div class="card-body">
+                    <h5 class="card-title text-white text-center mt-5" th:text="${user.userName}"></h5>
+                    <p class="card-text text-white text-center">
+                        <i class="fas fa-envelope"></i> <span th:text="${user.userEmail}"></span><br>
+                        <i class="fas fa-phone"></i> <span th:text="${user.userTelefono}"></span><br>
+                        <i class="fas fa-map-marker-alt"></i> <span th:text="${user.userCiudad}"></span><br>
+                        <i class="fas fa-briefcase"></i> <span th:each="cargo : ${user.rolLevel.cargos}" th:text="${cargo.cargoName}"></span><br>
+                     <!--   <i class="fas fa-user-tag"></i> <span th:text="${user.rolLevel.rolLevel}"></span><br> -->
+                        <i class="fas fa-building"></i> <span th:text="${user.companyId.companyName}"></span>
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a th:href="@{/editUserByAdminCompany/{id}(id=${user.userId})}" class="btn btn-warning btn-sm mx-2" title="Edita usuario"><i class="fas fa-edit"></i></a>
+                        <a th:href="@{/deleteUser/{id}(id=${user.userId})}" class="delete-button btn btn-danger btn-sm mx-2" title="Elimina usuario"><i class="fas fa-trash-alt"></i></a>
+                        <a th:href="@{/userReserva/{id}(id=${user.userId})}" class="btn btn-info btn-sm ver-reservas mx-2" title="Click para ver reservas"><i class="fas fa-eye"></i> Reservas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<!-- LISTADO ADMINCOMPANY -->
+
+<!-- RESERVA POR USUARIOS --> 
+<div th:fragment="vistaAdminCompany" class="container my-5">
 	
-	
-	
-	
-	<!-- FIN DE RESERVA POR USUARIOS --> 
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="reserva : ${reservaUser}">
+            <div class="card shadow-lg gradient-bg-reservas small-card">
+                <div class="card-body">
+                    <a href="/listUserAdminCompany" class="btn btn-light btn-sm ocultar-reservas"><i class="fas fa-times"></i></a>
+                    <h5 class="card-title text-white mt-4" th:text="'Reserva' + ' - ' + 'Sala ' + ${reserva.sala.salaNumero}"></h5>
+                    <p class="card-text">
+                        <strong>Fecha/Hora Entrada: </strong><span class="text-white" th:text="${#temporals.format(reserva.fechaEntrada, 'dd/MM/yyyy HH:mm')}"></span><br>
+                        <strong>Fecha/Hora Salida: </strong><span class="text-white" th:text="${#temporals.format(reserva.fechaSalida, 'dd/MM/yyyy HH:mm')}"></span><br>
+                        <strong>Fila: </strong><span class="text-white" th:text="${reserva.asiento.posicionFila}"></span><br>
+                        <strong>Asiento: </strong><span class="text-white" th:text="${reserva.asiento.posicionColumna}"></span><br>
+                        <strong>Estado: </strong><span class="text-white" th:text="${reserva.reservaCompletada ? 'Completada' : 'Pendiente'}"></span>
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a th:href="@{/deleteReservaAdminCompany/{id}(id=${reserva.reservaId})}" class="delete-button btn btn-danger btn-sm" title="Elimina la reserva"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN DE RESERVA POR USUARIOS -->
 	
 
 
@@ -179,6 +115,14 @@
  <!-- CDN DE JS -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
     <script src="/js/bootstrap.bundle.min.js"></script> 
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+<script>
+    $(document).ready(function(){
+        $('.ver-reservas').tooltip({title: "Haz clic para ver las reservas", placement: "top"});
+        
+    });
+</script>
     
 
 

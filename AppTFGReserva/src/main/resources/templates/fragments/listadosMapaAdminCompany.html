@@ -13,77 +13,52 @@
 	
 	
 	<!-- LISTADO DE MAPAS --> 
-	
-	
-    <div th:fragment="vistaAdminCompanyMapa" class="container my-5">
+<div th:fragment="vistaAdminCompanyMapa" class="container my-5">
     <h1 class="text-center mb-4 text-white">MI MAPA</h1>
-    <div class="table-responsive">
-        <table class="table table-hover align-middle bg-white">
-            <thead class="table-dark">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Nombre de la Empresa</th>
-                    <th>Número Total de Salas</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="mapa : ${myMap}">
-                    <td th:text="${mapa.mapaNombre}"></td>
-                    <td th:text="${mapa.companyMapa.companyName}"></td>
-                    <td th:text="${mapa.numeroTotalDeSalas}"></td>
-                    <td class="text-center">
-                        <div class="btn-group" role="group">
-                            <a th:href="@{/getMySalas/{id}(id=${mapa.mapaId})}" class="btn btn-info btn-sm">Ver Salas</a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="mapa : ${myMap}">
+            <div class="card shadow-lg gradient-bg">
+                <div class="card-body">
+                    <h5 class="card-title text-white text-center" th:text="${mapa.mapaNombre}"></h5>
+                    <p class="card-text text-white text-center">
+                        <i class="fas fa-building"></i> <span th:text="${mapa.companyMapa.companyName}"></span><br>
+                        <i class="fas fa-th-large"></i> Número Total de Salas: <span th:text="${mapa.numeroTotalDeSalas}"></span>
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a th:href="@{/getMySalas/{id}(id=${mapa.mapaId})}" class="btn btn-info btn-sm ver-salas" title="Click para ver salas">
+                            <i class="fas fa-eye"></i> Ver Salas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-    
-    
-   <!-- LISTADO DE SALAS --> 
-    
-    
-    <div th:fragment="vistaAdminCompanyMapa" class="container my-5">
-    <h1 class="text-center mb-4 text-white">SALAS</h1>
-    <div class="mb-3">
-        <a href="/mySalas" class="btn btn-danger">Ocultar</a>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-hover align-middle bg-white">
-            <thead class="table-dark">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Número Filas</th>
-                    <th>Número Columnas</th>
-                    <th>Asientos Totales</th>
-                    <th>Estado</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="sala : ${salas}">
-                    <td th:text="'Sala ' + ${sala.salaNumero}"></td>
-                    <td th:text="${sala.numeroFilas}"></td>
-                    <td th:text="${sala.numeroColumnas}"></td>
-                    <td th:text="${sala.salaAsientosTotales}"></td>
-                    <td th:text="${sala.salaEstado ? 'Activo' : 'Inactivo'}"></td>
-                    <td class="text-center">
-                        <div class="btn-group" role="group">
-                            <a th:href="@{/verAsientosAdminCompany/{id}(id=${sala.salaId})}" class="btn btn-info btn-sm">Ver</a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<!-- FIN DE LISTADO DE MAPAS -->
+
+<!-- LISTADO DE SALAS -->
+<div th:fragment="vistaAdminCompanyMapa" class="container my-5">
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="sala : ${salas}">
+            <div class="card shadow-lg gradient-bg-salas">
+                <div class="card-body">
+                    <a href="/mySalas" class="btn btn-light btn-sm ocultar-button"><i class="fas fa-times"></i></a>
+                    <h5 class="card-title text-white" th:text="'Sala ' + ${sala.salaNumero} + ' - ' + ${sala.mapaId.mapaNombre}"></h5>
+                    <p class="card-text">
+                        <strong>Filas: </strong><span class="text-white" th:text="${sala.numeroFilas}"></span><br>
+                        <strong>Columnas: </strong><span class="text-white" th:text="${sala.numeroColumnas}"></span><br>
+                        <strong>Asientos Totales: </strong><span class="text-white" th:text="${sala.salaAsientosTotales}"></span><br>
+                        <strong>Estado: </strong><span class="text-white" th:text="${sala.salaEstado ? 'Activo' : 'Inactivo'}"></span>
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a th:href="@{/verAsientosAdminCompany/{id}(id=${sala.salaId})}" class="btn btn-info btn-sm mx-2" title="Click para ver mapa de asientos"><i class="fas fa-eye"></i> Ver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-    
-    
-    <!-- FIN LISTADO DE SALAS --> 
+<!-- FIN DE LISTADO DE SALAS -->
     
     
     

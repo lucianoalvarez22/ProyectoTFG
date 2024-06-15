@@ -95,11 +95,14 @@ public class UserControllerAdminCompany {
 			List<Usuarios> usuariosEmpresa = userServiceAdminCompany.getUsuariosByCompanyId(empresa);	
 			List<Reservas> reservaByUser = reservaServicio.getReservasByUserId(userId);
 		
-		
+			boolean isReservaUserEmpty = reservaByUser.isEmpty();
+			
+			System.out.println(isReservaUserEmpty);
 		  
 			
 			model.addAttribute("reservaUser", reservaByUser);
 			model.addAttribute("usuariosEmpresa", usuariosEmpresa);
+			model.addAttribute("isReservaUserEmpty", isReservaUserEmpty);
 			model.addAttribute("rolID", rolIDUsuario);
 			return "listAllUser";
 			

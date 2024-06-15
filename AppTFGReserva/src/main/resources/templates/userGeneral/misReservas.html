@@ -7,11 +7,60 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/list.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
 	 .navbar-logo {
 		    width: 30px;
 		    height: 30px;
 		}
+		.card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    min-height: 350px; /* Adjust the height to fit the content */
+    border: 2px solid white; /* Added white border */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #2C5364, #203A43, #0F2027); /* Gradient background to match the body */
+    color: white; /* Text color for better contrast */
+}
+
+.profile-pic img {
+    border: 5px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Darker shadow for better contrast */
+}
+
+.card-title {
+    font-weight: bold;
+    color: #fff; /* White for better contrast */
+    font-size: 1.2rem; /* Slightly smaller font size */
+}
+
+.card-text {
+    font-size: 0.85rem; /* Slightly smaller font size */
+    color: #d1d1d1; /* Light grey text for better contrast */
+}
+
+.card-text i {
+    color: #b0c4de; /* Light steel blue for icon color */
+    margin-right: 8px;
+}
+
+.delete-button {
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
 </style>
 </head>
 <body>
@@ -23,7 +72,6 @@
     </div>
 
     <div class="container my-5">
-    <h1 class="text-center mb-4 text-white">MIS RESERVAS</h1>
     
     <!-- Mensaje de éxito 
 
@@ -45,36 +93,35 @@
         No tienes reservas.
     </div>
     
-    <div th:if="${!#lists.isEmpty(reservas)}" class="table-responsive">
-        <table class="table table-hover align-middle bg-white">
-            <thead class="table-dark text-center">
-                <tr>
-                    <th>Sala</th>
-                    <th>Fecha Entrada</th>
-                    <th>Fecha Salida</th>
-                    <th>Fila</th>
-                    <th>Asiento</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="reserva : ${reservas}" class="text-center">
-                    <td th:text="${'Sala ' + reserva.sala.salaNumero}"></td>
-                    <td th:text="${#temporals.format(reserva.fechaEntrada, 'dd/MM/yyyy HH:mm')}"></td>
-                    <td th:text="${#temporals.format(reserva.fechaSalida, 'dd/MM/yyyy HH:mm')}"></td>
-                    <td th:text="${reserva.asiento.posicionFila}"></td>
-                    <td th:text="${reserva.asiento.posicionColumna}"></td>
-                    <td class="text-center">
-                        <div role="group">
-                            <a th:href="@{/deleteReserva/{id}(id=${reserva.reservaId})}" class="delete-button btn btn-danger btn-sm">Eliminar</a>
-                        </div>
-                        
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+   <!-- LISTADO DE RESERVAS -->
+<div th:if="${!#lists.isEmpty(reservas)}" class="container my-5">
+    <h1 class="text-center mb-4 text-white">RESERVAS</h1>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="reserva : ${reservas}">
+            <div class="card shadow-lg gradient-bg">
+                <div class="card-body text-center">
+                    <h5 class="card-title mt-4" th:text="'Sala ' + ${reserva.sala.salaNumero}"></h5>
+                    <p class="card-text">
+                        <i class="fas fa-calendar-alt"></i> <span th:text="${#temporals.format(reserva.fechaEntrada, 'dd/MM/yyyy HH:mm')}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-calendar-check"></i> <span th:text="${#temporals.format(reserva.fechaSalida, 'dd/MM/yyyy HH:mm')}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-th-large"></i> <span th:text="'Fila: ' + ${reserva.asiento.posicionFila}"></span>
+                    </p>
+                    <p class="card-text">
+                        <i class="fas fa-couch"></i><span th:text="'Asiento: ' + ${reserva.asiento.posicionColumna}"></span>
+                    </p>
+                    <div class="d-flex justify-content-center mt-3">
+                        <a th:href="@{/deleteReserva/{id}(id=${reserva.reservaId})}" class="delete-button btn btn-danger btn-sm me-2"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
