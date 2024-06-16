@@ -12,9 +12,18 @@
 <body>
 	
 	
-	<!-- LISTADO ADMIN --> 
+<!-- LISTADO ADMIN --> 
 <div th:fragment="vistaAdmin" class="container my-5">
     <h1 class="text-center mb-4 text-white">USUARIOS</h1>
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <form th:action="@{/listUsers}" method="get" class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Buscar por nombre de usuario" aria-label="Buscar por nombre de usuario" aria-describedby="button-search">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">Buscar</button>
+                <a class="btn btn-outline-secondary" th:href="@{/listUsers}" id="button-clear">Limpiar</a>
+            </form>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4 mb-4" th:each="user : ${users}">
             <div class="card shadow-lg gradient-bg"> <!-- Removed 'border-0' -->
@@ -52,15 +61,26 @@
 	
 	
 	
-	<!-- LISTADO ADMINCOMPANY -->
+<!-- LISTADO ADMINCOMPANY -->
 <div th:fragment="vistaAdminCompany" class="container my-5">
     <h1 class="text-center mb-4 text-white">USUARIOS</h1>
-    <div class="mb-3">
-        <a href="/addUsuarioByAdminCompany" class="btn btn-success"><i class="fas fa-user-plus"></i></a>
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <form th:action="@{/listUserAdminCompany}" method="get" class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Buscar por nombre de usuario" aria-label="Buscar por nombre de usuario" aria-describedby="button-search" th:value="${search}">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">Buscar</button>
+                <a class="btn btn-outline-secondary" th:href="@{/listUserAdminCompany}" id="button-clear">Limpiar Filtro</a>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-start mb-4">
+        <div class="col-md-6">
+            <a href="/addUsuarioByAdminCompany" class="btn btn-success"><i class="fas fa-user-plus"></i></a>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-4 mb-4" th:each="user : ${usuariosEmpresa}">
-            <div class="card shadow-lg gradient-bg">
+            <div class="card shadow-lg gradient-bg" th:id="'user-' + ${user.userId}">
                 <div class="card-body">
                     <h5 class="card-title text-white text-center mt-5" th:text="${user.userName}"></h5>
                     <p class="card-text text-white text-center">
@@ -68,29 +88,24 @@
                         <i class="fas fa-phone"></i> <span th:text="${user.userTelefono}"></span><br>
                         <i class="fas fa-map-marker-alt"></i> <span th:text="${user.userCiudad}"></span><br>
                         <i class="fas fa-briefcase"></i> <span th:each="cargo : ${user.rolLevel.cargos}" th:text="${cargo.cargoName}"></span><br>
-                     <!--   <i class="fas fa-user-tag"></i> <span th:text="${user.rolLevel.rolLevel}"></span><br> -->
                         <i class="fas fa-building"></i> <span th:text="${user.companyId.companyName}"></span>
                     </p>
                     <div class="d-flex justify-content-center">
                         <a th:href="@{/editUserByAdminCompany/{id}(id=${user.userId})}" class="btn btn-warning btn-sm mx-2" title="Edita usuario"><i class="fas fa-edit"></i></a>
                         <a th:href="@{/deleteUser/{id}(id=${user.userId})}" class="delete-button btn btn-danger btn-sm mx-2" title="Elimina usuario"><i class="fas fa-trash-alt"></i></a>
-                        <a th:href="@{/userReserva/{id}(id=${user.userId})}" class="btn btn-info btn-sm ver-reservas mx-2" title="Click para ver reservas"><i class="fas fa-eye"></i> Reservas</a>
+                        <a th:href="@{/userReserva/{id}(id=${user.userId}, search=${search})}" class="btn btn-info btn-sm ver-reservas mx-2" title="Click para ver reservas"><i class="fas fa-eye"></i> Reservas</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- LISTADO ADMINCOMPANY -->
 
-<!-- RESERVA POR USUARIOS --> 
-<div th:fragment="vistaAdminCompany" class="container my-5">
-	
-    <div class="row">
+    <!-- RESERVA POR USUARIOS -->
+    <div class="row" th:if="${reservaUser}">
         <div class="col-md-4 mb-4" th:each="reserva : ${reservaUser}">
             <div class="card shadow-lg gradient-bg-reservas small-card">
                 <div class="card-body">
-                    <a href="/listUserAdminCompany" class="btn btn-light btn-sm ocultar-reservas"><i class="fas fa-times"></i></a>
+                    <a th:href="@{/listUserAdminCompany(search=${search})}" class="btn btn-light btn-sm ocultar-reservas"><i class="fas fa-times"></i></a>
                     <h5 class="card-title text-white mt-4" th:text="'Reserva' + ' - ' + 'Sala ' + ${reserva.sala.salaNumero}"></h5>
                     <p class="card-text">
                         <strong>Fecha/Hora Entrada: </strong><span class="text-white" th:text="${#temporals.format(reserva.fechaEntrada, 'dd/MM/yyyy HH:mm')}"></span><br>
@@ -106,8 +121,8 @@
             </div>
         </div>
     </div>
+    <!-- FIN DE RESERVA POR USUARIOS -->
 </div>
-<!-- FIN DE RESERVA POR USUARIOS -->
 	
 
 

@@ -13,5 +13,9 @@ public interface IMapaService {
 	void deleteMapa(Long id);
 	List<Salas> findSalasByMapaId(Long mapaId);
 	List<Salas> getSalasByCompany(Long companyId);
+	List<Mapas> searchMapasByName(String name);
+	List<Mapas> searchMapasByNameAndCompanyId(String name, Long companyId);
+	
+	List<Salas> searchSalasByNumberAndCompany(String search, Long companyId);
 
 }

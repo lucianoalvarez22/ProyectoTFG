@@ -43,26 +43,43 @@ public class MapasController {
 	
 	
 	@GetMapping("/listMapas")
-    public String listMapas(Model model) {
+    public String listMapas(@RequestParam(value = "search", required = false) String search, Model model) {
+		
+		List<Mapas> mapas;
+	    if (search != null && !search.isEmpty()) {
+	        mapas = mapaService.searchMapasByName(search);
+	    } else {
+	        mapas = mapaService.getAllMapas();
+	    }
 		
 		Usuarios userLogueado = userSession.getUser();
 		Roles rol = userLogueado.getRolLevel();
 		Long rolIDUsuario = rol.getRolLevel();
-        model.addAttribute("mapas", mapaService.getAllMapas());
+        model.addAttribute("mapas", mapas);
+        model.addAttribute("search", search);
         model.addAttribute("rolID", rolIDUsuario);
         return "listMapas";
     }
 	
 	
 	@GetMapping("/getSalas/{id}")
-	public String getSalas(@PathVariable(name = "id") Long mapaId, Model model) {
+	public String getSalas(@PathVariable(name = "id") Long mapaId,  @RequestParam(value = "search", required = false) String search, Model model) {
 		List<Salas> sala = mapaService.findSalasByMapaId(mapaId);
+		
+		List<Mapas> mapas;
+	    if (search != null && !search.isEmpty()) {
+	        mapas = mapaService.searchMapasByName(search);
+	    } else {
+	        mapas = mapaService.getAllMapas();
+	    }
+	    
 		Usuarios userLogueado = userSession.getUser();
 		Roles rol = userLogueado.getRolLevel();
 		Long rolIDUsuario = rol.getRolLevel();
 
 		model.addAttribute("salas", sala);
-		model.addAttribute("mapas", mapaService.getAllMapas());
+		model.addAttribute("mapas", mapas);
+		model.addAttribute("search", search);
 		model.addAttribute("rolID", rolIDUsuario);
 	    return "listMapas";
 	}

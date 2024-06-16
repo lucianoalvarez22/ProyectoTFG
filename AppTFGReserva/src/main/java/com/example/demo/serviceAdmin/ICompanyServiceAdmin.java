@@ -12,5 +12,6 @@ public interface ICompanyServiceAdmin {
 	Usuarios guardarAdminCompany(Usuarios adminCompany);
 	Company getCompanyById(Long companyId);
 	void eliminarCompany(Long id);
+	List<Company> searchCompaniesByName(String name);
 
 }

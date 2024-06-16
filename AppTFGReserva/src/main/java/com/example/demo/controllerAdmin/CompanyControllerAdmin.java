@@ -37,8 +37,15 @@ public class CompanyControllerAdmin {
 	private UserSessionLog userSession;
 	
 	@GetMapping("/listCompany")
-	public String getAllCompany(Model model) {
-		List<Company> companies = companyServicio.getAllCompany();
+	public String getAllCompany(@RequestParam(value = "search", required = false) String search, Model model) {
+		
+		List<Company> companies;
+	    if (search != null && !search.isEmpty()) {
+	        companies = companyServicio.searchCompaniesByName(search);
+	    } else {
+	        companies = companyServicio.getAllCompany();
+	    }
+	
 		
 		Usuarios userLogueado = userSession.getUser();
 		Roles rol = userLogueado.getRolLevel();

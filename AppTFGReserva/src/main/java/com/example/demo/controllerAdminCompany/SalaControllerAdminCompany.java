@@ -40,7 +40,7 @@ public class SalaControllerAdminCompany {
 
 	
 	@GetMapping("/mySalas")
-	public String getMySalas(Model model) {
+	public String getMySalas(@RequestParam(value = "search", required = false) String search, Model model) {
 		
 		Usuarios userLogueado = userSession.getUser();
 		Roles rol = userLogueado.getRolLevel();
@@ -49,11 +49,18 @@ public class SalaControllerAdminCompany {
 		Long companyId = company.getCompanyId();
 		System.out.println("ID de la compañía del usuario logueado: " + companyId);
 		
+		List<Mapas> mapas;
+	    if (search != null && !search.isEmpty()) {
+	        mapas = mapaServicio.searchMapasByNameAndCompanyId(search, companyId);
+	    } else {
+	        mapas = mapaServicio.getListMapaById(companyId);
+	    }
 		
 		
-	    List<Mapas> mapas = mapaServicio.getListMapaById(companyId);
+	 
 	    
 	    model.addAttribute("myMap", mapas);
+	    model.addAttribute("search", search);
 		model.addAttribute("rolID", rolIDUsuario);
 		
 		return "listMapas";
@@ -61,7 +68,7 @@ public class SalaControllerAdminCompany {
 	
 	
 	@GetMapping("/getMySalas/{id}")
-	public String getSalas(@PathVariable(name = "id") Long mapaId, Model model) {
+	public String getSalas(@PathVariable(name = "id") Long mapaId,@RequestParam(value = "search", required = false) String search, Model model) {
 		Usuarios userLogueado = userSession.getUser();
 		Roles rol = userLogueado.getRolLevel();
 		Long rolIDUsuario = rol.getRolLevel();
@@ -69,10 +76,18 @@ public class SalaControllerAdminCompany {
 		Long companyId = company.getCompanyId();
 		
 		List<Salas> sala = mapaServicio.findSalasByMapaId(mapaId);
-		List<Mapas> mapas = mapaServicio.getListMapaById(companyId);
+	    List<Mapas> mapas;
+	    if (search != null && !search.isEmpty()) {
+	        mapas = mapaServicio.searchMapasByNameAndCompanyId(search, companyId);
+	    } else {
+	        mapas = mapaServicio.getListMapaById(companyId);
+	    }
+		
+		
 
 		model.addAttribute("salas", sala);
 		model.addAttribute("myMap", mapas);
+		model.addAttribute("search", search);
 		model.addAttribute("rolID", rolIDUsuario);
 	    return "listMapas";
 	}

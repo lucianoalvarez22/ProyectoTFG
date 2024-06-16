@@ -13,4 +13,5 @@ public interface ISalasService {
 	Salas saveSala(Salas sala);
 	List<Salas>getSalaByMapaId(Long mapaId);
 	void deleteSala(Long id);
+	
 }

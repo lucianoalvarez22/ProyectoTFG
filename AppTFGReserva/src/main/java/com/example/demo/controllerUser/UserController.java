@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,16 +92,26 @@ public class UserController {
     }
 
     @GetMapping("/verSalas")
-    public String verSalas(Model model) {
+    public String verSalas(@RequestParam(value = "search", required = false) String search, Model model) {
         Usuarios userLogueado = userSession.getUser();
         Company company = userLogueado.getCompanyId();
+        
+        
 
         Roles rol = userLogueado.getRolLevel();
         Long rolIDUsuario = rol.getRolLevel();
+        
+        List<Salas> salas;
+        if (search != null && !search.isEmpty()) {
+            salas = mapaService.searchSalasByNumberAndCompany(search, company.getCompanyId());
+        } else {
+            salas = mapaService.getSalasByCompany(company.getCompanyId());
+        }
 
-        List<Salas> salas = mapaService.getSalasByCompany(company.getCompanyId());
+        //List<Salas> salas = mapaService.getSalasByCompany(company.getCompanyId());
 
         model.addAttribute("salas", salas);
+        model.addAttribute("search", search);
         model.addAttribute("rolID", rolIDUsuario);
         return "userGeneral/listSalasUserGeneral";
     }
@@ -178,12 +189,22 @@ public class UserController {
     }
 
     @GetMapping("/misReservas")
-    public String misReservas(Model model) {
+    public String misReservas(@RequestParam(value = "fechaEntrada", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaEntrada, Model model) {
         Usuarios userLogueado = userSession.getUser();
         Roles rol = userLogueado.getRolLevel();
         Long rolIDUsuario = rol.getRolLevel();
-        List<Reservas> reservas = reservaService.getReservasByUsuario(userLogueado);
+        
+        List<Reservas> reservas;
+        if (fechaEntrada != null) {
+            reservas = reservaService.searchReservasByFechaEntrada(userLogueado, fechaEntrada);
+        } else {
+            reservas = reservaService.getReservasByUsuario(userLogueado);
+        }
+        
+       
+        
         model.addAttribute("reservas", reservas);
+        model.addAttribute("fechaEntrada", fechaEntrada != null ? fechaEntrada.toString() : "");
         model.addAttribute("rolID", rolIDUsuario);
         return "userGeneral/misReservas";
     }

@@ -31,5 +31,10 @@ public class UserServiceAdmin implements IUserServiceAdmin {
 		userRepositoryAdminCompany.deleteById(id);
 		
 	}
+	
+	@Override
+	public List<Usuarios> searchUsersByName(String name) {
+	    return userRepositoryAdminCompany.findByUserNameContainingIgnoreCase(name);
+	}
 
 }

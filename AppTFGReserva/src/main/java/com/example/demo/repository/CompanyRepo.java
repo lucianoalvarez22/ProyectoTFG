@@ -9,5 +9,6 @@ import com.example.demo.entity.Company;
 public interface CompanyRepo extends JpaRepository<Company, Long> {
 	
 	List<Company> findByCompanyId(Long companyId);
+	List<Company> findByCompanyNameContainingIgnoreCase(String companyName);
 
 }

@@ -46,5 +46,10 @@ public class CompanyServiceAdmin implements ICompanyServiceAdmin {
 		companyRepository.deleteById(id);
 		
 	}
+	
+	@Override
+	public List<Company> searchCompaniesByName(String name) {
+	    return companyRepository.findByCompanyNameContainingIgnoreCase(name);
+	}
 
 }

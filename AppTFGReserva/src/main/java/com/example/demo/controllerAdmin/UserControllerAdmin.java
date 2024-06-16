@@ -37,8 +37,16 @@ public class UserControllerAdmin {
 	
 	//PROBANDO ALL USERS
 	@GetMapping("/listUsers")
-	public String getUsers(Model model) {
-		List<Usuarios> users = userServicio.getAllUser();
+	public String getUsers(@RequestParam(value = "search", required = false) String search,Model model) {
+		
+		 List<Usuarios> users;
+		    if (search != null && !search.isEmpty()) {
+		        users = userServicio.searchUsersByName(search);
+		    } else {
+		        users = userServicio.getAllUser();
+		    }
+		    
+		
 		Usuarios userLogueado = userSession.getUser();
 		Roles rol = userLogueado.getRolLevel();
 		Long rolIDUsuario = rol.getRolLevel();

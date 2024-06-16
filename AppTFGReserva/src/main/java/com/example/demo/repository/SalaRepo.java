@@ -11,4 +11,5 @@ public interface SalaRepo extends JpaRepository<Salas, Long> {
 	
 	List<Salas> findByMapaIdMapaId(Long mapa);
 	 List<Salas> findByMapaId_CompanyMapa_CompanyId(Long companyId);
+	 
 }

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/css/style.css"> 
   <link rel="stylesheet" href="/css/list.css"> 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <style>
 	
@@ -23,6 +24,13 @@
     min-height: 350px; /* Adjust the height to fit the content */
     border: 2px solid white; /* Added white border */
 }
+
+.card.selected {
+    border-color: green;
+    transform: scale(1.05);
+    transition: transform 0.3s, border-color 0.3s;
+}
+
 
 .card:hover {
     transform: translateY(-10px);
@@ -90,6 +98,17 @@
     animation: blink 3s infinite;
 }
 
+#button-clear {
+    margin-left: 10px;
+    background-color: #6c757d;
+    color: white;
+}
+
+#button-clear:hover {
+    background-color: #5a6268;
+    color: white;
+}
+
 @keyframes blink {
     0% { opacity: 1; }
     50% { opacity: 0.5; }
@@ -154,9 +173,36 @@
 </script>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
+        // Cargar el estado del almacenamiento local
+        var selectedUserId = localStorage.getItem('selectedUserId');
+        if (selectedUserId) {
+            // Agregar la clase 'selected' a la tarjeta correspondiente
+            $('#' + selectedUserId).addClass('selected');
+        }
+
         $('.ver-reservas').tooltip({title: "Haz clic para ver las reservas", placement: "top"});
 
+        $('.ver-reservas').on('click', function() {
+            // Obtener el ID del usuario seleccionado
+            var cardId = $(this).closest('.card').attr('id');
+            // Guardar el estado en localStorage
+            localStorage.setItem('selectedUserId', cardId);
+
+            // Remove selected class from any previously selected card
+            $('.card').removeClass('selected');
+
+            // Add selected class to the clicked card
+            $(this).closest('.card').addClass('selected');
+        });
+
+        $('.ocultar-reservas').on('click', function() {
+            // Limpiar el estado en localStorage
+            localStorage.removeItem('selectedUserId');
+
+            // Remove selected class from all cards when hiding the reservas
+            $('.card').removeClass('selected');
+        });
     });
 </script>
 

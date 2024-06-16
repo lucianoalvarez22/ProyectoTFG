@@ -11,11 +11,22 @@
 </head>
 <body>
 	
-	<!-- LISTADO COMPANY ADMIN SUPER --> 
+<!-- LISTADO COMPANY ADMIN SUPER --> 
 <div th:fragment="vistaAdmin" class="container my-5">
     <h1 class="text-center mb-4 text-white">EMPRESAS</h1>
-    <div class="mb-3">
-        <a href="/addCompany" class="btn btn-success" title="Añade nueva empresa"><i class="fas fa-plus"></i> <i class="fas fa-building"></i></a>
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <form th:action="@{/listCompany}" method="get" class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Buscar por nombre de empresa" aria-label="Buscar por nombre de empresa" aria-describedby="button-search" th:value="${search}">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">Buscar</button>
+                <a class="btn btn-outline-secondary" th:href="@{/listCompany}" id="button-clear">Limpiar Filtro</a>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-start mb-4">
+        <div class="col-md-6">
+            <a href="/addCompany" class="btn btn-success" title="Añade nueva empresa"><i class="fas fa-plus"></i> <i class="fas fa-building"></i></a>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-4 mb-4" th:each="compa : ${company}">

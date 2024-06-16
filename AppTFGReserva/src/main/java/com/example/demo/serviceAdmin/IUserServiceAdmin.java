@@ -10,5 +10,6 @@ public interface IUserServiceAdmin {
 	List<Usuarios> getAllUser();
 	Optional<Usuarios> verificaLogin(String userPassword, String userEmail);
 	void eliminarUserAdminSuper(Long id);
+	List<Usuarios> searchUsersByName(String name);
 
 }

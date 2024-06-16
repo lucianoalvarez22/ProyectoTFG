@@ -1,5 +1,7 @@
 package com.example.demo.serviceUser;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.demo.entity.Reservas;
@@ -13,5 +15,6 @@ public interface IReservaService {
 	List<Reservas> getReservasByUsuario(Usuarios usuario);
 	void eliminarReserva(Long id);
 	List<Reservas> getReservasByUserId(Long userId);
+	List<Reservas> searchReservasByFechaEntrada(Usuarios usuario, LocalDate fechaEntrada);
 
 }

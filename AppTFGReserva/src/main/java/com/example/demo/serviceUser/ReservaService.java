@@ -1,5 +1,8 @@
 package com.example.demo.serviceUser;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +40,13 @@ public class ReservaService implements IReservaService {
 	public List<Reservas> getReservasByUsuario(Usuarios usuario) {
 		return reservaRepo.findByUsuario(usuario);
 	}
+	
+	@Override
+	public List<Reservas> searchReservasByFechaEntrada(Usuarios usuario, LocalDate fechaEntrada) {
+        LocalDateTime startOfDay = fechaEntrada.atStartOfDay();
+        LocalDateTime endOfDay = fechaEntrada.atTime(LocalTime.MAX);
+        return reservaRepo.findByUsuarioAndFechaEntradaBetween(usuario, startOfDay, endOfDay);
+    }
 
 	@Override
 	public void eliminarReserva(Long id) {

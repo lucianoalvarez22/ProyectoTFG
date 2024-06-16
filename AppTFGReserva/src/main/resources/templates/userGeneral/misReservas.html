@@ -61,6 +61,18 @@
     background-color: #c82333;
     border-color: #bd2130;
 }
+
+#button-clear {
+    margin-left: 10px;
+    background-color: #6c757d;
+    color: white;
+}
+
+#button-clear:hover {
+    background-color: #5a6268;
+    color: white;
+}
+
 </style>
 </head>
 <body>
@@ -94,9 +106,18 @@
     </div>
     
    <!-- LISTADO DE RESERVAS -->
-<div th:if="${!#lists.isEmpty(reservas)}" class="container my-5">
+<div class="container my-5">
     <h1 class="text-center mb-4 text-white">RESERVAS</h1>
-    <div class="row">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <form th:action="@{/misReservas}" method="get" class="input-group">
+                <input type="date" name="fechaEntrada" class="form-control" placeholder="Fecha de entrada" aria-label="Fecha de entrada" aria-describedby="button-search" th:value="${fechaEntrada}">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">Buscar</button>
+                <a class="btn btn-outline-secondary" th:href="@{/misReservas}" id="button-clear">Limpiar Filtro</a>
+            </form>
+        </div>
+    </div>
+    <div th:if="${!#lists.isEmpty(reservas)}" class="row">
         <div class="col-md-4 mb-4" th:each="reserva : ${reservas}">
             <div class="card shadow-lg gradient-bg">
                 <div class="card-body text-center">
@@ -121,6 +142,7 @@
         </div>
     </div>
 </div>
+
 
 
     <script src="/js/bootstrap.bundle.min.js"></script>

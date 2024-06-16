@@ -12,12 +12,21 @@
 	
 	
 	
-	<!-- LISTADO DE MAPAS --> 
+<!-- LISTADO DE MAPAS --> 
 <div th:fragment="vistaAdminCompanyMapa" class="container my-5">
-    <h1 class="text-center mb-4 text-white">MI MAPA</h1>
+    <h1 class="text-center mb-4 text-white">Mapas</h1>
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <form th:action="@{/mySalas}" method="get" class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Buscar por nombre de mapa" aria-label="Buscar por nombre de mapa" aria-describedby="button-search" th:value="${search}">
+                <button class="btn btn-outline-secondary" type="submit" id="button-search">Buscar</button>
+                <a class="btn btn-outline-secondary" th:href="@{/mySalas}" id="button-clear">Limpiar Filtro</a>
+            </form>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4 mb-4" th:each="mapa : ${myMap}">
-            <div class="card shadow-lg gradient-bg">
+            <div class="card shadow-lg gradient-bg" th:id="'mapa-' + ${mapa.mapaId}">
                 <div class="card-body">
                     <h5 class="card-title text-white text-center" th:text="${mapa.mapaNombre}"></h5>
                     <p class="card-text text-white text-center">
@@ -25,7 +34,7 @@
                         <i class="fas fa-th-large"></i> Número Total de Salas: <span th:text="${mapa.numeroTotalDeSalas}"></span>
                     </p>
                     <div class="d-flex justify-content-center">
-                        <a th:href="@{/getMySalas/{id}(id=${mapa.mapaId})}" class="btn btn-info btn-sm ver-salas" title="Click para ver salas">
+                        <a th:href="@{/getMySalas/{id}(id=${mapa.mapaId}, search=${search})}" class="btn btn-info btn-sm ver-salas" title="Click para ver salas">
                             <i class="fas fa-eye"></i> Ver Salas
                         </a>
                     </div>
@@ -42,7 +51,7 @@
         <div class="col-md-4 mb-4" th:each="sala : ${salas}">
             <div class="card shadow-lg gradient-bg-salas">
                 <div class="card-body">
-                    <a href="/mySalas" class="btn btn-light btn-sm ocultar-button"><i class="fas fa-times"></i></a>
+                    <a th:href="@{/mySalas(search=${search})}" class="btn btn-light btn-sm ocultar-button"><i class="fas fa-times"></i></a>
                     <h5 class="card-title text-white" th:text="'Sala ' + ${sala.salaNumero} + ' - ' + ${sala.mapaId.mapaNombre}"></h5>
                     <p class="card-text">
                         <strong>Filas: </strong><span class="text-white" th:text="${sala.numeroFilas}"></span><br>
@@ -59,6 +68,7 @@
     </div>
 </div>
 <!-- FIN DE LISTADO DE SALAS -->
+
     
     
     

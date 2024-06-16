@@ -6,6 +6,7 @@
 <link rel="icon" href="/img/logo.PNG" type="image/x-icon">
 <link rel="stylesheet" href="/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="/css/style.css"> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
 	
@@ -20,6 +21,12 @@
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
     border: 2px solid white; /* White border */
+}
+
+.card.selected {
+    border-color: green;
+    transform: scale(1.08);
+    transition: transform 0.3s, border-color 0.3s; /* Añadir transición */
 }
 
 .card:hover {
@@ -78,6 +85,17 @@
     0% { opacity: 1; }
     50% { opacity: 0.5; }
     100% { opacity: 1; }
+}
+
+#button-clear {
+    margin-left: 10px;
+    background-color: #6c757d;
+    color: white;
+}
+
+#button-clear:hover {
+    background-color: #5a6268;
+    color: white;
 }
 	
 </style>
@@ -140,8 +158,70 @@
 </script>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
+        // Cargar el estado del almacenamiento local
+        var selectedMapId = localStorage.getItem('selectedMapId');
+        if (selectedMapId) {
+            // Agregar la clase 'selected' a la tarjeta correspondiente
+            $('#' + selectedMapId).addClass('selected');
+        }
+
         $('.ver-salas').tooltip({title: "Haz clic para ver las salas", placement: "top"});
+
+        $('.ver-salas').on('click', function(e) {
+            // Obtener el ID del mapa seleccionado
+            var cardId = $(this).closest('.card').attr('id');
+            // Guardar el estado en localStorage
+            localStorage.setItem('selectedMapId', cardId);
+
+            // Remove selected class from any previously selected card
+            $('.card').removeClass('selected');
+
+            // Add selected class to the clicked card
+            $(this).closest('.card').addClass('selected');
+        });
+
+        $('.ocultar-button').on('click', function(e) {
+            // Limpiar el estado en localStorage
+            localStorage.removeItem('selectedMapId');
+
+            // Remove selected class from all cards when hiding the salas
+            $('.card').removeClass('selected');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Cargar el estado del almacenamiento local
+        var selectedMapId = localStorage.getItem('selectedMapId');
+        if (selectedMapId) {
+            // Agregar la clase 'selected' a la tarjeta correspondiente
+            $('#' + selectedMapId).addClass('selected');
+        }
+
+        $('.ver-salas').tooltip({title: "Haz clic para ver las salas", placement: "top"});
+
+        $('.ver-salas').on('click', function() {
+            // Obtener el ID del mapa seleccionado
+            var cardId = $(this).closest('.card').attr('id');
+            // Guardar el estado en localStorage
+            localStorage.setItem('selectedMapId', cardId);
+
+            // Remove selected class from any previously selected card
+            $('.card').removeClass('selected');
+
+            // Add selected class to the clicked card
+            $(this).closest('.card').addClass('selected');
+        });
+
+        $('.ocultar-button').on('click', function() {
+            // Limpiar el estado en localStorage
+            localStorage.removeItem('selectedMapId');
+
+            // Remove selected class from all cards when hiding the salas
+            $('.card').removeClass('selected');
+        });
     });
 </script>
 

@@ -60,14 +60,19 @@ public class UserControllerAdminCompany {
 	
 	//SACAR LOS USUARIOS DE UNA DETERMINADA EMPRESA
 		@GetMapping("/listUserAdminCompany")
-		public String getUsersCompany(Model model) {
+		public String getUsersCompany(@RequestParam(value = "search", required = false) String search,Model model) {
 			
 			Usuarios userLogueado = userSession.getUser();
-//			Long companyId = userLogueado.getCompanyId().getCompanyId(); esto funciona
-//			List<Usuarios> usuariosEmpresa = userServiceAdminCompany.getUsuariosByCompanyId(companyId); esto funciona
+			Company empresa = userLogueado.getCompanyId();
 			
-			 Company empresa = userLogueado.getCompanyId();
-			 List<Usuarios> usuariosEmpresa = userServiceAdminCompany.getUsuariosByCompanyId(empresa);
+			List<Usuarios> usuariosEmpresa;
+
+			if (search != null && !search.isEmpty()) {
+		        usuariosEmpresa = userServiceAdminCompany.searchUsuariosByCompanyAndName(empresa, search);
+		    } else {
+		        usuariosEmpresa = userServiceAdminCompany.getUsuariosByCompanyId(empresa);
+		    }
+		    
 			
 			Roles rol = userLogueado.getRolLevel();
 			Long rolIDUsuario = rol.getRolLevel();
@@ -76,6 +81,7 @@ public class UserControllerAdminCompany {
 			
 			model.addAttribute("usuariosEmpresa", usuariosEmpresa);
 			model.addAttribute("rolID", rolIDUsuario);
+			model.addAttribute("search", search);
 			
 
 			return "listAllUser";
@@ -86,23 +92,27 @@ public class UserControllerAdminCompany {
 		//RESERVAS ACTIVAS DE CADA USUARIO
 		
 		@GetMapping("/userReserva/{id}")
-		public String getUserReservas(@PathVariable(name = "id") Long userId, Model model) {
+		public String getUserReservas(@PathVariable(name = "id") Long userId,@RequestParam(value = "search", required = false) String search, Model model) {
 			Usuarios userLogueado = userSession.getUser();
 			Roles rol = userLogueado.getRolLevel();
 			Long rolIDUsuario = rol.getRolLevel();
 			
-			Company empresa = userLogueado.getCompanyId();
-			List<Usuarios> usuariosEmpresa = userServiceAdminCompany.getUsuariosByCompanyId(empresa);	
-			List<Reservas> reservaByUser = reservaServicio.getReservasByUserId(userId);
-		
-			boolean isReservaUserEmpty = reservaByUser.isEmpty();
+			List<Usuarios> usuariosEmpresa;
+
+		    if (search != null && !search.isEmpty()) {
+		        usuariosEmpresa = userServiceAdminCompany.searchUsuariosByCompanyAndName(userLogueado.getCompanyId(), search);
+		    } else {
+		        usuariosEmpresa = userServiceAdminCompany.getUsuariosByCompanyId(userLogueado.getCompanyId());
+		    }
 			
-			System.out.println(isReservaUserEmpty);
+			Company empresa = userLogueado.getCompanyId();
+			List<Reservas> reservaByUser = reservaServicio.getReservasByUserId(userId);
+	
 		  
 			
 			model.addAttribute("reservaUser", reservaByUser);
 			model.addAttribute("usuariosEmpresa", usuariosEmpresa);
-			model.addAttribute("isReservaUserEmpty", isReservaUserEmpty);
+			model.addAttribute("search", search);
 			model.addAttribute("rolID", rolIDUsuario);
 			return "listAllUser";
 			
