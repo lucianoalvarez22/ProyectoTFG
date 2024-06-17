@@ -1,0 +1,4 @@
+<h1>SEATAKER</h1>
+PLATAFORMA WEB DE RESERVA DE ASIENTOS EN EMPRESAS CON MODALIDAD DE TRABAJO HÍBRIDO - 
+
+![Init](https://github.com/lucianoalvarez22/ProyectoTFG/assets/102383668/78dcecd9-685e-4a8f-bb1e-bd0cc08fd6e7)
