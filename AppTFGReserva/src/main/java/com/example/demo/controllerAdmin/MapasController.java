@@ -151,13 +151,29 @@ public class MapasController {
 	        @RequestParam(name = "companyId") Long companyId,
 	        @RequestParam(name = "mapaId") Long mapaId) {
 		
-		Company company = companyServicio.getCompanyById(companyId);
-		
-		String mapaNombreEdit = mapaNombre;
-		int salasEdit = salasTotales;
-		Long mapaIdEdit = mapaId;
-		
-		Mapas mapaEditado = new Mapas(mapaIdEdit, mapaNombreEdit, salasEdit, company);
+		 // Recuperar la entidad Mapas desde la base de datos
+	    Mapas mapaEditado = mapaService.getMapaById(mapaId);
+	    if (mapaEditado == null) {
+	        // Manejar el caso en que el mapa no se encuentre
+	        return "redirect:/listMapas?error=notfound";
+	    }
+	    
+	 // Recuperar la entidad Company desde la base de datos
+	    Company company = companyServicio.getCompanyById(companyId);
+	    if (company == null) {
+	        // Manejar el caso en que la empresa no se encuentre
+	        return "redirect:/listMapas?error=companynotfound";
+	    }
+	    
+	    
+	    mapaEditado.setMapaNombre(mapaNombre);
+	    mapaEditado.setNumeroTotalDeSalas(salasTotales);
+	    mapaEditado.setCompanyMapa(company);
+	    
+	 // Mantener la colección de salas y reservas referenciadas
+	    // Si no se está actualizando, asegúrate de que las colecciones no se pierdan
+	    // mapaEditado.setSalas(existingSalas);
+	    // mapaEditado.setReservas(existingReservas);
 		
 		mapaService.saveMapa(mapaEditado);
 		return "redirect:/listMapas";
@@ -235,16 +251,28 @@ public class MapasController {
 		        @RequestParam(name = "salaEstado") boolean salaEstado,
 		        @RequestParam(name = "salaId") Long salaId) {
 			
+			// Recuperar la entidad Salas desde la base de datos
+		    Salas salaEdit = salaService.getSalaById(salaId);
+		    if (salaEdit == null) {
+		        // Manejar el caso en que la sala no se encuentre
+		        return "redirect:/listMapas?error=notfound";
+		    }
+
+		    // Recuperar la entidad Mapas desde la base de datos
+		    Mapas mapaEdit = mapaService.getMapaById(mapaId);
+		    if (mapaEdit == null) {
+		        // Manejar el caso en que el mapa no se encuentre
+		        return "redirect:/listMapas?error=mapanotfound";
+		    }
+		    
+		    // Actualizar los campos necesarios
+		    salaEdit.setMapaId(mapaEdit);
+		    salaEdit.setNumeroFilas(numeroFilas);
+		    salaEdit.setNumeroColumnas(numeroColumnas);
+		    salaEdit.setSalaAsientosTotales(salaAsientosTotales);
+		    salaEdit.setSalaNumero(salaNumero);
+		    salaEdit.setSalaEstado(salaEstado);
 			
-			Mapas mapaEdit = mapaService.getMapaById(mapaId);
-			int filasEdit = numeroFilas;
-			int columnasEdit = numeroColumnas;
-			int asientosEdit = salaAsientosTotales;
-			int salaNumeroEdit = salaNumero;
-			boolean estadoEdit = salaEstado;
-			Long salaIdEdit = salaId;
-			
-			Salas salaEdit = new Salas(salaIdEdit,salaNumeroEdit, asientosEdit,estadoEdit,filasEdit,columnasEdit, mapaEdit);
 			
 			salaService.saveSala(salaEdit);
 	

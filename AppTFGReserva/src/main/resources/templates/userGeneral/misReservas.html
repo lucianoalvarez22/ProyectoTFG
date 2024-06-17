@@ -111,7 +111,7 @@
     <div class="row justify-content-center mb-4">
         <div class="col-md-6">
             <form th:action="@{/misReservas}" method="get" class="input-group">
-                <input type="date" name="fechaEntrada" class="form-control" placeholder="Fecha de entrada" aria-label="Fecha de entrada" aria-describedby="button-search" th:value="${fechaEntrada}">
+                <input type="date" name="fechaEntrada" class="form-control" placeholder="Buscar por Fecha de entrada" aria-label="Fecha de entrada" aria-describedby="button-search" th:value="${fechaEntrada}">
                 <button class="btn btn-outline-secondary" type="submit" id="button-search">Buscar</button>
                 <a class="btn btn-outline-secondary" th:href="@{/misReservas}" id="button-clear">Limpiar Filtro</a>
             </form>

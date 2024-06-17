@@ -142,17 +142,30 @@ public class CompanyControllerAdmin {
 		        @RequestParam(name = "horaCierre") String horaCierre,
 				Model model, @RequestParam(name = "idCompany") Long idCompany) {
 			
-			String nameEdit = companyName;
-			String industriaEdi = companyIndustria;
-			String ubicacionEdit = companyUbicacion;
-			String telefonoEdit = companyTelefono;
-			String emailEdit = companyEmail;
-			Long idEdit = idCompany;
-			LocalTime aperturaEdit = LocalTime.parse(horaApertura);
-		    LocalTime cierreEdit = LocalTime.parse(horaCierre);
+			 // Recuperar la entidad Company desde la base de datos
+		    Company companyEdit = companyServicio.getCompanyById(idCompany);
+		    if (companyEdit == null) {
+		        // Manejar el caso en que la empresa no se encuentre
+		        return "redirect:/listCompany?error=notfound";
+		    }
 		    
-			Company companyEdit = new Company(idEdit, nameEdit, industriaEdi, ubicacionEdit, telefonoEdit, emailEdit, aperturaEdit, cierreEdit);
-			companyServicio.guardarCompany(companyEdit);
+		 // Actualizar los campos necesarios
+		    companyEdit.setCompanyName(companyName);
+		    companyEdit.setCompanyIndustria(companyIndustria);
+		    companyEdit.setCompanyUbicacion(companyUbicacion);
+		    companyEdit.setCompanyTelefono(companyTelefono);
+		    companyEdit.setCompanyEmail(companyEmail);
+		    companyEdit.setHoraApertura(LocalTime.parse(horaApertura));
+		    companyEdit.setHoraCierre(LocalTime.parse(horaCierre));
+		    
+		 // Mantener la colección de usuarios referenciada (si no se está actualizando)
+		    // Asegúrate de que la colección no se pierda
+		    // companyEdit.setUsuarios(existingUsuarios);
+			
+			
+		    
+		 // Guardar la entidad actualizada
+		    companyServicio.guardarCompany(companyEdit);
 			return "redirect:/listCompany";
 		}
 		
