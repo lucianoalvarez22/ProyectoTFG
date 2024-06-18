@@ -44,9 +44,6 @@ public class Company {
 
     @Column(name = "hora_cierre")
     private LocalTime horaCierre;
-	
-	
-
 
 	@OneToMany(mappedBy = "companyId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Usuarios> usuarios;

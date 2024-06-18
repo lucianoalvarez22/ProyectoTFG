@@ -142,7 +142,7 @@ public class UserControllerAdminCompany {
 		
 		
 		
-		
+		//AÑADIR USUARIO
 		@GetMapping("/addUsuarioByAdminCompany")
 		public String addUsuariosByAdminCompany(Model model) {
 			model.addAttribute("user", new Usuarios());
@@ -151,6 +151,8 @@ public class UserControllerAdminCompany {
 			return "adminCompany/addUsuarioByAdminCompany";
 		}
 		
+		
+		//POST AÑADIR USUARIO
 		@PostMapping("/addUsuarioByAdminCompany")
 		public String addUsuarioByAdminCompanyPOST(@RequestParam(name = "userName") String userName,
 		        @RequestParam(name = "userEmail") String userEmail,
